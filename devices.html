@@ -115,6 +115,69 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
   .sp-band{grid-template-columns:1fr}.cta-section{padding:5rem 1.5rem}
 }
 </style>
+<style>
+/* ── IMAGE CAROUSEL ─────────────────────────────────── */
+.img-carousel{position:relative;overflow:hidden;user-select:none;background:#0f1f17}
+.img-carousel__track{display:flex;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);will-change:transform;height:280px}
+.img-carousel__slide{flex:0 0 100%;height:280px;position:relative;overflow:hidden}
+.img-carousel__slide img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.img-carousel__scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:2}
+
+/* arrow buttons */
+.img-carousel__btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  z-index:10;cursor:pointer;
+  background:rgba(15,31,23,0.72);
+  border:2px solid rgba(240,106,0,0.7);
+  color:#f06a00;
+  font-family:'Press Start 2P',monospace;font-size:0.55rem;
+  padding:0.5rem 0.65rem;line-height:1;
+  border-radius:4px;
+  box-shadow:2px 2px 0 rgba(196,85,0,0.8);
+  transition:background 0.15s,transform 0.1s,box-shadow 0.1s;
+  backdrop-filter:blur(4px);
+}
+.img-carousel__btn:hover{background:rgba(240,106,0,0.25);transform:translateY(-50%) translate(-1px,-1px);box-shadow:3px 3px 0 rgba(196,85,0,0.8)}
+.img-carousel__btn:active{transform:translateY(-50%) translate(2px,2px);box-shadow:none}
+.img-carousel__btn--prev{left:10px}
+.img-carousel__btn--next{right:10px}
+.img-carousel__btn[disabled]{opacity:0.25;cursor:default;pointer-events:none}
+
+/* dots */
+.img-carousel__dots{
+  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  display:flex;gap:6px;z-index:10;
+}
+.img-carousel__dot{
+  width:8px;height:8px;border-radius:2px;
+  background:rgba(200,221,208,0.35);
+  border:1.5px solid rgba(240,106,0,0.4);
+  cursor:pointer;
+  transition:background 0.15s,border-color 0.15s,transform 0.15s;
+}
+.img-carousel__dot.active{background:#f06a00;border-color:#c45500;transform:scale(1.25)}
+
+/* counter badge */
+.img-carousel__counter{
+  position:absolute;top:10px;right:10px;z-index:10;
+  font-family:'Press Start 2P',monospace;font-size:0.38rem;
+  color:rgba(200,221,208,0.7);
+  background:rgba(15,31,23,0.7);
+  padding:0.3rem 0.55rem;border-radius:3px;
+  border:1px solid rgba(240,106,0,0.3);
+  backdrop-filter:blur(4px);letter-spacing:0.08em;
+}
+
+/* add-image placeholder slide */
+.img-carousel__slide--placeholder{
+  background:rgba(26,58,42,0.25);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;
+}
+.img-carousel__slide--placeholder p{
+  font-family:'Press Start 2P',monospace;font-size:0.4rem;
+  color:rgba(200,221,208,0.4);letter-spacing:0.1em;text-align:center;line-height:2;
+}
+</style>
 </head>
 <body>
 
@@ -155,9 +218,7 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Transit Clock</h2>
         <div class="retro-window" style="margin-bottom:2rem">
           <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-ph(1).visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div style="background:#1a1a14;min-height:280px;position:relative;overflow:hidden">
-<div style="position:relative;width:100%;min-height:280px;overflow:hidden"><img src="img/phi_render.jpg" alt="DMG Ph(I) — three-view render" style="width:100%;height:280px;object-fit:cover;object-position:center top;display:block"/><div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:1"></div></div>
-</div>
+          <div class="img-carousel" id="carousel-ph1" style="background:#1a1a14"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/phi_render.jpg" alt="DMG Ph(I) — three-view render" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center top;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 3</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
           <span style="font-family:'Press Start 2P',monospace;font-size:0.42rem;padding:0.3rem 0.75rem;border-radius:4px;border:2px solid var(--orange);background:var(--orange-dim);color:var(--orange);box-shadow:2px 2px 0 var(--orange)">PROTOTYPE</span>
@@ -208,9 +269,7 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Acoustic iPhone Dock</h2>
         <div class="retro-window" style="margin-bottom:2rem">
           <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-40.visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div style="background:#0f0505;min-height:280px;position:relative;overflow:hidden">
-<div style="position:relative;width:100%;min-height:280px;overflow:hidden"><img src="img/dmg40_clock.jpg" alt="DMG-40 LED departure clock" style="width:100%;height:280px;object-fit:cover;object-position:center 30%;display:block"/><div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:1"></div></div>
-</div>
+          <div class="img-carousel" id="carousel-d40" style="background:#0f0505"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/dmg40_clock.jpg" alt="DMG-40 LED departure clock" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center 30%;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 3</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
           <span style="font-family:'Press Start 2P',monospace;font-size:0.42rem;padding:0.3rem 0.75rem;border-radius:4px;border:2px solid var(--orange);background:var(--orange-dim);color:var(--orange);box-shadow:2px 2px 0 var(--orange)">PROTOTYPE</span>
@@ -261,9 +320,7 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Handheld Music Player</h2>
         <div class="retro-window" style="margin-bottom:2rem">
           <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-lu1.visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div style="background:#0f1f17;min-height:280px;position:relative;overflow:hidden">
-<div style="position:relative;width:100%;min-height:280px;overflow:hidden"><img src="img/lu1_real.jpg" alt="DMG LU1 — real prototype" style="width:100%;height:280px;object-fit:cover;object-position:center 20%;display:block"/><div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:1"></div></div>
-</div>
+          <div class="img-carousel" id="carousel-lu1" style="background:#0f1f17"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/lu1_real.jpg" alt="DMG LU1 — real prototype" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center 20%;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 3</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
           <span style="font-family:'Press Start 2P',monospace;font-size:0.42rem;padding:0.3rem 0.75rem;border-radius:4px;border:2px solid var(--orange);background:var(--orange-dim);color:var(--orange);box-shadow:2px 2px 0 var(--orange)">PROTOTYPE</span>
@@ -317,9 +374,7 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Nautilus Soundbar</h2>
         <div class="retro-window" style="margin-bottom:2rem">
           <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-nautilus.visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div style="background:#1a1a14;min-height:280px;position:relative;overflow:hidden">
-<div style="position:relative;width:100%;min-height:280px;overflow:hidden"><img src="img/nautilus_render.jpg" alt="DMG Nautilus render" style="width:100%;height:220px;object-fit:cover;object-position:center;display:block"/><div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:1"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:3px"><img src="img/nautilus_real.jpg" alt="DMG Nautilus — real prototype on antique cabinet" style="width:100%;height:100px;object-fit:cover;object-position:center top;display:block"/><img src="img/nautilus_front.jpg" alt="DMG Nautilus — front render" style="width:100%;height:100px;object-fit:cover;object-position:center;display:block"/></div>
-</div>
+          <div class="img-carousel" id="carousel-nautilus" style="background:#1a1a14"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/nautilus_render.jpg" alt="DMG Nautilus — main render" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide"><img src="img/nautilus_real.jpg" alt="DMG Nautilus — real prototype on antique cabinet" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center top;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide"><img src="img/nautilus_front.jpg" alt="DMG Nautilus — front render" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 4</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
           <span style="font-family:'Press Start 2P',monospace;font-size:0.42rem;padding:0.3rem 0.75rem;border-radius:4px;border:2px solid var(--orange);background:var(--orange-dim);color:var(--orange);box-shadow:2px 2px 0 var(--orange)">PROTOTYPE</span>
@@ -394,6 +449,56 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
   document.querySelectorAll('.nav-links a').forEach(a=>{
     if(a.getAttribute('href')===window.location.pathname.split('/').pop())a.classList.add('active');
   });
+</script>
+<script>
+/* ── IMAGE CAROUSEL LOGIC ─────────────────────────────── */
+(function(){
+  function initCarousel(el){
+    const track  = el.querySelector('.img-carousel__track');
+    const slides = el.querySelectorAll('.img-carousel__slide');
+    const dots   = el.querySelectorAll('.img-carousel__dot');
+    const btnPrev= el.querySelector('.img-carousel__btn--prev');
+    const btnNext= el.querySelector('.img-carousel__btn--next');
+    const counter= el.querySelector('.img-carousel__counter');
+    const n = slides.length;
+    let cur = 0;
+
+    function go(idx){
+      cur = (idx + n) % n;
+      track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      dots.forEach((d,i)=> d.classList.toggle('active', i===cur));
+      if(counter) counter.textContent = (cur+1) + ' / ' + n;
+      if(btnPrev) btnPrev.disabled = false;
+      if(btnNext) btnNext.disabled = false;
+    }
+
+    if(btnPrev) btnPrev.addEventListener('click', ()=> go(cur-1));
+    if(btnNext) btnNext.addEventListener('click', ()=> go(cur+1));
+    dots.forEach((d,i)=> d.addEventListener('click',()=> go(i)));
+
+    /* keyboard: arrow keys when hovering */
+    el.setAttribute('tabindex','0');
+    el.addEventListener('keydown', e=>{
+      if(e.key==='ArrowLeft')  { go(cur-1); e.preventDefault(); }
+      if(e.key==='ArrowRight') { go(cur+1); e.preventDefault(); }
+    });
+
+    /* touch / swipe */
+    let tx0=0, ty0=0;
+    el.addEventListener('touchstart', e=>{ tx0=e.touches[0].clientX; ty0=e.touches[0].clientY; },{passive:true});
+    el.addEventListener('touchend',   e=>{
+      const dx = e.changedTouches[0].clientX - tx0;
+      const dy = e.changedTouches[0].clientY - ty0;
+      if(Math.abs(dx)>Math.abs(dy)*1.5 && Math.abs(dx)>30){
+        go(dx < 0 ? cur+1 : cur-1);
+      }
+    },{passive:true});
+
+    go(0);
+  }
+
+  document.querySelectorAll('.img-carousel').forEach(initCarousel);
+})();
 </script>
 </body>
 </html>
