@@ -173,6 +173,25 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
   .swatch{width:90px}
 }
 </style>
+<style>
+/* carousel demo in docs */
+.img-carousel{position:relative;overflow:hidden;user-select:none;background:#0f1f17}
+.img-carousel__track{display:flex;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);will-change:transform;height:280px}
+.img-carousel__slide{flex:0 0 100%;height:280px;position:relative;overflow:hidden}
+.img-carousel__slide img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.img-carousel__scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:2}
+.img-carousel__btn{position:absolute;top:50%;transform:translateY(-50%);z-index:10;cursor:pointer;background:rgba(15,31,23,0.72);border:2px solid rgba(240,106,0,0.7);color:#f06a00;font-family:'Press Start 2P',monospace;font-size:0.55rem;padding:0.5rem 0.65rem;line-height:1;border-radius:4px;box-shadow:2px 2px 0 rgba(196,85,0,0.8);transition:background 0.15s,transform 0.1s,box-shadow 0.1s;backdrop-filter:blur(4px)}
+.img-carousel__btn:hover{background:rgba(240,106,0,0.25)}
+.img-carousel__btn:active{transform:translateY(-50%) translate(2px,2px);box-shadow:none}
+.img-carousel__btn--prev{left:10px}
+.img-carousel__btn--next{right:10px}
+.img-carousel__dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10}
+.img-carousel__dot{width:8px;height:8px;border-radius:2px;background:rgba(200,221,208,0.35);border:1.5px solid rgba(240,106,0,0.4);cursor:pointer;transition:background 0.15s,border-color 0.15s,transform 0.15s}
+.img-carousel__dot.active{background:#f06a00;border-color:#c45500;transform:scale(1.25)}
+.img-carousel__counter{position:absolute;top:10px;right:10px;z-index:10;font-family:'Press Start 2P',monospace;font-size:0.38rem;color:rgba(200,221,208,0.7);background:rgba(15,31,23,0.7);padding:0.3rem 0.55rem;border-radius:3px;border:1px solid rgba(240,106,0,0.3);backdrop-filter:blur(4px);letter-spacing:0.08em}
+.img-carousel__slide--placeholder{background:rgba(26,58,42,0.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem}
+.img-carousel__slide--placeholder p{font-family:'Press Start 2P',monospace;font-size:0.4rem;color:rgba(200,221,208,0.4);letter-spacing:0.1em;text-align:center;line-height:2}
+</style>
 </head>
 <body>
 
@@ -224,6 +243,7 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
       <li><a href="#guide-cards">Guide cards</a></li>
       <li><a href="#windows">Retro windows</a></li>
       <li><a href="#spec-table">Spec table</a></li>
+      <li><a href="#carousel">Image Carousel</a></li>
     </ul>
   </div>
   <div class="doc-sidebar-section">
@@ -835,10 +855,119 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
 
 
 <!-- ══════════════════════════════════════════════════════════ -->
+<!-- IMAGE CAROUSEL                                             -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="doc-section" id="carousel">
+  <div class="section-eyebrow">10b &#8212; Molecules / Image Carousel</div>
+  <h2 class="section-title">Image Carousel</h2>
+  <p class="section-intro">Used inside each device&#8217;s retro-window visual slot. Supports left/right arrow buttons, dot navigation, touch swipe, and keyboard arrow keys. Placeholder slides show exactly where to drop new image files.</p>
+
+  <h4 style="margin-bottom:1rem;font-size:1.1rem">Live example &#8212; click arrows or swipe</h4>
+  <div class="preview" style="padding:1.5rem">
+    <div class="img-carousel" id="doc-carousel-demo" style="background:#0f1f17;border-radius:6px;overflow:hidden;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);max-width:460px"><div class="img-carousel__track"><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>img/your-photo-1.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#4a7c59" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#4a7c59" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#4a7c59" stroke-width="1" opacity="0.4"/></svg><p>img/your-photo-2.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#7aab8a" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#7aab8a" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#7aab8a" stroke-width="1" opacity="0.4"/></svg><p>img/your-photo-3.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 3</div><div class="img-carousel__dots"><div class="img-carousel__dot active"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
+    <p style="margin-top:1rem;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--text-faint);letter-spacing:0.08em">Click &#9664; &#9654; &#183; Swipe on touch &#183; Focus + &#8592; &#8594; keyboard</p>
+  </div>
+
+  <h4 style="margin-top:2rem;margin-bottom:1rem;font-size:1.1rem">HTML structure</h4>
+<pre>&lt;!-- Wrap inside a .retro-window visual slot --&gt;
+&lt;div class="img-carousel" id="carousel-phi" style="background:#1a1a14"&gt;
+
+  &lt;!-- Slide track: one .img-carousel__slide per image --&gt;
+  &lt;div class="img-carousel__track"&gt;
+
+    &lt;!-- Slide with a real photo --&gt;
+    &lt;div class="img-carousel__slide"&gt;
+      &lt;img src="img/phi_render.jpg" alt="DMG Ph(I) render"
+           style="width:100%;height:100%;object-fit:cover;display:block;
+                  object-position:center top"/&gt;
+      &lt;div class="img-carousel__scanline"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Placeholder slide (shows until you add a real photo) --&gt;
+    &lt;div class="img-carousel__slide img-carousel__slide--placeholder"&gt;
+      &lt;!-- SVG cross-hatch icon drawn by CSS --&gt;
+      &lt;p&gt;img/your-photo.jpg&lt;/p&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;&lt;!-- end track --&gt;
+
+  &lt;!-- Previous / next arrows --&gt;
+  &lt;button class="img-carousel__btn img-carousel__btn--prev"
+          aria-label="Previous"&gt;&amp;#9664;&lt;/button&gt;
+  &lt;button class="img-carousel__btn img-carousel__btn--next"
+          aria-label="Next"&gt;&amp;#9654;&lt;/button&gt;
+
+  &lt;!-- Slide counter (top-right) --&gt;
+  &lt;div class="img-carousel__counter"&gt;1 / 2&lt;/div&gt;
+
+  &lt;!-- Dot indicators (bottom-centre) --&gt;
+  &lt;div class="img-carousel__dots"&gt;
+    &lt;div class="img-carousel__dot active"&gt;&lt;/div&gt;
+    &lt;div class="img-carousel__dot"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;&lt;!-- end .img-carousel --&gt;</pre>
+
+  <h4 style="margin-top:2rem;margin-bottom:0.75rem;font-size:1.1rem">How to add a new photo to a device</h4>
+  <div class="callout">
+    <div class="callout-label">// STEPS</div>
+    <p>
+      1. Save your photo as a <code>.jpg</code> or <code>.png</code> in the <code>img/</code> folder next to <code>devices.html</code>.<br>
+      2. Open <code>devices.html</code>. Find the carousel for your device &#8212; look for <code>id="carousel-ph1"</code>, <code>id="carousel-d40"</code>, <code>id="carousel-lu1"</code>, or <code>id="carousel-nautilus"</code>.<br>
+      3. Inside <code>.img-carousel__track</code>, replace a placeholder slide with a real slide:<br>
+      <br>
+      Replace: <code>&lt;div class="img-carousel__slide img-carousel__slide--placeholder"&gt;...&lt;/div&gt;</code><br>
+      With:
+    </p>
+  </div>
+<pre>&lt;div class="img-carousel__slide"&gt;
+  &lt;img src="img/your-new-photo.jpg"
+       alt="Descriptive alt text"
+       style="width:100%;height:100%;object-fit:cover;display:block;
+              object-position:center"/&gt;
+  &lt;div class="img-carousel__scanline"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+
+  <p style="font-size:0.9rem;color:var(--text-soft);line-height:1.8;margin-top:0.75rem">
+    4. Update the dot count in <code>.img-carousel__dots</code> &#8212; add or remove <code>&lt;div class="img-carousel__dot"&gt;&lt;/div&gt;</code> elements to match the number of slides.<br>
+    5. Update the counter text: <code>&lt;div class="img-carousel__counter"&gt;1 / 3&lt;/div&gt;</code> &#8212; change the <code>3</code> to your new slide count.<br>
+    6. Save and reload. The JavaScript initialises automatically.
+  </p>
+
+  <h4 style="margin-top:2rem;margin-bottom:0.75rem;font-size:1.1rem">CSS classes at a glance</h4>
+  <table class="token-table">
+    <thead><tr><th>Class</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><code>.img-carousel</code></td><td>Outer wrapper. Set <code>background</code> to match the device&#8217;s dark color.</td></tr>
+      <tr><td><code>.img-carousel__track</code></td><td>Flex row that slides horizontally. Do not add padding or gap.</td></tr>
+      <tr><td><code>.img-carousel__slide</code></td><td>One slide &#8212; always <code>flex:0 0 100%</code>. Contains an <code>&lt;img&gt;</code> and the scanline overlay.</td></tr>
+      <tr><td><code>.img-carousel__slide--placeholder</code></td><td>Modifier. Shows a dashed crosshatch until a real image is added.</td></tr>
+      <tr><td><code>.img-carousel__scanline</code></td><td>CRT scanline overlay &#8212; always the last child inside a real slide.</td></tr>
+      <tr><td><code>.img-carousel__btn--prev / --next</code></td><td>Arrow buttons. Remove both elements if the carousel has only one slide.</td></tr>
+      <tr><td><code>.img-carousel__counter</code></td><td>&#8220;1 / 3&#8221; badge top-right. Remove if single slide.</td></tr>
+      <tr><td><code>.img-carousel__dots</code></td><td>Container for dot indicators. One <code>.img-carousel__dot</code> per slide.</td></tr>
+      <tr><td><code>.img-carousel__dot.active</code></td><td>Added by JS to the current dot. Do not set manually &#8212; JS handles it.</td></tr>
+    </tbody>
+  </table>
+
+  <h4 style="margin-top:1.5rem;margin-bottom:0.75rem;font-size:1.1rem">Interaction summary</h4>
+  <table class="token-table">
+    <thead><tr><th>Interaction</th><th>Behaviour</th></tr></thead>
+    <tbody>
+      <tr><td>Click &#9664; / &#9654; arrows</td><td>Goes to previous / next slide. Wraps around.</td></tr>
+      <tr><td>Click a dot</td><td>Jumps directly to that slide.</td></tr>
+      <tr><td>Touch swipe (mobile)</td><td>Swipe left &#8594; next slide. Swipe right &#8594; previous.</td></tr>
+      <tr><td>Keyboard &#8592; / &#8594;</td><td>Click the carousel to focus it, then use arrow keys.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
 <!-- ORGANISMS                                                  -->
 <!-- ══════════════════════════════════════════════════════════ -->
 <section class="doc-section" id="organisms">
-  <div class="section-eyebrow">11 — Organisms</div>
+  <div class="section-eyebrow">12 — Organisms</div>
   <h2 class="section-title">Page-level organisms</h2>
   <p class="section-intro">Organisms are the large structural blocks that define each page's layout. They always follow this order from top to bottom on every page.</p>
 
@@ -915,7 +1044,7 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
 <!-- HOW-TO GUIDES                                              -->
 <!-- ══════════════════════════════════════════════════════════ -->
 <section class="doc-section" id="howto">
-  <div class="section-eyebrow">12 — How-To Guides</div>
+  <div class="section-eyebrow">13 — How-To Guides</div>
   <h2 class="section-title">Common tasks</h2>
   <p class="section-intro">Step-by-step instructions for the most frequent edits you'll make to the site.</p>
 
@@ -1054,6 +1183,42 @@ window.addEventListener('scroll', () => {
     a.style.color = a.getAttribute('href') === '#' + current ? 'var(--orange)' : '';
   });
 });
+</script>
+<script>
+(function(){
+  function initCarousel(el){
+    const track=el.querySelector('.img-carousel__track');
+    const slides=el.querySelectorAll('.img-carousel__slide');
+    const dots=el.querySelectorAll('.img-carousel__dot');
+    const btnPrev=el.querySelector('.img-carousel__btn--prev');
+    const btnNext=el.querySelector('.img-carousel__btn--next');
+    const counter=el.querySelector('.img-carousel__counter');
+    const n=slides.length; let cur=0;
+    function go(idx){
+      cur=(idx+n)%n;
+      track.style.transform='translateX(-'+(cur*100)+'%)';
+      dots.forEach((d,i)=>d.classList.toggle('active',i===cur));
+      if(counter)counter.textContent=(cur+1)+' / '+n;
+    }
+    if(btnPrev)btnPrev.addEventListener('click',()=>go(cur-1));
+    if(btnNext)btnNext.addEventListener('click',()=>go(cur+1));
+    dots.forEach((d,i)=>d.addEventListener('click',()=>go(i)));
+    el.setAttribute('tabindex','0');
+    el.addEventListener('keydown',e=>{
+      if(e.key==='ArrowLeft'){go(cur-1);e.preventDefault();}
+      if(e.key==='ArrowRight'){go(cur+1);e.preventDefault();}
+    });
+    let tx0=0,ty0=0;
+    el.addEventListener('touchstart',e=>{tx0=e.touches[0].clientX;ty0=e.touches[0].clientY;},{passive:true});
+    el.addEventListener('touchend',e=>{
+      const dx=e.changedTouches[0].clientX-tx0;
+      const dy=e.changedTouches[0].clientY-ty0;
+      if(Math.abs(dx)>Math.abs(dy)*1.5&&Math.abs(dx)>30){go(dx<0?cur+1:cur-1);}
+    },{passive:true});
+    go(0);
+  }
+  document.querySelectorAll('.img-carousel').forEach(initCarousel);
+})();
 </script>
 </body>
 </html>
