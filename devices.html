@@ -178,6 +178,43 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
   color:rgba(200,221,208,0.4);letter-spacing:0.1em;text-align:center;line-height:2;
 }
 </style>
+<style>
+/* ── LIGHTBOX ───────────────────────────────────────── */
+#dmg-lightbox{
+  display:none;position:fixed;inset:0;z-index:9000;
+  background:rgba(7,18,8,0.92);
+  align-items:center;justify-content:center;
+  cursor:zoom-out;
+  backdrop-filter:blur(6px);
+}
+#dmg-lightbox.open{display:flex}
+#dmg-lightbox img{
+  max-width:90vw;max-height:88vh;
+  object-fit:contain;
+  border:3px solid var(--orange);
+  border-radius:8px;
+  box-shadow:0 0 0 1px var(--orange-dk), 8px 8px 0 var(--ink);
+  animation:lb-in 0.22s cubic-bezier(0.2,0,0,1);
+}
+@keyframes lb-in{from{transform:scale(0.88);opacity:0}to{transform:scale(1);opacity:1}}
+#dmg-lightbox-close{
+  position:fixed;top:1.2rem;right:1.4rem;
+  font-family:'Press Start 2P',monospace;font-size:0.6rem;
+  color:var(--orange);background:var(--ink);
+  border:2px solid var(--orange);border-radius:4px;
+  padding:0.4rem 0.7rem;cursor:pointer;
+  box-shadow:2px 2px 0 var(--orange-dk);
+  letter-spacing:0.08em;
+}
+#dmg-lightbox-close:hover{background:var(--forest)}
+#dmg-lightbox-hint{
+  position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);
+  font-family:'Press Start 2P',monospace;font-size:0.42rem;
+  color:rgba(200,221,208,0.45);letter-spacing:0.1em;pointer-events:none;
+}
+/* double-click cursor hint on carousel images */
+.img-carousel__slide img{ cursor:zoom-in }
+</style>
 </head>
 <body>
 
@@ -217,7 +254,7 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         <div style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--orange);margin:1rem 0 0.4rem;letter-spacing:0.08em">DMG-Ph(1)</div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Transit Clock</h2>
         <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-ph(1).visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
+          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-ph(1).visual</span><span style="font-family:'Press Start 2P',monospace;font-size:0.36rem;color:rgba(200,221,208,0.4);margin-left:auto;letter-spacing:0.06em">DBL-CLICK: ZOOM</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
           <div class="img-carousel" id="carousel-ph1" style="background:#1a1a14"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/phi_render.jpg" alt="DMG Ph(I) — three-view render" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center top;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 3</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
@@ -268,7 +305,7 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         <div style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--orange);margin:1rem 0 0.4rem;letter-spacing:0.08em">DMG-40</div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Acoustic iPhone Dock</h2>
         <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-40.visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
+          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-40.visual</span><span style="font-family:'Press Start 2P',monospace;font-size:0.36rem;color:rgba(200,221,208,0.4);margin-left:auto;letter-spacing:0.06em">DBL-CLICK: ZOOM</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
           <div class="img-carousel" id="carousel-d40" style="background:#0f0505"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/dmg40_clock.jpg" alt="DMG-40 LED departure clock" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center 30%;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 3</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
@@ -319,7 +356,7 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         <div style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--orange);margin:1rem 0 0.4rem;letter-spacing:0.08em">DMG-LU1</div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Handheld Music Player</h2>
         <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-lu1.visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
+          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-lu1.visual</span><span style="font-family:'Press Start 2P',monospace;font-size:0.36rem;color:rgba(200,221,208,0.4);margin-left:auto;letter-spacing:0.06em">DBL-CLICK: ZOOM</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
           <div class="img-carousel" id="carousel-lu1" style="background:#0f1f17"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/lu1_real.jpg" alt="DMG LU1 — real prototype" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center 20%;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 3</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
@@ -373,7 +410,7 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         <div style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--orange);margin:1rem 0 0.4rem;letter-spacing:0.08em">DMG-Nautilus</div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Nautilus Soundbar</h2>
         <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-nautilus.visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
+          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-nautilus.visual</span><span style="font-family:'Press Start 2P',monospace;font-size:0.36rem;color:rgba(200,221,208,0.4);margin-left:auto;letter-spacing:0.06em">DBL-CLICK: ZOOM</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
           <div class="img-carousel" id="carousel-nautilus" style="background:#1a1a14"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/nautilus_render.jpg" alt="DMG Nautilus — main render" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide"><img src="img/nautilus_real.jpg" alt="DMG Nautilus — real prototype on antique cabinet" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center top;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide"><img src="img/nautilus_front.jpg" alt="DMG Nautilus — front render" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 4</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
@@ -500,5 +537,56 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
   document.querySelectorAll('.img-carousel').forEach(initCarousel);
 })();
 </script>
+
+<!-- LIGHTBOX (shared for all device images) -->
+<div id="dmg-lightbox" role="dialog" aria-label="Image lightbox">
+  <button id="dmg-lightbox-close" aria-label="Close">&#10005; CLOSE</button>
+  <img id="dmg-lightbox-img" src="" alt=""/>
+  <div id="dmg-lightbox-hint">DOUBLE-CLICK OR ESC TO CLOSE</div>
+</div>
+
+<script>
+(function(){
+  var lb   = document.getElementById('dmg-lightbox');
+  var lbImg= document.getElementById('dmg-lightbox-img');
+  var lbCl = document.getElementById('dmg-lightbox-close');
+  if(!lb) return;
+
+  function open(src, alt){
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lb.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function close(){
+    lb.classList.remove('open');
+    document.body.style.overflow='';
+    // small delay so CSS animation finishes before clearing src
+    setTimeout(()=>{ lbImg.src=''; },250);
+  }
+
+  // Double-click any carousel image
+  document.querySelectorAll('.img-carousel__slide img').forEach(function(img){
+    img.addEventListener('dblclick', function(e){
+      e.stopPropagation();
+      open(this.src, this.alt);
+    });
+    // Also allow single tap on mobile (quick double-tap is hard)
+    // We use a 250ms double-tap detector
+    var tapTimer=null;
+    img.addEventListener('touchend', function(e){
+      if(tapTimer){ clearTimeout(tapTimer); tapTimer=null; open(this.src,this.alt); }
+      else{ var self=this; tapTimer=setTimeout(function(){tapTimer=null;},300); }
+    });
+  });
+
+  // Close on: backdrop click, close button, Escape key, double-click on lightbox
+  lb.addEventListener('click',   function(e){ if(e.target===lb||e.target===lbImg) close(); });
+  lb.addEventListener('dblclick',function(e){ if(e.target===lb||e.target===lbImg) close(); });
+  lbCl.addEventListener('click', close);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&lb.classList.contains('open')) close(); });
+})();
+</script>
+
 </body>
 </html>
