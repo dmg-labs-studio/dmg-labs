@@ -119,8 +119,8 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
 /* ── IMAGE CAROUSEL ─────────────────────────────────── */
 .img-carousel{position:relative;overflow:hidden;user-select:none;background:#0f1f17}
 .img-carousel__track{display:flex;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);will-change:transform;height:280px}
-.img-carousel__slide{flex:0 0 100%;height:280px;position:relative;overflow:hidden}
-.img-carousel__slide img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.img-carousel__slide{flex:0 0 100%;height:280px;position:relative;overflow:hidden;cursor:pointer}
+.img-carousel__slide img{width:100%;height:100%;object-fit:cover;display:block;-webkit-user-drag:none;user-select:none}
 .img-carousel__scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:2}
 
 /* arrow buttons */
@@ -582,10 +582,17 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
   // Attach to every carousel image — single click opens lightbox
   // (carousel navigation is handled by the carousel's own buttons/dots,
   //  so a plain click on the image itself is unambiguous)
-  document.querySelectorAll('.img-carousel__slide img').forEach(function(el){
-    el.addEventListener('click', function(e){
-      e.stopPropagation();
-      openLB(this.src, this.alt);
+  // Use event delegation on each carousel — catches clicks on the slide/img
+  document.querySelectorAll('.img-carousel').forEach(function(carousel){
+    carousel.addEventListener('click', function(e){
+      // find the img inside the clicked slide
+      var slide = e.target.closest('.img-carousel__slide:not(.img-carousel__slide--placeholder)');
+      if(!slide) return;
+      var imgEl = slide.querySelector('img');
+      if(!imgEl) return;
+      // don't open if user clicked an arrow button or dot
+      if(e.target.closest('.img-carousel__btn') || e.target.closest('.img-carousel__dots')) return;
+      openLB(imgEl.src, imgEl.alt);
     });
   });
 
