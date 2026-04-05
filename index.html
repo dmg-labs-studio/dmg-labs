@@ -176,35 +176,85 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
   </div>
   <div style="position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:4rem 3rem 4rem 1rem">
     
-<div style="width:290px;background:var(--forest);padding:2rem 1.8rem;position:relative;border-radius:12px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)">
+<div id="dmg-device" style="width:290px;background:var(--forest);padding:1.8rem 1.8rem 1.4rem;position:relative;border-radius:12px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);touch-action:none">
+  <!-- orange top stripe -->
   <div style="position:absolute;top:-3px;left:20px;right:20px;height:3px;background:var(--orange);border-radius:2px"></div>
-  <div style="position:absolute;bottom:10px;right:12px;width:8px;height:8px;background:var(--orange);border-radius:50%;border:2px solid var(--orange-dk);box-shadow:-14px 0 0 var(--orange-dk)"></div>
-  <div style="width:100%;aspect-ratio:4/3;background:#071208;border-radius:6px;border:3px solid var(--ink);margin-bottom:1.4rem;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:inset 0 0 20px rgba(0,0,0,0.6)">
-    <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.18) 3px,rgba(0,0,0,0.18) 4px);z-index:2;pointer-events:none"></div>
-    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,0.5) 100%);z-index:3;pointer-events:none;border-radius:4px"></div>
-    <div style="position:relative;z-index:1;text-align:center;display:flex;flex-direction:column;align-items:center;gap:0.5rem">
-      <div style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:#5db870;letter-spacing:0.1em;line-height:2">DMG MK.I<br>LU1 PLAYER<br>───────────</div>
-      <div style="width:80px;height:4px;background:#0d200f;border:1px solid #2a5a30;position:relative;overflow:hidden"><div style="position:absolute;top:0;left:0;height:100%;width:65%;background:var(--orange);animation:pulse-bar 2.5s ease-in-out infinite"></div></div>
-      <div style="font-family:'Press Start 2P',monospace;font-size:0.35rem;color:#5db870;animation:blink 1.1s step-end infinite">&#9611;</div>
-    </div>
+  <!-- rivet dots -->
+  <div style="position:absolute;bottom:14px;right:12px;width:8px;height:8px;background:var(--orange);border-radius:50%;border:2px solid var(--orange-dk);box-shadow:-14px 0 0 var(--orange-dk)"></div>
+
+  <!-- SCREEN -->
+  <div style="width:100%;position:relative;border-radius:6px;border:3px solid var(--ink);margin-bottom:1.2rem;overflow:hidden;box-shadow:inset 0 0 20px rgba(0,0,0,0.6)">
+    <canvas id="pacman-canvas" width="250" height="188"
+      style="display:block;background:#071208;width:100%;image-rendering:pixelated"></canvas>
+    <!-- CRT scanlines -->
+    <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.15) 3px,rgba(0,0,0,0.15) 4px);pointer-events:none;z-index:2"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.45) 100%);pointer-events:none;z-index:3;border-radius:3px"></div>
   </div>
+
+  <!-- CONTROLS ROW -->
   <div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem">
+
+    <!-- A / B buttons (knobs) -->
     <div style="display:flex;gap:0.7rem">
       <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(145deg,#2a4030,#1a2a20);border:2px solid rgba(93,184,112,0.4);position:relative;box-shadow:2px 2px 0 var(--ink)"><div style="position:absolute;top:3px;left:50%;transform:translateX(-50%);width:2px;height:7px;background:var(--orange);border-radius:1px"></div></div>
       <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(145deg,#2a4030,#1a2a20);border:2px solid rgba(93,184,112,0.4);position:relative;box-shadow:2px 2px 0 var(--ink)"><div style="position:absolute;top:3px;left:50%;transform:translateX(-50%);width:2px;height:7px;background:var(--orange);border-radius:1px"></div></div>
     </div>
-    <div style="display:grid;grid-template-columns:10px 10px 10px;grid-template-rows:10px 10px 10px;gap:1px">
-      <div></div><div style="background:#2a4030;border:1.5px solid var(--ink);border-radius:2px"></div><div></div>
-      <div style="background:#2a4030;border:1.5px solid var(--ink);border-radius:2px"></div><div style="background:var(--orange-dk);border:1.5px solid var(--ink);border-radius:2px"></div><div style="background:#2a4030;border:1.5px solid var(--ink);border-radius:2px"></div>
-      <div></div><div style="background:#2a4030;border:1.5px solid var(--ink);border-radius:2px"></div><div></div>
+
+    <!-- D-PAD -->
+    <div style="position:relative;width:52px;height:52px">
+      <!-- Up -->
+      <button id="btn-up"
+        style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:16px;height:16px;background:#2a4030;border:2px solid var(--ink);border-radius:3px;cursor:pointer;transition:background 0.08s,transform 0.08s;display:flex;align-items:center;justify-content:center"
+        onmousedown="this.style.background='var(--orange)';this.style.transform='translateX(-50%) scale(0.88)'"
+        onmouseup="this.style.background='#2a4030';this.style.transform='translateX(-50%)'"
+        onmouseleave="this.style.background='#2a4030';this.style.transform='translateX(-50%)'"
+        ontouchstart="this.style.background='var(--orange)'" ontouchend="this.style.background='#2a4030'"
+        aria-label="Up">
+        <svg width="8" height="6" viewBox="0 0 8 6"><path d="M4 0L8 6H0Z" fill="rgba(93,184,112,0.6)"/></svg>
+      </button>
+      <!-- Down -->
+      <button id="btn-down"
+        style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:16px;height:16px;background:#2a4030;border:2px solid var(--ink);border-radius:3px;cursor:pointer;transition:background 0.08s,transform 0.08s;display:flex;align-items:center;justify-content:center"
+        onmousedown="this.style.background='var(--orange)';this.style.transform='translateX(-50%) scale(0.88)'"
+        onmouseup="this.style.background='#2a4030';this.style.transform='translateX(-50%)'"
+        onmouseleave="this.style.background='#2a4030';this.style.transform='translateX(-50%)'"
+        ontouchstart="this.style.background='var(--orange)'" ontouchend="this.style.background='#2a4030'"
+        aria-label="Down">
+        <svg width="8" height="6" viewBox="0 0 8 6"><path d="M4 6L0 0H8Z" fill="rgba(93,184,112,0.6)"/></svg>
+      </button>
+      <!-- Left -->
+      <button id="btn-left"
+        style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:16px;height:16px;background:#2a4030;border:2px solid var(--ink);border-radius:3px;cursor:pointer;transition:background 0.08s,transform 0.08s;display:flex;align-items:center;justify-content:center"
+        onmousedown="this.style.background='var(--orange)';this.style.transform='translateY(-50%) scale(0.88)'"
+        onmouseup="this.style.background='#2a4030';this.style.transform='translateY(-50%)'"
+        onmouseleave="this.style.background='#2a4030';this.style.transform='translateY(-50%)'"
+        ontouchstart="this.style.background='var(--orange)'" ontouchend="this.style.background='#2a4030'"
+        aria-label="Left">
+        <svg width="6" height="8" viewBox="0 0 6 8"><path d="M0 4L6 0V8Z" fill="rgba(93,184,112,0.6)"/></svg>
+      </button>
+      <!-- Right -->
+      <button id="btn-right"
+        style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:16px;height:16px;background:#2a4030;border:2px solid var(--ink);border-radius:3px;cursor:pointer;transition:background 0.08s,transform 0.08s;display:flex;align-items:center;justify-content:center"
+        onmousedown="this.style.background='var(--orange)';this.style.transform='translateY(-50%) scale(0.88)'"
+        onmouseup="this.style.background='#2a4030';this.style.transform='translateY(-50%)'"
+        onmouseleave="this.style.background='#2a4030';this.style.transform='translateY(-50%)'"
+        ontouchstart="this.style.background='var(--orange)'" ontouchend="this.style.background='#2a4030'"
+        aria-label="Right">
+        <svg width="6" height="8" viewBox="0 0 6 8"><path d="M6 4L0 0V8Z" fill="rgba(93,184,112,0.6)"/></svg>
+      </button>
+      <!-- Centre pip -->
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:12px;height:12px;background:var(--orange-dk);border:2px solid var(--ink);border-radius:2px"></div>
     </div>
+
+    <!-- vent lines -->
     <div style="display:flex;gap:3px">
       <div style="width:2px;height:24px;background:rgba(93,184,112,0.15);border-radius:1px"></div>
       <div style="width:2px;height:24px;background:rgba(93,184,112,0.15);border-radius:1px"></div>
       <div style="width:2px;height:24px;background:rgba(93,184,112,0.15);border-radius:1px"></div>
     </div>
   </div>
-  <div style="font-family:'Press Start 2P',monospace;font-size:0.32rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(93,184,112,0.3);text-align:center;margin-top:1rem">DMG LABS /// HANDCRAFTED</div>
+
+  <div style="font-family:'Press Start 2P',monospace;font-size:0.32rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(93,184,112,0.3);text-align:center;margin-top:0.9rem">DMG LABS /// HANDCRAFTED</div>
 </div>
 
   </div>
@@ -410,6 +460,312 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
   document.querySelectorAll('.nav-links a').forEach(a=>{
     if(a.getAttribute('href')===window.location.pathname.split('/').pop())a.classList.add('active');
   });
+</script>
+
+<script>
+(function(){
+// ── PAC-MAN ENGINE ──────────────────────────────────────────────────────────
+const CV  = document.getElementById('pacman-canvas');
+if(!CV) return;
+const CTX = CV.getContext('2d');
+const W = CV.width, H = CV.height;
+
+// Pixel size (each "pixel" = 4 real px for chunky look)
+const PS = 4;
+const COLS = Math.floor(W / PS);   // 62
+const ROWS = Math.floor(H / PS);   // 47
+
+// Colour palette (matches DMG solarpunk)
+const C = {
+  bg:     '#071208',
+  wall:   '#1a3a2a',
+  walll:  '#2e6647',  // wall highlight edge
+  dot:    '#5db870',
+  power:  '#f06a00',
+  pac:    '#f06a00',
+  g1:     '#e05050',  // ghost 1
+  g2:     '#5090f0',  // ghost 2
+  scared: '#234d38',
+  text:   '#5db870',
+  score:  '#f06a00',
+};
+
+// Simple 31×23 maze template (1=wall, 0=dot, 2=empty, 3=power, 4=ghost-house)
+const T=[
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  [1,3,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1],
+  [1,0,1,1,0,1,1,1,0,1,1,1,1,0,1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,0,1],
+  [1,0,1,1,0,1,1,1,0,1,1,1,1,0,1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,1,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,0,1,0,1,1,0,0,0,1],
+  [1,0,0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+  [1,1,1,1,0,1,1,1,0,2,2,2,2,2,2,2,2,2,2,2,0,1,1,1,0,1,1,1,1,1,1],
+  [2,2,2,1,0,1,2,2,2,2,4,4,4,4,4,4,4,4,4,2,2,2,2,1,0,1,2,2,2,2,2],
+  [1,1,1,1,0,1,0,1,1,2,4,4,4,4,4,4,4,4,4,2,1,1,0,1,0,1,1,1,1,1,1],
+  [2,2,2,2,0,2,0,1,1,2,4,4,4,4,4,4,4,4,4,2,1,1,0,2,0,2,2,2,2,2,2],
+  [1,1,1,1,0,1,0,1,1,2,2,2,2,2,2,2,2,2,2,2,1,1,0,1,0,1,1,1,1,1,1],
+  [2,2,2,1,0,1,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,1,0,1,2,2,2,2,2],
+  [1,1,1,1,0,1,0,1,1,2,2,2,2,2,2,2,2,2,2,2,1,1,0,1,0,1,1,1,1,1,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,1,1,0,1,1,1,0,1,1,1,1,0,1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,0,1],
+  [1,3,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,3,0,1],
+  [1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,0,1,0,1,0,1,1,1,1],
+  [1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+  [1,0,1,1,1,1,1,1,0,1,1,1,1,0,1,0,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1],
+  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+  [1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,0,0,1],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+];
+
+const MR = T.length, MC = T[0].length;
+// Scale factor to fit maze into canvas
+const SX = Math.floor(W / MC);   // pixels per maze-col
+const SY = Math.floor(H / MR);   // pixels per maze-row
+const OX = Math.floor((W - MC*SX)/2);  // centering offset
+const OY = Math.floor((H - MR*SY)/2);
+
+function mxToCanvas(col,row){ return [OX+col*SX, OY+row*SY]; }
+
+// Game state
+let maze, dots, score, lives, dir, nextDir, px, py, pAnim, pMouth;
+let ghosts, scared, scaredTimer, gameState, animFrame;
+
+function initGame(){
+  maze  = T.map(r=>[...r]);
+  dots  = 0;
+  score = 0;
+  lives = 3;
+  // count dots
+  for(let r=0;r<MR;r++) for(let c=0;c<MC;c++){
+    if(maze[r][c]===0||maze[r][c]===3) dots++;
+  }
+  dir={x:0,y:0}; nextDir={x:1,y:0};
+  px=1; py=1; pAnim=0; pMouth=0;
+  scared=false; scaredTimer=0;
+  ghosts=[
+    {x:13,y:11,dx:1,dy:0,col:C.g1,scared:false},
+    {x:15,y:11,dx:-1,dy:0,col:C.g2,scared:false},
+  ];
+  gameState='attract'; // 'attract' | 'playing' | 'dead' | 'win'
+}
+
+// ── INPUT ────────────────────────────────────────────────────────────────────
+const KEY_MAP = {'ArrowUp':{x:0,y:-1},'ArrowDown':{x:0,y:1},'ArrowLeft':{x:-1,y:0},'ArrowRight':{x:1,y:0},
+                 'w':{x:0,y:-1},'s':{x:0,y:1},'a':{x:-1,y:0},'d':{x:1,y:0}};
+
+document.addEventListener('keydown', e=>{
+  const d=KEY_MAP[e.key];
+  if(d){ nextDir=d; if(gameState==='attract'||gameState==='dead'||gameState==='win') startGame(); e.preventDefault(); }
+});
+
+// D-pad buttons
+['up','down','left','right'].forEach(name=>{
+  const btn = document.getElementById('btn-'+name);
+  if(!btn) return;
+  const dir_map = {up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}};
+  const fire = ()=>{ nextDir=dir_map[name]; if(gameState==='attract'||gameState==='dead'||gameState==='win') startGame(); };
+  btn.addEventListener('click', fire);
+  btn.addEventListener('touchstart', e=>{ fire(); e.preventDefault(); },{passive:false});
+});
+
+function startGame(){
+  if(gameState==='win'||gameState==='dead') initGame();
+  gameState='playing';
+}
+
+// ── MAZE HELPERS ─────────────────────────────────────────────────────────────
+function isWall(c,r){
+  if(c<0) c=MC-1; if(c>=MC) c=0;
+  if(r<0||r>=MR) return true;
+  return maze[r][c]===1;
+}
+function wrapC(c){ return ((c%MC)+MC)%MC; }
+
+// ── UPDATE ───────────────────────────────────────────────────────────────────
+let tick=0;
+function update(){
+  if(gameState!=='playing') return;
+  tick++;
+  pAnim=(pAnim+1)%8;
+  pMouth = pAnim<4 ? pAnim/4 : (8-pAnim)/4; // 0→1→0
+
+  // Try to turn
+  const tc = wrapC(Math.round(px)+nextDir.x);
+  const tr = Math.round(py)+nextDir.y;
+  if(!isWall(tc,tr)){ dir=nextDir; }
+
+  // Move pac-man
+  const nc = wrapC(Math.round(px)+dir.x);
+  const nr = Math.round(py)+dir.y;
+  if(!isWall(nc,nr)){ px=nc; py=nr; }
+
+  // Eat dot / power
+  const cr=Math.round(py), cc=wrapC(Math.round(px));
+  if(maze[cr][cc]===0){ maze[cr][cc]=2; score+=10; dots--; }
+  if(maze[cr][cc]===3){ maze[cr][cc]=2; score+=50; dots--; scared=true; scaredTimer=60; }
+  if(scared){ scaredTimer--; if(scaredTimer<=0) scared=false; }
+
+  // Move ghosts (simple: random valid direction each few ticks)
+  ghosts.forEach(g=>{
+    if(tick%2!==0) return;
+    // try to keep going; change direction at intersections randomly
+    const dirs=[{x:1,y:0},{x:-1,y:0},{x:0,y:1},{x:0,y:-1}];
+    const nc2=wrapC(Math.round(g.x)+g.dx), nr2=Math.round(g.y)+g.dy;
+    if(!isWall(nc2,nr2)&&Math.random()>0.3){ g.x=nc2; g.y=nr2; }
+    else{
+      const shuffled=dirs.sort(()=>Math.random()-0.5);
+      for(const d of shuffled){
+        const gc=wrapC(Math.round(g.x)+d.x), gr=Math.round(g.y)+d.y;
+        if(!isWall(gc,gr)){ g.dx=d.x; g.dy=d.y; g.x=gc; g.y=gr; break; }
+      }
+    }
+    // Collision with pac-man
+    if(Math.abs(g.x-px)<=1&&Math.abs(g.y-py)<=1){
+      if(scared){ score+=200; g.x=13; g.y=11; }
+      else{ lives--; px=1; py=1; dir={x:0,y:0}; nextDir={x:1,y:0}; if(lives<=0) gameState='dead'; }
+    }
+  });
+
+  if(dots<=0) gameState='win';
+}
+
+// ── DRAW ─────────────────────────────────────────────────────────────────────
+function drawPixel(x,y,col,size){
+  CTX.fillStyle=col;
+  CTX.fillRect(x,y,size||PS,size||PS);
+}
+
+function drawMaze(){
+  for(let r=0;r<MR;r++){
+    for(let c=0;c<MC;c++){
+      const [cx,cy]=mxToCanvas(c,r);
+      const cell=maze[r][c];
+      if(cell===1){
+        CTX.fillStyle=C.wall;
+        CTX.fillRect(cx,cy,SX,SY);
+        // Highlight top/left edge for depth
+        CTX.fillStyle=C.walll;
+        CTX.fillRect(cx,cy,SX,1);
+        CTX.fillRect(cx,cy,1,SY);
+      } else if(cell===0){
+        // small dot
+        const dx=cx+Math.floor(SX/2)-1, dy=cy+Math.floor(SY/2)-1;
+        CTX.fillStyle=C.dot;
+        CTX.fillRect(dx,dy,2,2);
+      } else if(cell===3){
+        // power pellet — pulsing
+        const blink = (tick%16)<8;
+        if(blink){
+          const dx=cx+Math.floor(SX/2)-2, dy=cy+Math.floor(SY/2)-2;
+          CTX.fillStyle=C.power;
+          CTX.fillRect(dx,dy,4,4);
+        }
+      }
+    }
+  }
+}
+
+function drawPacman(){
+  const [cx,cy]=mxToCanvas(Math.round(px),Math.round(py));
+  const r2=Math.floor(SX*0.45);
+  const cx2=cx+Math.floor(SX/2), cy2=cy+Math.floor(SY/2);
+  const mouthAngle=pMouth*0.7; // 0 → ~40°
+  // direction angle
+  const baseAngle = dir.x>0?0:dir.x<0?Math.PI:dir.y>0?Math.PI*0.5:-Math.PI*0.5;
+  CTX.fillStyle=C.pac;
+  CTX.beginPath();
+  CTX.moveTo(cx2,cy2);
+  CTX.arc(cx2,cy2,r2,baseAngle+mouthAngle,baseAngle+Math.PI*2-mouthAngle);
+  CTX.closePath();
+  CTX.fill();
+  // eye
+  const ex=cx2+Math.cos(baseAngle-0.5)*r2*0.5;
+  const ey=cy2+Math.sin(baseAngle-0.5)*r2*0.5;
+  CTX.fillStyle='#071208';
+  CTX.fillRect(Math.round(ex)-1,Math.round(ey)-1,2,2);
+}
+
+function drawGhosts(){
+  ghosts.forEach(g=>{
+    const [cx,cy]=mxToCanvas(Math.round(g.x),Math.round(g.y));
+    const gx=cx+1, gy=cy+1, gw=SX-2, gh=SY-2;
+    const col = scared?(tick%8<4?C.scared:'#4a7c59'):g.col;
+    CTX.fillStyle=col;
+    // body
+    CTX.fillRect(gx,gy+Math.floor(gh*0.35),gw,Math.ceil(gh*0.65));
+    // rounded top (semicircle approx)
+    CTX.beginPath();
+    CTX.arc(gx+gw/2, gy+Math.floor(gh*0.35), gw/2, Math.PI, 0);
+    CTX.fill();
+    // wavy bottom
+    const wy=gy+gh;
+    for(let i=0;i<3;i++){
+      CTX.fillStyle=C.bg;
+      CTX.beginPath();
+      CTX.arc(gx+(i+0.5)*(gw/3),wy,gw/6,0,Math.PI);
+      CTX.fill();
+    }
+    CTX.fillStyle=col;
+    // eyes
+    if(!scared){
+      CTX.fillStyle='#fff';
+      CTX.fillRect(gx+2,gy+3,3,3); CTX.fillRect(gx+gw-5,gy+3,3,3);
+      CTX.fillStyle='#00f';
+      CTX.fillRect(gx+3,gy+4,1,1); CTX.fillRect(gx+gw-4,gy+4,1,1);
+    }
+  });
+}
+
+function drawHUD(){
+  CTX.fillStyle=C.score;
+  CTX.font='bold 7px monospace';
+  CTX.fillText('SC:'+score, 2, 8);
+  // lives as small pac icons
+  for(let i=0;i<lives;i++){
+    const lx=W-6-i*10, ly=5;
+    CTX.fillStyle=C.pac;
+    CTX.beginPath();
+    CTX.moveTo(lx,ly);
+    CTX.arc(lx,ly,4,0.3,Math.PI*2-0.3);
+    CTX.closePath();
+    CTX.fill();
+  }
+}
+
+function drawOverlay(msg,sub){
+  CTX.fillStyle='rgba(7,18,8,0.72)';
+  CTX.fillRect(0,0,W,H);
+  CTX.fillStyle=C.pac;
+  CTX.font='bold 8px monospace';
+  CTX.textAlign='center';
+  CTX.fillText(msg,W/2,H/2-6);
+  if(sub){
+    CTX.fillStyle=C.text;
+    CTX.font='6px monospace';
+    CTX.fillText(sub,W/2,H/2+8);
+  }
+  CTX.textAlign='left';
+}
+
+// ── RENDER LOOP ───────────────────────────────────────────────────────────────
+function loop(){
+  CTX.fillStyle=C.bg;
+  CTX.fillRect(0,0,W,H);
+  update();
+  drawMaze();
+  if(gameState!=='attract') drawPacman();
+  drawGhosts();
+  drawHUD();
+  if(gameState==='attract') drawOverlay('DMG PAC','PRESS D-PAD');
+  if(gameState==='dead')    drawOverlay('GAME OVER','PRESS D-PAD');
+  if(gameState==='win')     drawOverlay('YOU WIN!','PRESS D-PAD');
+  animFrame=requestAnimationFrame(loop);
+}
+
+initGame();
+// slight delay so page finishes painting
+setTimeout(()=>loop(), 300);
+})();
 </script>
 </body>
 </html>
