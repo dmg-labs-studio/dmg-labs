@@ -886,14 +886,14 @@ h1 em, h2 em, h3 em {
    ============================================================ */
 
 .ticker-wrap {
-  background:    var(--color-ink);
+  background:    var(--ink);
   overflow:      hidden;
-  padding:       0.75rem 0;
-  border-top:    3px solid var(--color-orange);
+  padding:       1.2rem 0;
+  margin-top:    68px;
+  border-top:    3px solid var(--orange);
   border-bottom: 3px solid var(--color-forest-lt);
-  position:      sticky;
-  top:           var(--nav-height);
-  z-index:       100;
+  position:      relative;
+  z-index:       10;
 }
 .ticker-track {
   display:    flex;
@@ -918,7 +918,7 @@ h1 em, h2 em, h3 em {
   font-family: var(--font-pixel);
   font-size:   0.4rem;
   color:       var(--color-orange);
-  padding:     0 1.2rem;
+  padding:     0.1rem 1.2rem 0rem 1.2rem;
   opacity:     0.7;
 }
 
