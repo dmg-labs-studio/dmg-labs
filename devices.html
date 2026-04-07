@@ -222,6 +222,138 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
 }
 /* zoom cursor on all carousel slides */
 .img-carousel__slide img{cursor:zoom-in}
+
+/* ── LIGHTBOX NAVIGATION ── */
+#lb-prev,#lb-next{
+  position:fixed;top:50%;transform:translateY(-50%);
+  z-index:9002;cursor:pointer;
+  background:rgba(15,31,23,0.82);
+  border:2px solid rgba(240,106,0,0.7);
+  color:#f06a00;
+  font-family:'Press Start 2P',monospace;font-size:0.6rem;
+  padding:0.6rem 0.8rem;line-height:1;
+  border-radius:4px;
+  box-shadow:2px 2px 0 rgba(196,85,0,0.8);
+  transition:background 0.15s,box-shadow 0.1s;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}
+#lb-prev{left:1.2rem}
+#lb-next{right:1.2rem}
+#lb-prev:hover,#lb-next:hover{background:rgba(240,106,0,0.25);box-shadow:3px 3px 0 rgba(196,85,0,0.8)}
+#lb-prev[hidden],#lb-next[hidden]{display:none}
+#lb-counter{
+  position:fixed;bottom:3.2rem;left:50%;transform:translateX(-50%);
+  font-family:'Press Start 2P',monospace;font-size:0.38rem;
+  color:rgba(200,221,208,0.55);
+  background:rgba(15,31,23,0.7);
+  padding:0.3rem 0.6rem;border-radius:3px;
+  border:1px solid rgba(240,106,0,0.3);
+  z-index:9002;pointer-events:none;letter-spacing:0.1em;
+}
+
+/* ── CONTACT MODAL ── */
+#contact-modal{
+  display:none;position:fixed;inset:0;z-index:8000;
+  background:rgba(7,18,8,0.88);
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  cursor:pointer;
+}
+#contact-modal.on{display:flex}
+.contact-modal-box{
+  cursor:default;
+  background:var(--cream);
+  border:2px solid var(--ink);
+  border-radius:10px;
+  box-shadow:6px 6px 0 var(--ink);
+  width:min(480px,92vw);
+  overflow:hidden;
+  animation:lb-pop 0.2s cubic-bezier(0.2,0,0,1.2) both;
+}
+.contact-modal-titlebar{
+  background:var(--orange);
+  padding:0.4rem 0.9rem;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:2px solid var(--orange-dk);
+}
+.contact-modal-title{
+  font-family:'Press Start 2P',monospace;font-size:0.45rem;
+  color:var(--cream);letter-spacing:0.08em;
+}
+.contact-modal-close{
+  font-family:'Press Start 2P',monospace;font-size:0.5rem;
+  color:var(--cream);background:none;border:none;cursor:pointer;
+  line-height:1;padding:0.1rem 0.3rem;
+  opacity:0.8;transition:opacity 0.15s;
+}
+.contact-modal-close:hover{opacity:1}
+.contact-modal-body{padding:2rem 2rem 1.75rem}
+.contact-modal-body label{
+  display:block;
+  font-family:'Press Start 2P',monospace;font-size:0.42rem;
+  color:var(--orange);letter-spacing:0.08em;
+  margin-bottom:0.45rem;margin-top:1.2rem;
+}
+.contact-modal-body label:first-child{margin-top:0}
+.contact-modal-body input,
+.contact-modal-body textarea{
+  width:100%;
+  font-family:'Nunito',sans-serif;font-size:0.9rem;
+  color:var(--text-main);background:#fff;
+  border:2px solid var(--border-g);
+  border-radius:6px;
+  padding:0.6rem 0.85rem;
+  box-shadow:2px 2px 0 var(--border);
+  transition:border-color 0.15s,box-shadow 0.15s;
+  resize:none;
+  outline:none;
+}
+.contact-modal-body input:focus,
+.contact-modal-body textarea:focus{
+  border-color:var(--orange);
+  box-shadow:2px 2px 0 var(--orange-dk);
+}
+.contact-modal-body textarea{height:110px;line-height:1.65}
+.contact-modal-actions{
+  display:flex;justify-content:flex-end;
+  margin-top:1.6rem;padding-top:1.2rem;
+  border-top:1px dashed var(--border);
+}
+.contact-send-btn{
+  font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;
+  color:var(--cream);background:var(--orange);
+  padding:0.7rem 1.8rem;
+  border:2px solid var(--orange-dk);
+  border-radius:8px;
+  box-shadow:3px 3px 0 var(--orange-dk);
+  cursor:pointer;
+  transition:transform 0.1s,box-shadow 0.1s;
+}
+.contact-send-btn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--orange-dk)}
+.contact-me-btn{
+  font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;
+  color:var(--orange);
+  background:transparent;
+  padding:0.55rem 1.3rem;
+  border:2px solid var(--orange);
+  border-radius:8px;
+  box-shadow:3px 3px 0 var(--orange);
+  cursor:pointer;
+  transition:transform 0.1s,box-shadow 0.1s;
+  display:inline-block;
+  margin-top:0.6rem;
+  margin-bottom:1.2rem;
+  text-decoration:none;
+}
+.contact-me-btn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--orange-dk)}
+.description-paragraph{
+  font-size:1rem;
+  color:var(--text-soft);
+  line-height:1.9;
+  margin-bottom:0.6rem
+}
 </style>
 </head>
 <body>
@@ -271,9 +403,10 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         </div>
       </div>
       <div>
-        <p style="font-size:1rem;color:var(--text-soft);line-height:1.9;margin-bottom:2rem">
-          My wife was looking for a real-time departure display of trains and metros she frequently takes from our home in Nuremberg - so I built one for her. Four 8×8 LED matrix panels show the next departing trains and metros in real time, pulling information from the public VGN / VGA APIs. The design is modelled on the elegant roundings of the legendary Braun DN 40 clock, integrating the retro feeling of German train station displays. The red-black color scheme is a nod to the city colors of Nuremberg. The device is self-contained in design and functionality, integrating easily into any stylish office or living space. </br>Contact me, if you're interested in a transit clock for your own city!
+        <p class="description-paragraph">
+          My wife was looking for a real-time departure display of trains and metros she frequently takes from our home in Nuremberg - so I built one for her. Four 8×8 LED matrix panels show the next departing trains and metros in real time, pulling information from the public VGN / VGA APIs. The design is modelled on the elegant roundings of the legendary Braun DN 40 clock, integrating the retro feeling of German train station displays. The red-black color scheme is a nod to the city colors of Nuremberg. The device is self-contained in design and functionality, integrating easily into any stylish office or living space.
         </p>
+        <button class="contact-me-btn" onclick="openContact('Re: Transit Clock (DMG-40)')">Contact me!</button>
         <div class="retro-window" style="margin-bottom:2rem">
           <div class="retro-titlebar retro-titlebar-green"><span class="retro-titlebar-title">specs.txt</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
           <div class="retro-window-body"><table style="width:100%;border-collapse:collapse"><tr>
@@ -324,7 +457,8 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         </div>
       </div>
       <div>
-        <p style="font-size:1rem;color:var(--text-soft);line-height:1.9;margin-bottom:2rem">A docking station for iPhone that doubles as a passive acoustic amplifier. The phone inserts horizontally and activates clock, calendar, or picture-frame mode automatically. Below, a purely mechanical trumpet-horn carved from hardwood increases audio volume without any electronics — the same principle as a gramophone horn, scaled for a phone speaker.</p>
+        <p class="description-paragraph">A docking station for iPhone that doubles as a passive acoustic amplifier. The phone inserts horizontally and activates clock, calendar, or picture-frame mode automatically. Below, a purely mechanical trumpet-horn carved from hardwood increases audio volume without any electronics — the same principle as a gramophone horn, scaled for a phone speaker.</p>
+        <button class="contact-me-btn" onclick="openContact('Re: Acoustic iPhone Dock (DMG-Ph(I))')">Contact me!</button>
         <div class="retro-window" style="margin-bottom:2rem">
           <div class="retro-titlebar retro-titlebar-green"><span class="retro-titlebar-title">specs.txt</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
           <div class="retro-window-body"><table style="width:100%;border-collapse:collapse"><tr>
@@ -375,7 +509,8 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         </div>
       </div>
       <div>
-        <p style="font-size:1rem;color:var(--text-soft);line-height:1.9;margin-bottom:2rem">A handheld music player that brings ownership and haptics back to digital listening. Stream from Spotify via API, or play local files from SD card. Physical cassettes contain RFID chips that link directly to playlists — drop one in and the music starts. The 2.13&#8221; e-Ink screen is always readable in any light, and the Raspberry Pi Zero 2W provides full Bluetooth audio output.</p>
+        <p class="description-paragraph">A handheld music player that brings ownership and haptics back to digital listening. Stream from Spotify via API, or play local files from SD card. Physical cassettes contain RFID chips that link directly to playlists — drop one in and the music starts. The 2.13&#8221; e-Ink screen is always readable in any light, and the Raspberry Pi Zero 2W provides full Bluetooth audio output.</p>
+        <button class="contact-me-btn" onclick="openContact('Re: Handheld Music Player (DMG-LU1)')">Contact me</button>
         <div class="retro-window" style="margin-bottom:2rem">
           <div class="retro-titlebar retro-titlebar-green"><span class="retro-titlebar-title">specs.txt</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
           <div class="retro-window-body"><table style="width:100%;border-collapse:collapse"><tr>
@@ -429,7 +564,8 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
         </div>
       </div>
       <div>
-        <p style="font-size:1rem;color:var(--text-soft);line-height:1.9;margin-bottom:2rem">A high-fidelity soundbar designed around two Tectonic TEBM46C20N-4B bending-wave drivers — a technology that produces a remarkably uniform frequency response across a wide listening area. The two speaker enclosures follow the golden ratio nautilus spiral geometry to optimise internal volume and minimise standing waves. The soundbar also serves as a docking station for the DMG-LU1.</p>
+        <p class="description-paragraph">A high-fidelity soundbar designed around two Tectonic TEBM46C20N-4B bending-wave drivers — a technology that produces a remarkably uniform frequency response across a wide listening area. The two speaker enclosures follow the golden ratio nautilus spiral geometry to optimise internal volume and minimise standing waves. The soundbar also serves as a docking station for the DMG-LU1.</p>
+        <button class="contact-me-btn" onclick="openContact('Re: Nautilus Soundbar (DMG-Nautilus)')">Contact me!</button>
         <div class="retro-window" style="margin-bottom:2rem">
           <div class="retro-titlebar retro-titlebar-green"><span class="retro-titlebar-title">specs.txt</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
           <div class="retro-window-body"><table style="width:100%;border-collapse:collapse"><tr>
@@ -552,60 +688,165 @@ footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3
 
 
 
-<!-- ── LIGHTBOX v2 ── -->
+<!-- ── LIGHTBOX v3 (with navigation) ── -->
 <div id="lb" role="dialog" aria-modal="true" aria-label="Image zoom">
   <button id="lb-close" aria-label="Close">&#10005; CLOSE</button>
+  <button id="lb-prev" aria-label="Previous image">&#9664;</button>
   <img id="lb-img" src="" alt=""/>
+  <button id="lb-next" aria-label="Next image">&#9654;</button>
+  <span id="lb-counter"></span>
   <span id="lb-esc">CLICK BACKDROP OR PRESS ESC TO CLOSE</span>
 </div>
+
+<!-- ── CONTACT MODAL ── -->
+<div id="contact-modal" role="dialog" aria-modal="true" aria-label="Contact form">
+  <div class="contact-modal-box">
+    <div class="contact-modal-titlebar">
+      <span class="contact-modal-title">// GET IN TOUCH</span>
+      <button class="contact-modal-close" id="contact-close" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="contact-modal-body">
+      <label for="contact-subject">Re:</label>
+      <input type="text" id="contact-subject" name="subject" autocomplete="off"/>
+      <label for="contact-message">Message:</label>
+      <textarea id="contact-message" name="message" placeholder="Write your message here..."></textarea>
+      <label for="contact-email">Email:</label>
+      <input type="email" id="contact-email" name="email" placeholder="your@email.com" autocomplete="email"/>
+      <div class="contact-modal-actions">
+        <button class="contact-send-btn" id="contact-send">&#9658; Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+/* ── LIGHTBOX v3 ── */
 (function(){
-  var overlay = document.getElementById('lb');
-  var img     = document.getElementById('lb-img');
-  var btn     = document.getElementById('lb-close');
+  var overlay  = document.getElementById('lb');
+  var imgEl    = document.getElementById('lb-img');
+  var btnClose = document.getElementById('lb-close');
+  var btnPrev  = document.getElementById('lb-prev');
+  var btnNext  = document.getElementById('lb-next');
+  var counter  = document.getElementById('lb-counter');
   if(!overlay) return;
 
-  function openLB(src, alt){
-    img.src = src;
-    img.alt = alt || '';
+  var lbImages = []; // [{src,alt}]
+  var lbIdx    = 0;
+
+  function getCarouselImages(carousel){
+    var imgs = [];
+    carousel.querySelectorAll('.img-carousel__slide:not(.img-carousel__slide--placeholder) img').forEach(function(img){
+      imgs.push({src: img.src, alt: img.alt || ''});
+    });
+    return imgs;
+  }
+
+  function updateNav(){
+    btnPrev.hidden = (lbImages.length <= 1);
+    btnNext.hidden = (lbImages.length <= 1);
+    counter.textContent = lbImages.length > 1 ? (lbIdx + 1) + ' / ' + lbImages.length : '';
+  }
+
+  function showImage(idx){
+    lbIdx = (idx + lbImages.length) % lbImages.length;
+    imgEl.src = lbImages[lbIdx].src;
+    imgEl.alt = lbImages[lbIdx].alt;
+    updateNav();
+  }
+
+  function openLB(images, startIdx){
+    lbImages = images;
     overlay.classList.add('on');
     document.body.style.overflow = 'hidden';
-    // shift focus into dialog for accessibility
-    btn.focus();
+    showImage(startIdx || 0);
+    btnClose.focus();
   }
 
   function closeLB(){
     overlay.classList.remove('on');
     document.body.style.overflow = '';
-    // clear src after animation finishes
-    setTimeout(function(){ img.src = ''; }, 250);
+    setTimeout(function(){ imgEl.src = ''; lbImages = []; }, 250);
   }
 
-  // Attach to every carousel image — single click opens lightbox
-  // (carousel navigation is handled by the carousel's own buttons/dots,
-  //  so a plain click on the image itself is unambiguous)
-  // Use event delegation on each carousel — catches clicks on the slide/img
+  /* attach click to each carousel */
   document.querySelectorAll('.img-carousel').forEach(function(carousel){
     carousel.addEventListener('click', function(e){
-      // find the img inside the clicked slide
+      if(e.target.closest('.img-carousel__btn') || e.target.closest('.img-carousel__dots')) return;
       var slide = e.target.closest('.img-carousel__slide:not(.img-carousel__slide--placeholder)');
       if(!slide) return;
-      var imgEl = slide.querySelector('img');
-      if(!imgEl) return;
-      // don't open if user clicked an arrow button or dot
-      if(e.target.closest('.img-carousel__btn') || e.target.closest('.img-carousel__dots')) return;
-      openLB(imgEl.src, imgEl.alt);
+      var clickedImg = slide.querySelector('img');
+      if(!clickedImg) return;
+      var images = getCarouselImages(carousel);
+      var startIdx = images.findIndex(function(im){ return im.src === clickedImg.src; });
+      openLB(images, startIdx < 0 ? 0 : startIdx);
     });
   });
 
-  // Close handlers
-  overlay.addEventListener('click', function(e){
-    // close if clicking the backdrop (not the image itself)
-    if(e.target === overlay) closeLB();
-  });
-  btn.addEventListener('click', closeLB);
+  /* nav buttons */
+  btnPrev.addEventListener('click', function(e){ e.stopPropagation(); showImage(lbIdx - 1); });
+  btnNext.addEventListener('click', function(e){ e.stopPropagation(); showImage(lbIdx + 1); });
+
+  /* touch swipe in lightbox */
+  var tx0 = 0;
+  imgEl.addEventListener('touchstart', function(e){ tx0 = e.touches[0].clientX; }, {passive:true});
+  imgEl.addEventListener('touchend',   function(e){
+    var dx = e.changedTouches[0].clientX - tx0;
+    if(Math.abs(dx) > 40){ showImage(dx < 0 ? lbIdx + 1 : lbIdx - 1); }
+  }, {passive:true});
+
+  /* close handlers */
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeLB(); });
+  btnClose.addEventListener('click', closeLB);
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && overlay.classList.contains('on')) closeLB();
+    if(!overlay.classList.contains('on')) return;
+    if(e.key === 'Escape')      { closeLB(); }
+    if(e.key === 'ArrowLeft')   { showImage(lbIdx - 1); e.preventDefault(); }
+    if(e.key === 'ArrowRight')  { showImage(lbIdx + 1); e.preventDefault(); }
+  });
+})();
+
+/* ── CONTACT MODAL ── */
+(function(){
+  var modal   = document.getElementById('contact-modal');
+  var closeBtn= document.getElementById('contact-close');
+  var sendBtn = document.getElementById('contact-send');
+  var subject = document.getElementById('contact-subject');
+  var message = document.getElementById('contact-message');
+  var email   = document.getElementById('contact-email');
+  if(!modal) return;
+
+  window.openContact = function(deviceName){
+    subject.value = deviceName || '';
+    message.value = '';
+    email.value   = '';
+    modal.classList.add('on');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ message.focus(); }, 50);
+  };
+
+  function closeContact(){
+    modal.classList.remove('on');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeContact);
+  modal.addEventListener('click', function(e){ if(e.target === modal) closeContact(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('on')) closeContact();
+  });
+
+  sendBtn.addEventListener('click', function(){
+    var subj = subject.value.trim() || 'DMG Labs Enquiry';
+    var msg  = message.value.trim();
+    var from = email.value.trim();
+    var body = '';
+    if(msg)  body += msg;
+    if(from) body += (body ? '\n\n' : '') + 'Reply to: ' + from;
+    var mailto = 'mailto:alexanderdemattosgabriel@gmail.com'
+      + '?subject=' + encodeURIComponent(subj)
+      + '&body='    + encodeURIComponent(body);
+    window.location.href = mailto;
+    closeContact();
   });
 })();
 </script>
