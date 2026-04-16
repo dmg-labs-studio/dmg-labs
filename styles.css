@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=DM+Mono:wght@300;400&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap');
+
 /*
  * ============================================================
  *  DMG LABS — Design System  /  styles.css
@@ -24,7 +26,12 @@
  * 16.  CTA SECTION  (organism)
  * 17.  FOOTER  (organism)
  * 18.  REVEAL ANIMATION
- * 19.  RESPONSIVE OVERRIDES
+ * 19.  KEYFRAMES
+ * 20.  RESPONSIVE OVERRIDES
+ * 21.  IMAGE CAROUSEL  (molecule)
+ * 22.  LIGHTBOX  (organism)
+ * 23.  CONTACT MODAL  (organism)
+ * 24.  DEVICES PAGE — page-specific
  * ============================================================
  */
 
@@ -157,7 +164,7 @@ body::before {
   z-index: 999;
 }
 
-img, svg {
+img {
   display: block;
   max-width: 100%;
 }
@@ -761,6 +768,12 @@ h1 em, h2 em, h3 em {
   background:    var(--color-forest);
   border-bottom-color: var(--color-ink);
 }
+
+/* Allow the modifier to be applied directly on the titlebar div */
+.retro-window__titlebar.retro-window--green {
+  background:    var(--color-forest);
+  border-bottom: 2px solid var(--color-ink);
+}
 .retro-window--dark .retro-window__titlebar {
   background:    var(--color-ink);
   border-bottom-color: var(--color-black);
@@ -777,7 +790,8 @@ h1 em, h2 em, h3 em {
   padding:    var(--space-5);
   background: var(--color-cream);
 }
-.retro-window--dark .retro-window__body {
+.retro-window--dark .retro-window__body,
+.retro-window__body--dark {
   background: var(--color-ink);
 }
 
@@ -886,40 +900,44 @@ h1 em, h2 em, h3 em {
    ============================================================ */
 
 .ticker-wrap {
-  background:    var(--ink);
-  overflow:      hidden;
-  padding:       1.2rem 0;
-  margin-top:    68px;
-  border-top:    3px solid var(--orange);
+  background: var(--color-ink);
+  overflow: hidden;
+  padding: 1.2rem 0;
+  border-top: 3px solid var(--color-orange);
   border-bottom: 3px solid var(--color-forest-lt);
-  position:      relative;
-  z-index:       10;
+  margin-top: 58px;
+  position: relative;
+  z-index: 10
 }
+
 .ticker-track {
-  display:    flex;
-  animation:  ticker 44s linear infinite;
-  white-space: nowrap;
+  display: flex;
+  animation: ticker 44s linear infinite;
+  white-space: nowrap
 }
+
 .ticker-item {
-  font-family:    var(--font-mono);
-  font-size:      0.62rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color:          rgba(200,221,208,0.45);
-  padding:        0 2.2rem;
+  color: var(--color-mist);
+  padding: 0 2.2rem
 }
-.ticker-pac {
-  display:        inline-flex;
-  align-items:    center;
-  padding:        0 0.5rem;
-  vertical-align: middle;
+
+.ticker-pac{
+  display:inline-flex;
+  align-items:center;
+  padding: 0.1rem 1.2rem 0rem 1.2rem;
+  vertical-align:middle;
 }
+
 .ticker-pixel {
-  font-family: var(--font-pixel);
-  font-size:   0.4rem;
-  color:       var(--color-orange);
-  padding:     0.1rem 1.2rem 0rem 1.2rem;
-  opacity:     0.7;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.5rem;
+  color: var(--color-orange);
+  padding: 0.1rem 1.2rem 0rem 1.2rem;
+  opacity: 0.7
 }
 
 
@@ -1268,6 +1286,8 @@ h1 em, h2 em, h3 em {
 .reveal--d2 { transition-delay: 0.2s; }
 .reveal--d3 { transition-delay: 0.3s; }
 .reveal--d4 { transition-delay: 0.4s; }
+.reveal--d5 { transition-delay: 0.5s; }
+.reveal--d6 { transition-delay: 0.6s; }
 
 
 /* ============================================================
@@ -1319,4 +1339,826 @@ h1 em, h2 em, h3 em {
     text-align:     center;
   }
   .footer__links { flex-wrap: wrap; justify-content: center; }
+
+  .device-section { padding: 4rem 1.5rem; }
+
+  .contact-modal-body { padding: 1.5rem; }
+}
+
+
+/* ============================================================
+   21. IMAGE CAROUSEL — MOLECULE
+   ============================================================
+   Usage:
+     <div class="img-carousel">
+       <div class="img-carousel__track">
+         <div class="img-carousel__slide"><img ...><div class="img-carousel__scanline"></div></div>
+         <div class="img-carousel__slide img-carousel__slide--placeholder">...</div>
+       </div>
+       <button class="img-carousel__btn img-carousel__btn--prev">◀</button>
+       <button class="img-carousel__btn img-carousel__btn--next">▶</button>
+       <div class="img-carousel__counter">1 / 3</div>
+       <div class="img-carousel__dots">
+         <div class="img-carousel__dot active"></div>
+       </div>
+     </div>
+   ============================================================ */
+
+.img-carousel {
+  position:    relative;
+  overflow:    hidden;
+  user-select: none;
+  background:  var(--color-ink);
+}
+
+.img-carousel__track {
+  display:    flex;
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  height:     280px;
+}
+
+.img-carousel__slide {
+  flex:     0 0 100%;
+  height:   280px;
+  position: relative;
+  overflow: hidden;
+  cursor:   pointer;
+}
+
+.img-carousel__slide img {
+  width:              100%;
+  height:             100%;
+  object-fit:         cover;
+  display:            block;
+  -webkit-user-drag:  none;
+  user-select:        none;
+  cursor:             zoom-in;
+}
+
+.img-carousel__scanline {
+  position:   absolute;
+  inset:      0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent, transparent 3px,
+    rgba(0, 0, 0, 0.08) 3px, rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index:    2;
+}
+
+/* Arrow buttons */
+.img-carousel__btn {
+  position:        absolute;
+  top:             50%;
+  transform:       translateY(-50%);
+  z-index:         10;
+  cursor:          pointer;
+  background:      rgba(15, 31, 23, 0.72);
+  border:          2px solid rgba(240, 106, 0, 0.7);
+  color:           var(--color-orange);
+  font-family:     var(--font-pixel);
+  font-size:       0.55rem;
+  padding:         0.5rem 0.65rem;
+  line-height:     1;
+  border-radius:   var(--radius-sm);
+  box-shadow:      2px 2px 0 rgba(196, 85, 0, 0.8);
+  transition:      background var(--transition-base), transform var(--transition-fast), box-shadow var(--transition-fast);
+  backdrop-filter: blur(4px);
+}
+.img-carousel__btn:hover {
+  background:  rgba(240, 106, 0, 0.25);
+  transform:   translateY(-50%) translate(-1px, -1px);
+  box-shadow:  3px 3px 0 rgba(196, 85, 0, 0.8);
+}
+.img-carousel__btn:active {
+  transform:  translateY(-50%) translate(2px, 2px);
+  box-shadow: none;
+}
+.img-carousel__btn--prev { left: 10px; }
+.img-carousel__btn--next { right: 10px; }
+.img-carousel__btn[disabled] {
+  opacity:        0.25;
+  cursor:         default;
+  pointer-events: none;
+}
+
+/* Dots */
+.img-carousel__dots {
+  position:  absolute;
+  bottom:    10px;
+  left:      50%;
+  transform: translateX(-50%);
+  display:   flex;
+  gap:       6px;
+  z-index:   10;
+}
+
+.img-carousel__dot {
+  width:         8px;
+  height:        8px;
+  border-radius: var(--radius-sm);
+  background:    rgba(200, 221, 208, 0.35);
+  border:        1.5px solid rgba(240, 106, 0, 0.4);
+  cursor:        pointer;
+  transition:    background var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
+}
+.img-carousel__dot.active {
+  background:    var(--color-orange);
+  border-color:  var(--color-orange-dk);
+  transform:     scale(1.25);
+}
+
+/* Counter badge */
+.img-carousel__counter {
+  position:        absolute;
+  top:             10px;
+  right:           10px;
+  z-index:         10;
+  font-family:     var(--font-pixel);
+  font-size:       0.38rem;
+  color:           rgba(200, 221, 208, 0.7);
+  background:      rgba(15, 31, 23, 0.7);
+  padding:         0.3rem 0.55rem;
+  border-radius:   var(--radius-sm);
+  border:          1px solid rgba(240, 106, 0, 0.3);
+  backdrop-filter: blur(4px);
+  letter-spacing:  0.08em;
+}
+
+/* Placeholder slide */
+.img-carousel__slide--placeholder {
+  background:      rgba(26, 58, 42, 0.25);
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  gap:             0.75rem;
+}
+.img-carousel__slide--placeholder p {
+  font-family:    var(--font-pixel);
+  font-size:      0.4rem;
+  color:          rgba(200, 221, 208, 0.4);
+  letter-spacing: 0.1em;
+  text-align:     center;
+  line-height:    2;
+}
+
+
+/* ============================================================
+   22. LIGHTBOX — ORGANISM
+   ============================================================ */
+
+@keyframes lb-pop {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+#lb {
+  display:             none;
+  position:            fixed;
+  inset:               0;
+  z-index:             9000;
+  background:          rgba(7, 18, 8, 0.93);
+  align-items:         center;
+  justify-content:     center;
+  backdrop-filter:     blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor:              pointer;
+}
+#lb.on { display: flex; }
+
+#lb-img {
+  max-width:    90vw;
+  max-height:   88vh;
+  object-fit:   contain;
+  border:       3px solid var(--color-orange);
+  border-radius: var(--radius-md);
+  box-shadow:   0 0 0 1px var(--color-orange-dk), 8px 8px 0 var(--color-ink);
+  cursor:       default;
+  animation:    lb-pop 0.2s cubic-bezier(0.2, 0, 0, 1.2) both;
+  display:      block;
+}
+
+#lb-close {
+  position:       fixed;
+  top:            1rem;
+  right:          1.2rem;
+  font-family:    var(--font-pixel);
+  font-size:      0.55rem;
+  color:          var(--color-orange);
+  background:     var(--color-ink);
+  border:         2px solid var(--color-orange);
+  border-radius:  var(--radius-sm);
+  padding:        0.45rem 0.8rem;
+  cursor:         pointer;
+  box-shadow:     2px 2px 0 var(--color-orange-dk);
+  letter-spacing: 0.08em;
+  line-height:    1;
+  z-index:        9001;
+}
+#lb-close:hover { background: var(--color-forest); }
+
+#lb-esc {
+  position:       fixed;
+  bottom:         1.2rem;
+  left:           50%;
+  transform:      translateX(-50%);
+  font-family:    var(--font-pixel);
+  font-size:      0.4rem;
+  color:          rgba(200, 221, 208, 0.35);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  z-index:        9001;
+}
+
+/* Lightbox navigation arrows */
+#lb-prev,
+#lb-next {
+  position:            fixed;
+  top:                 50%;
+  transform:           translateY(-50%);
+  z-index:             9002;
+  cursor:              pointer;
+  background:          rgba(15, 31, 23, 0.82);
+  border:              2px solid rgba(240, 106, 0, 0.7);
+  color:               var(--color-orange);
+  font-family:         var(--font-pixel);
+  font-size:           0.6rem;
+  padding:             0.6rem 0.8rem;
+  line-height:         1;
+  border-radius:       var(--radius-sm);
+  box-shadow:          2px 2px 0 rgba(196, 85, 0, 0.8);
+  transition:          background var(--transition-base), box-shadow var(--transition-fast);
+  backdrop-filter:     blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+#lb-prev { left: 1.2rem; }
+#lb-next { right: 1.2rem; }
+#lb-prev:hover,
+#lb-next:hover {
+  background:  rgba(240, 106, 0, 0.25);
+  box-shadow:  3px 3px 0 rgba(196, 85, 0, 0.8);
+}
+#lb-prev[hidden],
+#lb-next[hidden] { display: none; }
+
+#lb-counter {
+  position:       fixed;
+  bottom:         3.2rem;
+  left:           50%;
+  transform:      translateX(-50%);
+  font-family:    var(--font-pixel);
+  font-size:      0.38rem;
+  color:          rgba(200, 221, 208, 0.55);
+  background:     rgba(15, 31, 23, 0.7);
+  padding:        0.3rem 0.6rem;
+  border-radius:  var(--radius-sm);
+  border:         1px solid rgba(240, 106, 0, 0.3);
+  z-index:        9002;
+  pointer-events: none;
+  letter-spacing: 0.1em;
+}
+
+
+/* ============================================================
+   23. CONTACT MODAL — ORGANISM
+   ============================================================ */
+
+#contact-modal {
+  display:             none;
+  position:            fixed;
+  inset:               0;
+  z-index:             8000;
+  background:          rgba(7, 18, 8, 0.88);
+  align-items:         center;
+  justify-content:     center;
+  backdrop-filter:     blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor:              pointer;
+}
+#contact-modal.on { display: flex; }
+
+.contact-modal-box {
+  cursor:        default;
+  background:    var(--color-cream);
+  border:        2px solid var(--color-ink);
+  border-radius: var(--radius-lg);
+  box-shadow:    var(--shadow-pixel-xl) var(--color-ink);
+  width:         min(480px, 92vw);
+  overflow:      hidden;
+  animation:     lb-pop 0.2s cubic-bezier(0.2, 0, 0, 1.2) both;
+}
+
+.contact-modal-titlebar {
+  background:    var(--color-orange);
+  padding:       0.4rem 0.9rem;
+  display:       flex;
+  align-items:   center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--color-orange-dk);
+}
+
+.contact-modal-title {
+  font-family:    var(--font-pixel);
+  font-size:      0.45rem;
+  color:          var(--color-cream);
+  letter-spacing: 0.08em;
+}
+
+.contact-modal-close {
+  font-family: var(--font-pixel);
+  font-size:   0.5rem;
+  color:       var(--color-cream);
+  background:  none;
+  border:      none;
+  cursor:      pointer;
+  line-height: 1;
+  padding:     0.1rem 0.3rem;
+  opacity:     0.8;
+  transition:  opacity var(--transition-base);
+}
+.contact-modal-close:hover { opacity: 1; }
+
+.contact-modal-body {
+  padding: 2rem 2rem 1.75rem;
+}
+
+.contact-modal-body label {
+  display:        block;
+  font-family:    var(--font-pixel);
+  font-size:      0.42rem;
+  color:          var(--color-orange);
+  letter-spacing: 0.08em;
+  margin-bottom:  0.45rem;
+  margin-top:     1.2rem;
+}
+.contact-modal-body label:first-child { margin-top: 0; }
+
+.contact-modal-body input,
+.contact-modal-body textarea {
+  width:          100%;
+  font-family:    var(--font-body);
+  font-size:      0.9rem;
+  color:          var(--color-text-main);
+  background:     var(--color-white);
+  border:         2px solid var(--color-border-green);
+  border-radius:  var(--radius-md);
+  padding:        0.6rem 0.85rem;
+  box-shadow:     var(--shadow-pixel-sm) var(--color-border);
+  transition:     border-color var(--transition-base), box-shadow var(--transition-base);
+  resize:         none;
+  outline:        none;
+}
+.contact-modal-body input:focus,
+.contact-modal-body textarea:focus {
+  border-color: var(--color-orange);
+  box-shadow:   var(--shadow-pixel-sm) var(--color-orange-dk);
+}
+.contact-modal-body textarea { height: 110px; line-height: 1.65; }
+
+.contact-modal-actions {
+  display:         flex;
+  justify-content: flex-end;
+  margin-top:      1.6rem;
+  padding-top:     1.2rem;
+  border-top:      1px dashed var(--color-border);
+}
+
+.contact-send-btn {
+  font-family:  var(--font-body);
+  font-size:    0.88rem;
+  font-weight:  700;
+  color:        var(--color-cream);
+  background:   var(--color-orange);
+  padding:      0.7rem 1.8rem;
+  border:       2px solid var(--color-orange-dk);
+  border-radius: var(--radius-md);
+  box-shadow:   var(--shadow-pixel-md) var(--color-orange-dk);
+  cursor:       pointer;
+  transition:   transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.contact-send-btn:hover {
+  transform:  translate(2px, 2px);
+  box-shadow: var(--shadow-pixel-sm) var(--color-orange-dk);
+}
+
+/* "Contact me" trigger button (inline, below description) */
+.contact-me-btn {
+  font-family:    var(--font-body);
+  font-size:      1rem;
+  font-weight:    700;
+  color:          var(--color-orange);
+  background:     transparent;
+  padding:        0.55rem 1.3rem;
+  border:         2px solid var(--color-orange);
+  border-radius:  var(--radius-md);
+  box-shadow:     var(--shadow-pixel-md) var(--color-orange);
+  cursor:         pointer;
+  transition:     transform var(--transition-fast), box-shadow var(--transition-fast);
+  display:        inline-block;
+  margin-top:     0.6rem;
+  margin-bottom:  1.2rem;
+  text-decoration: none;
+}
+.contact-me-btn:hover {
+  transform:  translate(2px, 2px);
+  box-shadow: var(--shadow-pixel-sm) var(--color-orange-dk);
+}
+
+
+/* ============================================================
+   24. DEVICES PAGE — PAGE-SPECIFIC
+   ============================================================ */
+
+/* Hero banner (dark, grid background) */
+.devices-hero {
+  background:    var(--color-forest);
+  padding:       5rem 3.5rem 4rem;
+  border-bottom: 3px solid var(--color-ink);
+  position:      relative;
+  overflow:      hidden;
+}
+.devices-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(200, 221, 208, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 221, 208, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.devices-hero__inner {
+  max-width:  var(--max-width);
+  margin:     0 auto;
+  position:   relative;
+  z-index:    1;
+}
+.devices-hero__eyebrow {
+  font-family:    var(--font-pixel);
+  font-size:      0.5rem;
+  color:          var(--color-orange);
+  margin-bottom:  1rem;
+  letter-spacing: 0.12em;
+}
+.devices-hero__title {
+  font-family:    var(--font-display);
+  font-size:      clamp(3.5rem, 6vw, 7rem);
+  font-weight:    700;
+  color:          var(--color-mist);
+  line-height:    1.05;
+  letter-spacing: -0.02em;
+  margin-bottom:  1.2rem;
+}
+.devices-hero__title em {
+  color:       var(--color-orange-lt);
+  font-weight: 300;
+  font-style:  italic;
+}
+.devices-hero__sub {
+  font-size:   1rem;
+  color:       rgba(200, 221, 208, 0.6);
+  max-width:   560px;
+  line-height: 1.85;
+}
+
+/* Individual device sections */
+.device-section {
+  background:    var(--color-cream);
+  border-bottom: 2px solid var(--color-border);
+}
+
+/* Two-column device layout (visual left, info right) */
+.device-layout {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   4rem;
+  align-items:           start;
+}
+
+/* Left column: tag + model label + heading + carousel + badge row */
+.device-col-visual {
+  display:        flex;
+  flex-direction: column;
+}
+
+.device-tag-row {
+  margin-bottom: 0.6rem;
+}
+
+.device-model-label {
+  font-family:    var(--font-pixel);
+  font-size:      0.5rem;
+  color:          var(--color-orange);
+  margin:         1rem 0 0.4rem;
+  letter-spacing: 0.08em;
+}
+
+.device-heading {
+  font-family:    var(--font-display);
+  font-size:      clamp(2.5rem, 4vw, 4rem);
+  font-weight:    700;
+  color:          var(--color-ink);
+  margin-bottom:  1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.device-window-wrap {
+  margin-bottom: 2rem;
+}
+
+.device-badge-row {
+  display:     flex;
+  gap:         0.75rem;
+  align-items: center;
+  flex-wrap:   wrap;
+}
+
+/* Right column: description + contact btn + spec window */
+.device-col-info {
+  display:        flex;
+  flex-direction: column;
+}
+
+.description-paragraph {
+  font-size:     1rem;
+  color:         var(--color-text-soft);
+  line-height:   1.9;
+  margin-bottom: 0.6rem;
+}
+
+/* Retro spec table (light background variant used on devices page) */
+.spec-table-light {
+  width:           100%;
+  border-collapse: collapse;
+}
+.spec-table-light tr {
+  border-bottom: 1px dashed var(--color-border);
+}
+.spec-table-light tr:last-child { border-bottom: none; }
+.spec-table-light__key {
+  font-family:    var(--font-pixel);
+  font-size:      0.42rem;
+  color:          var(--color-orange);
+  padding:        0.7rem 1rem 0.7rem 0;
+  white-space:    nowrap;
+  border-bottom:  1px dashed var(--color-border);
+  vertical-align: top;
+}
+.spec-table-light__val {
+  font-size:      0.88rem;
+  color:          var(--color-text-soft);
+  padding:        0.7rem 0;
+  border-bottom:  1px dashed var(--color-border);
+  line-height:    1.6;
+}
+
+/* View guide button variant (smaller, inside badge row) */
+.btn-view-guide {
+  font-size: 0.78rem;
+  padding:   0.6rem 1.4rem;
+}
+
+/* ============================================================
+   25. HERO QUICK-LINKS & PROVENANCE  (atoms / molecules)
+   ============================================================
+   Used in the index.html hero section.
+   ============================================================ */
+
+/* Row of three icon-link tiles below the hero CTAs */
+.hero__quicklinks {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   var(--space-3);
+  margin-top:            var(--space-6);
+}
+
+.hero__quicklink {
+  display:         flex;
+  align-items:     center;
+  gap:             0.7rem;
+  padding:         0.9rem 1rem;
+  border-radius:   var(--radius-md);
+  border:          2px solid var(--color-ink);
+  box-shadow:      var(--shadow-pixel-md) var(--color-ink);
+  text-decoration: none;
+  background:      var(--color-white);
+  transition:      transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.hero__quicklink:hover {
+  transform:  translate(2px, 2px);
+  box-shadow: var(--shadow-pixel-sm) var(--color-ink);
+}
+.hero__quicklink-icon {
+  font-size: 1.1rem;
+}
+.hero__quicklink-label {
+  font-family:    var(--font-pixel);
+  font-size:      0.38rem;
+  color:          var(--color-orange);
+  display:        block;
+  margin-bottom:  0.2rem;
+}
+.hero__quicklink-name {
+  font-family: var(--font-display);
+  font-size:   1.1rem;
+  font-weight: 700;
+  color:       var(--color-ink);
+}
+
+/* Studio page — two-column about grid */
+.studio-about-grid {
+  display:     grid;
+  grid-template-columns: 1fr 1fr;
+  gap:         7rem;
+  align-items: start;
+}
+
+/* Influence entry (Studio page) */
+.influence-entry {
+  margin-bottom:  2.2rem;
+  padding-bottom: 2.2rem;
+  border-bottom:  1px dashed var(--color-border);
+}
+.influence-entry:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.influence-category {
+  font-family:    var(--font-pixel);
+  font-size:      0.42rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color:          var(--color-orange);
+  margin-bottom:  0.5rem;
+}
+.influence-name {
+  font-family:    var(--font-display);
+  font-size:      2rem;
+  font-weight:    700;
+  color:          var(--color-ink);
+  margin-bottom:  0.4rem;
+  letter-spacing: -0.02em;
+}
+.influence-body {
+  font-size:   0.88rem;
+  color:       var(--color-text-soft);
+  line-height: 1.75;
+}
+
+/* Location chip row (Studio & hero provenance) */
+.location-chips {
+  margin-top:  2.5rem;
+  padding-top: 2rem;
+  border-top:  2px dashed var(--color-border);
+  display:     flex;
+  gap:         var(--space-4);
+  flex-wrap:   wrap;
+}
+.location-chip {
+  font-family:    var(--font-mono);
+  font-size:      0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          var(--color-text-soft);
+  background:     rgba(74,124,89,0.09);
+  padding:        0.45rem 1rem;
+  border-radius:  var(--radius-md);
+  border:         1.5px solid var(--color-border-green);
+  box-shadow:     var(--shadow-pixel-sm) var(--color-border-green);
+}
+.location-chip strong {
+  display:       block;
+  margin-bottom: 0.1rem;
+}
+.location-chip--orange strong { color: var(--color-orange); }
+.location-chip--green  strong { color: var(--color-forest); }
+
+@media (max-width: 960px) {
+  .hero__quicklinks      { grid-template-columns: 1fr; }
+  .studio-about-grid     { grid-template-columns: 1fr; gap: 4rem; }
+}
+
+/* ============================================================
+   26. PAGE HERO — sub-page dark hero (guides, studio)
+   ============================================================
+   Used on guides.html and studio.html instead of the full
+   hero organism. Wraps .page-hero defined in section 14.
+   ============================================================ */
+
+/* Alias: some pages use .page-hero directly on a <section>.
+   No extra CSS needed — see section 14. */
+
+
+/* ============================================================
+   27. GUIDE ROW — molecule
+   ============================================================
+   A single guide list item inside a retro-window.
+   Usage:
+     <div class="retro-window">
+       <div class="retro-window__titlebar">…</div>
+       <div class="retro-window__body retro-window__body--flush">
+         <div class="guide-row">
+           <div class="guide-row__number">01</div>
+           <div class="guide-row__content">
+             <div class="guide-row__meta">
+               <span class="guide-card__level">BEGINNER</span>
+               <span class="guide-card__category">FDM</span>
+             </div>
+             <h3 class="guide-row__title">…</h3>
+             <p class="guide-row__desc">…</p>
+           </div>
+           <div class="guide-row__stats">
+             <span class="guide-card__stat">8 steps</span>
+             <span class="guide-card__stat">~ 3 hrs</span>
+             <span class="guide-card__stat">STL + params</span>
+             <span class="guide-card__arrow">&#8599;</span>
+           </div>
+         </div>
+       </div>
+     </div>
+   ============================================================ */
+
+.retro-window__body--flush {
+  padding:    0;
+  background: var(--color-white);
+}
+
+.guide-row {
+  display:       grid;
+  grid-template-columns: 4.5rem 1fr auto;
+  gap:           1.5rem;
+  align-items:   center;
+  padding:       1.8rem 2rem;
+  cursor:        pointer;
+  transition:    background var(--transition-base);
+}
+.guide-row:hover { background: var(--color-parchment); }
+
+.guide-row__number {
+  font-family: var(--font-pixel);
+  font-size:   1.1rem;
+  color:       var(--color-orange);
+  line-height: 1;
+  text-shadow: var(--shadow-pixel-sm) var(--color-orange-dk);
+}
+
+.guide-row__meta {
+  display:     flex;
+  gap:         var(--space-2);
+  align-items: center;
+  margin-bottom: 0.35rem;
+  flex-wrap:   wrap;
+}
+
+.guide-row__title {
+  font-family:    var(--font-display);
+  font-size:      1.6rem;
+  font-weight:    700;
+  margin-bottom:  0.25rem;
+  color:          var(--color-ink);
+  letter-spacing: -0.02em;
+  line-height:    1.1;
+}
+
+.guide-row__desc {
+  font-size:   0.87rem;
+  color:       var(--color-text-soft);
+  line-height: 1.7;
+}
+
+.guide-row__stats {
+  display:        flex;
+  flex-direction: column;
+  align-items:    flex-end;
+  gap:            0.45rem;
+  flex-shrink:    0;
+}
+
+.guide-row__arrow {
+  font-size:  1rem;
+  color:      var(--color-forest);
+  margin-top: 0.2rem;
+}
+
+/* Guide list wrapper */
+.guide-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+}
+
+@media (max-width: 960px) {
+  .guide-row {
+    grid-template-columns: 3rem 1fr;
+    grid-template-rows:    auto auto;
+  }
+  .guide-row__stats {
+    grid-column:    2;
+    align-items:    flex-start;
+    flex-direction: row;
+    flex-wrap:      wrap;
+  }
 }

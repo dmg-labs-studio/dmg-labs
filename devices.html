@@ -1,855 +1,888 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>DMG Labs — Devices</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=DM+Mono:wght@300;400&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap');
-:root{
-  --forest:#1a3a2a;--forest-mid:#234d38;--forest-lt:#2e6647;
-  --moss:#4a7c59;--sage:#7aab8a;--mist:#c8ddd0;
-  --cream:#f4f0e6;--parchment:#ede7d9;
-  --orange:#f06a00;--orange-lt:#ff8c2a;--orange-dk:#c45500;--orange-dim:rgba(240,106,0,0.14);
-  --ink:#0f1f17;--ink-soft:#1a2e22;
-  --text-main:#1a2e22;--text-soft:#4a6655;--text-faint:#8aaa95;
-  --border:rgba(26,58,42,0.14);--border-g:rgba(74,124,89,0.28);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--cream);color:var(--text-main);font-family:'Nunito',sans-serif;font-weight:400;line-height:1.75;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect x='0' y='0' width='1' height='1' fill='%231a3a2a' opacity='0.03'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%231a3a2a' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999}
-h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:700;line-height:1.05;letter-spacing:-0.02em}
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2.5rem;background:var(--cream);border-bottom:2px solid var(--ink);box-shadow:0 2px 0 0 var(--orange)}
-.nav-logo{display:flex;align-items:center;text-decoration:none}
-.nav-links{display:flex;gap:2.5rem;list-style:none}
-.nav-links a{font-family:'DM Mono',monospace;font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-soft);text-decoration:none;transition:color 0.15s;position:relative}
-.nav-links a:hover,.nav-links a.active{color:var(--orange)}
-.nav-links a::after{content:'';position:absolute;left:0;bottom:-4px;right:0;height:2px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform 0.15s}
-.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
-.nav-cta{font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:700;color:var(--cream);background:var(--orange);padding:0.5rem 1.3rem;text-decoration:none;border-radius:8px;border:2px solid var(--orange-dk);box-shadow:3px 3px 0 var(--orange-dk);transition:transform 0.1s,box-shadow 0.1s;display:inline-block}
-.nav-cta:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--orange-dk)}
-/* TICKER */
-.ticker-wrap{background:var(--ink);overflow:hidden;padding:1.2rem 0;border-top:3px solid var(--orange);border-bottom:3px solid var(--forest-lt);margin-top:68px;position:relative;z-index:10}
-.ticker-track{display:flex;animation:ticker 44s linear infinite;white-space:nowrap}
-.ticker-item{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(200,221,208,0.45);padding:0 2.2rem}
-.ticker-pac{display:inline-flex;align-items:center;padding:0 0.5rem;vertical-align:middle}
-.ticker-pixel{font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--orange);padding:0.1rem 1.2rem 0rem 1.2rem;opacity:0.7}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-/* BUTTONS */
-.btn-primary{font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;color:var(--cream);background:var(--forest);padding:0.85rem 2rem;text-decoration:none;border-radius:8px;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transition:transform 0.1s,box-shadow 0.1s;display:inline-block}
-.btn-primary:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
-.btn-ghost{font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;color:var(--forest);background:transparent;padding:0.83rem 2rem;text-decoration:none;border-radius:8px;border:2px solid var(--forest);box-shadow:4px 4px 0 var(--forest);transition:transform 0.1s,box-shadow 0.1s;display:inline-block}
-.btn-ghost:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--forest)}
-.btn-orange{font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;color:var(--cream);background:var(--orange);padding:0.88rem 2.2rem;text-decoration:none;display:inline-block;border-radius:8px;border:2px solid var(--orange-dk);box-shadow:4px 4px 0 var(--orange-dk);transition:transform 0.1s,box-shadow 0.1s}
-.btn-orange:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--orange-dk)}
-.btn-ghost-light{font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;color:var(--mist);background:transparent;border:2px solid rgba(200,221,208,0.3);padding:0.88rem 2.2rem;text-decoration:none;display:inline-block;border-radius:8px;box-shadow:4px 4px 0 rgba(200,221,208,0.15);transition:transform 0.1s,box-shadow 0.1s,border-color 0.15s}
-.btn-ghost-light:hover{border-color:var(--orange-lt);color:var(--orange-lt);transform:translate(2px,2px)}
-/* BADGES */
-.pixel-badge{font-family:'Press Start 2P',monospace;font-size:0.5rem;line-height:1.8;color:var(--cream);background:var(--orange);padding:0.35rem 0.75rem;border-radius:4px;border:2px solid var(--orange-dk);box-shadow:2px 2px 0 var(--orange-dk)}
-.pixel-badge-green{font-family:'Press Start 2P',monospace;font-size:0.5rem;line-height:1.8;color:var(--cream);background:var(--forest);padding:0.35rem 0.75rem;border-radius:4px;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
-/* RETRO WINDOW */
-.retro-window{border:2px solid var(--ink);border-radius:8px;overflow:hidden;box-shadow:4px 4px 0 var(--ink)}
-.retro-titlebar{background:var(--orange);padding:0.35rem 0.75rem;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--orange-dk)}
-.retro-titlebar-green{background:var(--forest);border-bottom:2px solid var(--ink)}
-.retro-titlebar-title{font-family:'Press Start 2P',monospace;font-size:0.45rem;color:var(--cream);letter-spacing:0.08em}
-.retro-window-btns{display:flex;gap:4px}
-.retro-wbtn{width:10px;height:10px;border-radius:2px;border:1.5px solid rgba(0,0,0,0.3)}
-.retro-wbtn-r{background:#e05050}.retro-wbtn-y{background:#f0c030}.retro-wbtn-g{background:#50c050}
-.retro-window-body{padding:1.5rem;background:var(--cream)}
-.retro-window-body-dark{padding:1.5rem;background:var(--ink)}
-/* SECTION */
-.section-inner{max-width:1240px;margin:0 auto;padding:6rem 3.5rem}
-.section-label{font-family:'Press Start 2P',monospace;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--orange);margin-bottom:1rem}
-.section-title{font-size:clamp(3rem,5vw,5.5rem);color:var(--ink)}
-.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3.5rem}
-/* PRODUCT CARD */
-.product-card{background:#fff;padding:0;border-radius:10px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transition:transform 0.1s,box-shadow 0.1s}
-.product-card:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
-.product-card:hover .product-arrow{color:var(--orange)}
-.product-card-header{background:var(--parchment);padding:0.5rem 1.2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--ink)}
-.product-card-title-bar{font-family:'Press Start 2P',monospace;font-size:0.4rem;color:var(--text-soft);letter-spacing:0.08em}
-.product-card-body{padding:1.8rem;flex:1;display:flex;flex-direction:column}
-.product-tag{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.28rem 0.75rem;border-radius:4px;border:1.5px solid currentColor;display:inline-block;margin-bottom:1.4rem;box-shadow:2px 2px 0 currentColor}
-.tag-fdm{color:var(--moss)}.tag-elec{color:var(--forest-lt)}.tag-audio{color:var(--orange)}.tag-hybrid{color:var(--text-soft)}
-.product-visual{width:100%;height:150px;margin-bottom:1.4rem;display:flex;align-items:center;justify-content:center;border-radius:6px;overflow:hidden;position:relative}
-.product-visual::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none}
-.vis-dark{background:rgba(0,0,0,0.2)}.vis-light{background:rgba(74,124,89,0.06)}
-.product-model{font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);margin-bottom:0.5rem;letter-spacing:0.08em}
-.product-name{font-size:1.9rem;margin-bottom:0.4rem}
-.product-desc{font-size:0.88rem;color:var(--text-soft);line-height:1.75;margin-bottom:1.4rem;flex:1}
-.product-footer{display:flex;align-items:center;justify-content:space-between;padding-top:1rem;border-top:1px dashed var(--border)}
-.product-status{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-faint)}
-.product-arrow{font-size:1rem;color:var(--forest);transition:color 0.15s}
-/* SP BAND */
-.sp-band{background:var(--forest-mid);padding:4rem 3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
-.sp-pull{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.2vw,3.1rem);font-weight:700;color:var(--mist);line-height:1.15}
-.sp-pull em{color:var(--orange-lt);font-style:italic;font-weight:300}
-.sp-body{font-size:0.97rem;color:rgba(200,221,208,0.62);line-height:1.9}
-/* CTA */
-.cta-section{background:var(--forest);padding:7rem 3.5rem;text-align:center;position:relative;overflow:hidden;border-top:3px solid var(--ink)}
-.cta-section::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(200,221,208,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,221,208,0.04) 1px,transparent 1px);background-size:24px 24px}
-.cta-eyebrow{font-family:'Press Start 2P',monospace;font-size:0.45rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);margin-bottom:2rem;position:relative;z-index:1}
-.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,5.5vw,6rem);font-weight:700;color:var(--mist);line-height:1.1;max-width:820px;margin:0 auto 2.5rem;position:relative;z-index:1}
-.cta-title em{color:var(--orange-lt);font-style:italic;font-weight:300}
-.cta-sub{font-size:1rem;color:rgba(200,221,208,0.45);max-width:480px;margin:0 auto 3rem;line-height:1.8;position:relative;z-index:1}
-.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
-/* FOOTER */
-footer{background:var(--ink);border-top:3px solid var(--orange);padding:2.5rem 3.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
-.footer-links{display:flex;gap:2.5rem;list-style:none}
-.footer-links a{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(200,221,208,0.28);text-decoration:none;transition:color 0.15s}
-.footer-links a:hover{color:var(--orange)}
-.footer-copy{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;color:rgba(200,221,208,0.15)}
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal.visible{opacity:1;transform:none}
-.reveal-delay-1{transition-delay:0.1s}.reveal-delay-2{transition-delay:0.2s}.reveal-delay-3{transition-delay:0.3s}.reveal-delay-4{transition-delay:0.4s}
-/* BLINK */
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-@keyframes pulse-bar{0%,100%{width:65%}50%{width:80%}}
-/* RESPONSIVE */
-@media(max-width:960px){
-  nav{padding:0.9rem 1.5rem}.nav-links{display:none}
-  .section-inner{padding:4.5rem 1.5rem}
-  footer{flex-direction:column;gap:1.5rem;text-align:center}
-  .sp-band{grid-template-columns:1fr}.cta-section{padding:5rem 1.5rem}
-}
-</style>
-<style>
-/* ── IMAGE CAROUSEL ─────────────────────────────────── */
-.img-carousel{position:relative;overflow:hidden;user-select:none;background:#0f1f17}
-.img-carousel__track{display:flex;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);will-change:transform;height:280px}
-.img-carousel__slide{flex:0 0 100%;height:280px;position:relative;overflow:hidden;cursor:pointer}
-.img-carousel__slide img{width:100%;height:100%;object-fit:cover;display:block;-webkit-user-drag:none;user-select:none}
-.img-carousel__scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:2}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>DMG Labs — Devices</title>
 
-/* arrow buttons */
-.img-carousel__btn{
-  position:absolute;top:50%;transform:translateY(-50%);
-  z-index:10;cursor:pointer;
-  background:rgba(15,31,23,0.72);
-  border:2px solid rgba(240,106,0,0.7);
-  color:#f06a00;
-  font-family:'Press Start 2P',monospace;font-size:0.55rem;
-  padding:0.5rem 0.65rem;line-height:1;
-  border-radius:4px;
-  box-shadow:2px 2px 0 rgba(196,85,0,0.8);
-  transition:background 0.15s,transform 0.1s,box-shadow 0.1s;
-  backdrop-filter:blur(4px);
-}
-.img-carousel__btn:hover{background:rgba(240,106,0,0.25);transform:translateY(-50%) translate(-1px,-1px);box-shadow:3px 3px 0 rgba(196,85,0,0.8)}
-.img-carousel__btn:active{transform:translateY(-50%) translate(2px,2px);box-shadow:none}
-.img-carousel__btn--prev{left:10px}
-.img-carousel__btn--next{right:10px}
-.img-carousel__btn[disabled]{opacity:0.25;cursor:default;pointer-events:none}
-
-/* dots */
-.img-carousel__dots{
-  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
-  display:flex;gap:6px;z-index:10;
-}
-.img-carousel__dot{
-  width:8px;height:8px;border-radius:2px;
-  background:rgba(200,221,208,0.35);
-  border:1.5px solid rgba(240,106,0,0.4);
-  cursor:pointer;
-  transition:background 0.15s,border-color 0.15s,transform 0.15s;
-}
-.img-carousel__dot.active{background:#f06a00;border-color:#c45500;transform:scale(1.25)}
-
-/* counter badge */
-.img-carousel__counter{
-  position:absolute;top:10px;right:10px;z-index:10;
-  font-family:'Press Start 2P',monospace;font-size:0.38rem;
-  color:rgba(200,221,208,0.7);
-  background:rgba(15,31,23,0.7);
-  padding:0.3rem 0.55rem;border-radius:3px;
-  border:1px solid rgba(240,106,0,0.3);
-  backdrop-filter:blur(4px);letter-spacing:0.08em;
-}
-
-/* add-image placeholder slide */
-.img-carousel__slide--placeholder{
-  background:rgba(26,58,42,0.25);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;
-}
-.img-carousel__slide--placeholder p{
-  font-family:'Press Start 2P',monospace;font-size:0.4rem;
-  color:rgba(200,221,208,0.4);letter-spacing:0.1em;text-align:center;line-height:2;
-}
-</style>
-<style>
-/* lightbox styles replaced */
-</style>
-<style>
-/* ── LIGHTBOX v2 ──────────────────────────────────── */
-#lb{
-  display:none;position:fixed;inset:0;z-index:9000;
-  background:rgba(7,18,8,0.93);
-  align-items:center;justify-content:center;
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  cursor:pointer;
-}
-#lb.on{display:flex}
-#lb-img{
-  max-width:90vw;max-height:88vh;
-  object-fit:contain;
-  border:3px solid #f06a00;
-  border-radius:8px;
-  box-shadow:0 0 0 1px #c45500, 8px 8px 0 #0f1f17;
-  cursor:default;
-  animation:lb-pop 0.2s cubic-bezier(0.2,0,0,1.2) both;
-  display:block;
-}
-@keyframes lb-pop{from{transform:scale(0.9);opacity:0}to{transform:scale(1);opacity:1}}
-#lb-close{
-  position:fixed;top:1rem;right:1.2rem;
-  font-family:'Press Start 2P',monospace;font-size:0.55rem;
-  color:#f06a00;background:#0f1f17;
-  border:2px solid #f06a00;border-radius:4px;
-  padding:0.45rem 0.8rem;cursor:pointer;
-  box-shadow:2px 2px 0 #c45500;
-  letter-spacing:0.08em;line-height:1;
-  z-index:9001;
-}
-#lb-close:hover{background:#1a3a2a}
-#lb-esc{
-  position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);
-  font-family:'Press Start 2P',monospace;font-size:0.4rem;
-  color:rgba(200,221,208,0.35);letter-spacing:0.1em;
-  pointer-events:none;z-index:9001;
-}
-/* zoom cursor on all carousel slides */
-.img-carousel__slide img{cursor:zoom-in}
-
-/* ── LIGHTBOX NAVIGATION ── */
-#lb-prev,#lb-next{
-  position:fixed;top:50%;transform:translateY(-50%);
-  z-index:9002;cursor:pointer;
-  background:rgba(15,31,23,0.82);
-  border:2px solid rgba(240,106,0,0.7);
-  color:#f06a00;
-  font-family:'Press Start 2P',monospace;font-size:0.6rem;
-  padding:0.6rem 0.8rem;line-height:1;
-  border-radius:4px;
-  box-shadow:2px 2px 0 rgba(196,85,0,0.8);
-  transition:background 0.15s,box-shadow 0.1s;
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-}
-#lb-prev{left:1.2rem}
-#lb-next{right:1.2rem}
-#lb-prev:hover,#lb-next:hover{background:rgba(240,106,0,0.25);box-shadow:3px 3px 0 rgba(196,85,0,0.8)}
-#lb-prev[hidden],#lb-next[hidden]{display:none}
-#lb-counter{
-  position:fixed;bottom:3.2rem;left:50%;transform:translateX(-50%);
-  font-family:'Press Start 2P',monospace;font-size:0.38rem;
-  color:rgba(200,221,208,0.55);
-  background:rgba(15,31,23,0.7);
-  padding:0.3rem 0.6rem;border-radius:3px;
-  border:1px solid rgba(240,106,0,0.3);
-  z-index:9002;pointer-events:none;letter-spacing:0.1em;
-}
-
-/* ── CONTACT MODAL ── */
-#contact-modal{
-  display:none;position:fixed;inset:0;z-index:8000;
-  background:rgba(7,18,8,0.88);
-  align-items:center;justify-content:center;
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  cursor:pointer;
-}
-#contact-modal.on{display:flex}
-.contact-modal-box{
-  cursor:default;
-  background:var(--cream);
-  border:2px solid var(--ink);
-  border-radius:10px;
-  box-shadow:6px 6px 0 var(--ink);
-  width:min(480px,92vw);
-  overflow:hidden;
-  animation:lb-pop 0.2s cubic-bezier(0.2,0,0,1.2) both;
-}
-.contact-modal-titlebar{
-  background:var(--orange);
-  padding:0.4rem 0.9rem;
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:2px solid var(--orange-dk);
-}
-.contact-modal-title{
-  font-family:'Press Start 2P',monospace;font-size:0.45rem;
-  color:var(--cream);letter-spacing:0.08em;
-}
-.contact-modal-close{
-  font-family:'Press Start 2P',monospace;font-size:0.5rem;
-  color:var(--cream);background:none;border:none;cursor:pointer;
-  line-height:1;padding:0.1rem 0.3rem;
-  opacity:0.8;transition:opacity 0.15s;
-}
-.contact-modal-close:hover{opacity:1}
-.contact-modal-body{padding:2rem 2rem 1.75rem}
-.contact-modal-body label{
-  display:block;
-  font-family:'Press Start 2P',monospace;font-size:0.42rem;
-  color:var(--orange);letter-spacing:0.08em;
-  margin-bottom:0.45rem;margin-top:1.2rem;
-}
-.contact-modal-body label:first-child{margin-top:0}
-.contact-modal-body input,
-.contact-modal-body textarea{
-  width:100%;
-  font-family:'Nunito',sans-serif;font-size:0.9rem;
-  color:var(--text-main);background:#fff;
-  border:2px solid var(--border-g);
-  border-radius:6px;
-  padding:0.6rem 0.85rem;
-  box-shadow:2px 2px 0 var(--border);
-  transition:border-color 0.15s,box-shadow 0.15s;
-  resize:none;
-  outline:none;
-}
-.contact-modal-body input:focus,
-.contact-modal-body textarea:focus{
-  border-color:var(--orange);
-  box-shadow:2px 2px 0 var(--orange-dk);
-}
-.contact-modal-body textarea{height:110px;line-height:1.65}
-.contact-modal-actions{
-  display:flex;justify-content:flex-end;
-  margin-top:1.6rem;padding-top:1.2rem;
-  border-top:1px dashed var(--border);
-}
-.contact-send-btn{
-  font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;
-  color:var(--cream);background:var(--orange);
-  padding:0.7rem 1.8rem;
-  border:2px solid var(--orange-dk);
-  border-radius:8px;
-  box-shadow:3px 3px 0 var(--orange-dk);
-  cursor:pointer;
-  transition:transform 0.1s,box-shadow 0.1s;
-}
-.contact-send-btn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--orange-dk)}
-.contact-me-btn{
-  font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;
-  color:var(--orange);
-  background:transparent;
-  padding:0.55rem 1.3rem;
-  border:2px solid var(--orange);
-  border-radius:8px;
-  box-shadow:3px 3px 0 var(--orange);
-  cursor:pointer;
-  transition:transform 0.1s,box-shadow 0.1s;
-  display:inline-block;
-  margin-top:0.6rem;
-  margin-bottom:1.2rem;
-  text-decoration:none;
-}
-.contact-me-btn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--orange-dk)}
-.description-paragraph{
-  font-size:1rem;
-  color:var(--text-soft);
-  line-height:1.9;
-  margin-bottom:0.6rem
-}
-</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=DM+Mono:wght@300;400&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo" aria-label="DMG Labs">
-    <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
-      <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#0f1f17">D</text>
-      <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#0f1f17">M</text>
-      <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00"/>
-      <circle cx="74" cy="16" r="2.8" fill="#f06a00"/>
-    </svg>
-  </a>
-  <ul class="nav-links"><li><a href="devices.html" >Devices</a></li>
-<li><a href="guides.html" >Guides</a></li>
-<li><a href="studio.html" >Studio</a></li></ul>
-  <a href="guides.html" class="nav-cta">&#9658; Start Building</a>
-</nav>
-<div class="ticker-wrap"><div class="ticker-track"><span class="ticker-item">FDM / 3D Printing</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Audiophile Electronics</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Open Hardware</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Nuremberg — Munich</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Rio de Janeiro</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Paris</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Community Builds</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Retro-Futurist Design</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">FDM / 3D Printing</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Audiophile Electronics</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Open Hardware</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Nuremberg — Munich</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Rio de Janeiro</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Paris</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Community Builds</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span><span class="ticker-item">Retro-Futurist Design</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 10"><path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00"/><circle cx="13.5" cy="5" r="1.3" fill="#f06a00"/></svg></span></div></div>
+  <nav class="nav">
+    <a href="index.html" class="nav__logo" aria-label="DMG Labs">
+      <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
+        <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#0f1f17">D</text>
+        <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#0f1f17">M</text>
+        <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00" />
+        <circle cx="74" cy="16" r="2.8" fill="#f06a00" />
+      </svg>
+    </a>
+    <ul class="nav__links">
+      <li><a href="devices.html" class="nav__link">Devices</a></li>
+      <li><a href="guides.html" class="nav__link">Guides</a></li>
+      <li><a href="studio.html" class="nav__link">Studio</a></li>
+    </ul>
+    <a href="guides.html" class="btn btn-nav-cta">&#9658; Start Building</a>
+  </nav>
 
-<section style="background:var(--forest);padding:5rem 3.5rem 4rem;border-bottom:3px solid var(--ink);position:relative;overflow:hidden">
-  <div style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(200,221,208,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,221,208,0.04) 1px,transparent 1px);background-size:24px 24px"></div>
-  <div style="max-width:1240px;margin:0 auto;position:relative;z-index:1">
-    <div style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--orange);margin-bottom:1rem;letter-spacing:0.12em">// THE DEVICES</div>
-    <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,6vw,7rem);font-weight:700;color:var(--mist);line-height:1.05;letter-spacing:-0.02em;margin-bottom:1.2rem">Four devices.<br><em style="color:var(--orange-lt);font-weight:300;font-style:italic">All prototype.</em></h1>
-    <p style="font-size:1rem;color:rgba(200,221,208,0.6);max-width:560px;line-height:1.85">Each one started as a frustration with what was available, and ended as something I&#8217;d actually want on my desk. Files and guides are open for all of them.</p>
+  <div class="ticker-wrap">
+    <div class="ticker-track"><span class="ticker-item">FDM / 3D Printing</span><span class="ticker-pac"><svg width="14" height="14" viewBox="0 0 14 14"> <path d="M7,7 L12,3.5 A6,6 0 1,0 12,10.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="7" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Audiophile Electronics</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Open Hardware</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Nuremberg — Munich</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Rio de Janeiro</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Paris</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Community Builds</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Retro-Futurist Design</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">FDM / 3D Printing</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Audiophile Electronics</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Open Hardware</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Nuremberg — Munich</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Rio de Janeiro</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Paris</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Community Builds</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Retro-Futurist Design</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span></div>
   </div>
-</section>
+
+  <!-- ── DEVICES HERO ── -->
+  <section class="devices-hero">
+    <div class="devices-hero__inner">
+      <div class="devices-hero__eyebrow">// THE DEVICES</div>
+      <h1 class="devices-hero__title">Four devices.<br><em>All prototype.</em></h1>
+      <p class="devices-hero__sub">Each one started as a frustration with what was available, and ended as something
+        I&#8217;d actually want on my desk. Files and guides are open for all of them.</p>
+    </div>
+  </section>
 
 
-<section id="dmg-40" style="background:var(--cream);border-bottom:2px solid var(--border)">
-  <div class="section-inner">
-    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start">
-      <div>
-        <div style="margin-bottom:0.6rem">
-          <span class="product-tag tag-elec" style="margin-bottom:0">Electronics</span>
+  <!-- ── DMG-40 TRANSIT CLOCK ── -->
+  <section id="dmg-40" class="device-section">
+    <div class="section-inner">
+      <div class="reveal device-layout">
+
+        <div class="device-col-visual">
+          <div class="device-tag-row">
+            <span class="tag tag-elec">Electronics</span>
+          </div>
+          <div class="device-model-label">DMG-40</div>
+          <h2 class="device-heading">Transit Clock</h2>
+
+          <div class="retro-window device-window-wrap">
+            <div class="retro-window__titlebar">
+              <span class="retro-window__title">dmg-40.visual</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="img-carousel" id="carousel-ph1" style="background:#1a1a14;">
+              <div class="img-carousel__track">
+                <div class="img-carousel__slide">
+                  <img src="img/dmg40_render.jpg" alt="DMG 40 — three-view render"
+                    style="object-position:center top;" />
+                  <div class="img-carousel__scanline"></div>
+                </div>
+                <div class="img-carousel__slide img-carousel__slide--placeholder">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5"
+                      stroke-dasharray="4 3" />
+                    <line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                    <line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                  </svg>
+                  <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
+                </div>
+                <div class="img-carousel__slide img-carousel__slide--placeholder">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5"
+                      stroke-dasharray="4 3" />
+                    <line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                    <line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                  </svg>
+                  <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
+                </div>
+              </div>
+              <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+              <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+              <div class="img-carousel__counter">1 / 3</div>
+              <div class="img-carousel__dots">
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="device-badge-row">
+            <span class="badge badge-prototype">FUNCTIONAL</span>
+            <a href="#" class="btn btn-primary btn-view-guide">&#9658; View Guide</a>
+          </div>
         </div>
-        <div style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--orange);margin:1rem 0 0.4rem;letter-spacing:0.08em">DMG-40</div>
-        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Transit Clock</h2>
-        <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-40.visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div class="img-carousel" id="carousel-ph1" style="background:#1a1a14"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/dmg40_render.jpg" alt="DMG 40 — three-view render" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center top;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 3</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
+
+        <div class="device-col-info">
+          <p class="description-paragraph">My wife was looking for a real-time departure display of trains and metros
+            she frequently takes from our home in Nuremberg — so I built one for her. Four 8×8 LED matrix panels show
+            the next departing trains and metros in real time, pulling information from the public VGN / VGA APIs. The
+            design is modelled on the elegant roundings of the legendary Braun DN 40 clock, integrating the retro
+            feeling of German train station displays. The red-black color scheme is a nod to the city colors of
+            Nuremberg. The device is self-contained in design and functionality, integrating easily into any stylish
+            office or living space. The ultimate proof of love to urban lifestyle.</p>
+          <button class="contact-me-btn" onclick="openContact('Re: Transit Clock (DMG-40)')">Contact me!</button>
+
+          <div class="retro-window">
+            <div class="retro-window__titlebar retro-window--green">
+              <span class="retro-window__title">specs.txt</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="retro-window__body">
+              <table class="spec-table-light">
+                <tr>
+                  <td class="spec-table-light__key">Display</td>
+                  <td class="spec-table-light__val">4 × 8×8 LED matrix panels<br>Alternating departure ticker and
+                    real-time clock</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Connectivity</td>
+                  <td class="spec-table-light__val">Wi-Fi via Pico W Microcontroller</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Data</td>
+                  <td class="spec-table-light__val">Configurable transit API | Custom network and stops possible<br>(DB,
+                    VGN, SNCF, TfL, NYC MTA, ...)</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Time</td>
+                  <td class="spec-table-light__val">NTP-synced real-time clock</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Enclosure</td>
+                  <td class="spec-table-light__val">FDM-printed, inspired by Braun DN40 design language<br>Custom color
+                    schemes available on request</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Power</td>
+                  <td class="spec-table-light__val">USB-C, 5V</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Status</td>
+                  <td class="spec-table-light__val">Prototype — software and hardware fully functional</td>
+                </tr>
+              </table>
+            </div>
+          </div>
         </div>
-        <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
-          <span style="font-family:'Press Start 2P',monospace;font-size:0.42rem;padding:0.3rem 0.75rem;border-radius:4px;border:2px solid var(--orange);background:var(--orange-dim);color:var(--orange);box-shadow:2px 2px 0 var(--orange)">FUNTIONAL</span>
-          <a href="#" class="btn-primary" style="font-size:0.78rem;padding:0.6rem 1.4rem">&#9658; View Guide</a>
-        </div>
+
       </div>
-      <div>
-        <p class="description-paragraph">
-          My wife was looking for a real-time departure display of trains and metros she frequently takes from our home in Nuremberg - so I built one for her. Four 8×8 LED matrix panels show the next departing trains and metros in real time, pulling information from the public VGN / VGA APIs. The design is modelled on the elegant roundings of the legendary Braun DN 40 clock, integrating the retro feeling of German train station displays. The red-black color scheme is a nod to the city colors of Nuremberg. The device is self-contained in design and functionality, integrating easily into any stylish office or living space.
-        </p>
-        <button class="contact-me-btn" onclick="openContact('Re: Transit Clock (DMG-40)')">Contact me!</button>
-        <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar retro-titlebar-green"><span class="retro-titlebar-title">specs.txt</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div class="retro-window-body"><table style="width:100%;border-collapse:collapse"><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Display</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">4 × 8×8 LED matrix panels </br> Alternating departure ticker and real-time clock</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Connectivity</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Wi-Fi via Pico W Microcontroller</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Data</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Configurable transit API | Custom network and stops possible </br> (DB, VGN, SNCF, TfL, NYC MTA, ...)</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Time</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">NTP-synced real-time clock</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Enclosure</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">FDM-printed, inspired by Braun DN40 design language </br> Custom color schemes available on request</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Power</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">USB-C, 5V</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Status</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Prototype — software and hardware fully functional</td>
-    </tr></table></div>
+    </div>
+  </section>
+
+
+  <!-- ── DMG-Ph(I) ACOUSTIC iPHONE DOCK ── -->
+  <section id="dmg-ph1" class="device-section">
+    <div class="section-inner">
+      <div class="reveal device-layout">
+
+        <div class="device-col-visual">
+          <div class="device-tag-row">
+            <span class="tag tag-hybrid">Hybrid</span>
+          </div>
+          <div class="device-model-label">DMG-Ph(I)</div>
+          <h2 class="device-heading">Acoustic iPhone Dock</h2>
+
+          <div class="retro-window device-window-wrap">
+            <div class="retro-window__titlebar">
+              <span class="retro-window__title">dmg-ph(i).visual</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="img-carousel" id="carousel-d40" style="background:#0f0505;">
+              <div class="img-carousel__track">
+                <div class="img-carousel__slide">
+                  <img src="img/dmg_phi.jpg" alt="DMG-Ph(I) Docking Station" style="object-position:center 30%;" />
+                  <div class="img-carousel__scanline"></div>
+                </div>
+                <div class="img-carousel__slide img-carousel__slide--placeholder">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5"
+                      stroke-dasharray="4 3" />
+                    <line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                    <line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                  </svg>
+                  <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
+                </div>
+                <div class="img-carousel__slide img-carousel__slide--placeholder">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5"
+                      stroke-dasharray="4 3" />
+                    <line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                    <line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                  </svg>
+                  <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
+                </div>
+              </div>
+              <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+              <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+              <div class="img-carousel__counter">1 / 3</div>
+              <div class="img-carousel__dots">
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="device-badge-row">
+            <span class="badge badge-prototype">PROTOTYPE</span>
+            <a href="#" class="btn btn-primary btn-view-guide">&#9658; View Guide</a>
+          </div>
+        </div>
+
+        <div class="device-col-info">
+          <p class="description-paragraph">A docking station for iPhone that doubles as a passive acoustic amplifier.
+            The phone inserts horizontally and activates clock, calendar, or picture-frame mode automatically. Below, a
+            purely mechanical trumpet-horn carved from hardwood increases audio volume without any electronics — the
+            same principle as a gramophone horn, scaled for a phone speaker.</p>
+          <button class="contact-me-btn" onclick="openContact('Re: Acoustic iPhone Dock (DMG-Ph(I))')">Contact
+            me!</button>
+
+          <div class="retro-window">
+            <div class="retro-window__titlebar retro-window--green">
+              <span class="retro-window__title">specs.txt</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="retro-window__body">
+              <table class="spec-table-light">
+                <tr>
+                  <td class="spec-table-light__key">Charging</td>
+                  <td class="spec-table-light__val">MagSafe + USB-C passthrough, 15W</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Phone orientation</td>
+                  <td class="spec-table-light__val">Horizontal, auto-rotates to landscape mode</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Amplification</td>
+                  <td class="spec-table-light__val">Passive acoustic horn, hardwood (walnut or oak)</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Horn geometry</td>
+                  <td class="spec-table-light__val">Exponential flare, ~8 dB passive gain</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Enclosure</td>
+                  <td class="spec-table-light__val">FDM body + CNC-routed or turned wood horn</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Compatible</td>
+                  <td class="spec-table-light__val">iPhone 12 and later (MagSafe ring)</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Status</td>
+                  <td class="spec-table-light__val">Prototype — mechanical horn v1 complete, dock electronics in
+                    progress</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── DMG-LU1 HANDHELD MUSIC PLAYER ── -->
+  <section id="lu1" class="device-section">
+    <div class="section-inner">
+      <div class="reveal device-layout">
+
+        <div class="device-col-visual">
+          <div class="device-tag-row">
+            <span class="tag tag-elec">Electronics</span>
+          </div>
+          <div class="device-model-label">DMG-LU1</div>
+          <h2 class="device-heading">Handheld Music Player</h2>
+
+          <div class="retro-window device-window-wrap">
+            <div class="retro-window__titlebar">
+              <span class="retro-window__title">dmg-lu1.visual</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="img-carousel" id="carousel-lu1" style="background:#0f1f17;">
+              <div class="img-carousel__track">
+                <div class="img-carousel__slide">
+                  <img src="img/lu1_real.jpg" alt="DMG LU1 — real prototype" style="object-position:center 20%;" />
+                  <div class="img-carousel__scanline"></div>
+                </div>
+                <div class="img-carousel__slide img-carousel__slide--placeholder">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5"
+                      stroke-dasharray="4 3" />
+                    <line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                    <line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                  </svg>
+                  <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
+                </div>
+                <div class="img-carousel__slide img-carousel__slide--placeholder">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5"
+                      stroke-dasharray="4 3" />
+                    <line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                    <line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                  </svg>
+                  <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
+                </div>
+              </div>
+              <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+              <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+              <div class="img-carousel__counter">1 / 3</div>
+              <div class="img-carousel__dots">
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="device-badge-row">
+            <span class="badge badge-prototype">PROTOTYPE</span>
+            <a href="#" class="btn btn-primary btn-view-guide">&#9658; View Guide</a>
+          </div>
+        </div>
+
+        <div class="device-col-info">
+          <p class="description-paragraph">A handheld music player that brings ownership and haptics back to digital
+            listening. Stream from Spotify via API, or play local files from SD card. Physical cassettes contain RFID
+            chips that link directly to playlists — drop one in and the music starts. The 2.13&#8221; e-Ink screen is
+            always readable in any light, and the Raspberry Pi Zero 2W provides full Bluetooth audio output.</p>
+          <button class="contact-me-btn" onclick="openContact('Re: Handheld Music Player (DMG-LU1)')">Contact
+            me</button>
+
+          <div class="retro-window">
+            <div class="retro-window__titlebar retro-window--green">
+              <span class="retro-window__title">specs.txt</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="retro-window__body">
+              <table class="spec-table-light">
+                <tr>
+                  <td class="spec-table-light__key">Processor</td>
+                  <td class="spec-table-light__val">Raspberry Pi Zero 2W, 512 MB RAM</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Display</td>
+                  <td class="spec-table-light__val">2.13&#8221; e-Ink, 250×122 px, bistable (no power when static)</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Audio out</td>
+                  <td class="spec-table-light__val">Bluetooth 5.0 (headphones, speakers, Nautilus dock)</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Playback</td>
+                  <td class="spec-table-light__val">Spotify Connect API + local FLAC/MP3 from microSD</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">RFID</td>
+                  <td class="spec-table-light__val">PN532 reader — custom cassette inserts trigger playlists</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Battery</td>
+                  <td class="spec-table-light__val">2000 mAh LiPo, USB-C charging, ~8 hr playback</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Enclosure</td>
+                  <td class="spec-table-light__val">FDM-printed, Niemeyer-curved edges, replaceable face panels</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Status</td>
+                  <td class="spec-table-light__val">Prototype — hardware assembled, firmware in development</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── DMG-NAUTILUS SOUNDBAR ── -->
+  <section id="nautilus" class="device-section">
+    <div class="section-inner">
+      <div class="reveal device-layout">
+
+        <div class="device-col-visual">
+          <div class="device-tag-row">
+            <span class="tag tag-audio">Audio</span>
+          </div>
+          <div class="device-model-label">DMG-Nautilus</div>
+          <h2 class="device-heading">Nautilus Soundbar</h2>
+
+          <div class="retro-window device-window-wrap">
+            <div class="retro-window__titlebar">
+              <span class="retro-window__title">dmg-nautilus.visual</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="img-carousel" id="carousel-nautilus" style="background:#1a1a14;">
+              <div class="img-carousel__track">
+                <div class="img-carousel__slide">
+                  <img src="img/nautilus_render.jpg" alt="DMG Nautilus — main render" style="object-position:center;" />
+                  <div class="img-carousel__scanline"></div>
+                </div>
+                <div class="img-carousel__slide">
+                  <img src="img/nautilus_real.jpg" alt="DMG Nautilus — real prototype on antique cabinet"
+                    style="object-position:center top;" />
+                  <div class="img-carousel__scanline"></div>
+                </div>
+                <div class="img-carousel__slide">
+                  <img src="img/nautilus_front.jpg" alt="DMG Nautilus — front render" style="object-position:center;" />
+                  <div class="img-carousel__scanline"></div>
+                </div>
+                <div class="img-carousel__slide img-carousel__slide--placeholder">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5"
+                      stroke-dasharray="4 3" />
+                    <line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                    <line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
+                  </svg>
+                  <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
+                </div>
+              </div>
+              <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+              <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+              <div class="img-carousel__counter">1 / 4</div>
+              <div class="img-carousel__dots">
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="device-badge-row">
+            <span class="badge badge-prototype">PROTOTYPE</span>
+            <a href="#" class="btn btn-primary btn-view-guide">&#9658; View Guide</a>
+          </div>
+        </div>
+
+        <div class="device-col-info">
+          <p class="description-paragraph">A high-fidelity soundbar designed around two Tectonic TEBM46C20N-4B
+            bending-wave drivers — a technology that produces a remarkably uniform frequency response across a wide
+            listening area. The two speaker enclosures follow the golden ratio nautilus spiral geometry to optimise
+            internal volume and minimise standing waves. The soundbar also serves as a docking station for the DMG-LU1.
+          </p>
+          <button class="contact-me-btn" onclick="openContact('Re: Nautilus Soundbar (DMG-Nautilus)')">Contact
+            me!</button>
+
+          <div class="retro-window">
+            <div class="retro-window__titlebar retro-window--green">
+              <span class="retro-window__title">specs.txt</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="retro-window__body">
+              <table class="spec-table-light">
+                <tr>
+                  <td class="spec-table-light__key">Drivers</td>
+                  <td class="spec-table-light__val">2 × Tectonic TEBM46C20N-4B Balanced Mode Radiator</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Amplifier</td>
+                  <td class="spec-table-light__val">2 × 50W Class-D (TPA3116), 100W total</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Frequency response</td>
+                  <td class="spec-table-light__val">100 Hz – 20 kHz (&#177;3 dB)</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Enclosures</td>
+                  <td class="spec-table-light__val">Dual nautilus-spiral geometry, golden ratio proportions, FDM + resin
+                  </td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">LU1 Dock</td>
+                  <td class="spec-table-light__val">Integrated pogo-pin dock, charges and streams via Bluetooth</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Connectivity</td>
+                  <td class="spec-table-light__val">Bluetooth 5.0, optical in, 3.5 mm aux</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Enclosure</td>
+                  <td class="spec-table-light__val">FDM structural shell, wood veneer panels</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Status</td>
+                  <td class="spec-table-light__val">Prototype — enclosure design complete, amplifier board in progress
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── CTA ── -->
+  <section class="cta-section reveal">
+    <div class="cta-section__eyebrow">// ALL FILES OPEN</div>
+    <h2 class="cta-section__title">Want to build one? <em>Start here.</em></h2>
+    <p class="cta-section__sub">Every device has a corresponding guide with full BOM, source files, and step-by-step
+      build notes.</p>
+    <div class="cta-section__actions">
+      <a href="guides.html" class="btn btn-orange">&#9658; Go to Guides</a>
+      <a href="studio.html" class="btn btn-ghost-light">About the Studio</a>
+    </div>
+  </section>
+
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <a href="index.html" aria-label="DMG Labs home">
+      <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
+        <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#c8ddd0">D</text>
+        <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#c8ddd0">M</text>
+        <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00" />
+        <circle cx="74" cy="16" r="2.8" fill="#f06a00" />
+      </svg>
+    </a>
+    <ul class="footer__links">
+      <li><a href="devices.html" class="footer__link">Devices</a></li>
+      <li><a href="guides.html" class="footer__link">Guides</a></li>
+      <li><a href="studio.html" class="footer__link">Studio</a></li>
+    </ul>
+    <div class="footer__copy">&copy; 2025 De Mattos Gabriel Labs</div>
+  </footer>
+
+
+  <!-- ── LIGHTBOX v3 (with navigation) ── -->
+  <div id="lb" role="dialog" aria-modal="true" aria-label="Image zoom">
+    <button id="lb-close" aria-label="Close">&#10005; CLOSE</button>
+    <button id="lb-prev" aria-label="Previous image">&#9664;</button>
+    <img id="lb-img" src="" alt="" />
+    <button id="lb-next" aria-label="Next image">&#9654;</button>
+    <span id="lb-counter"></span>
+    <span id="lb-esc">CLICK BACKDROP OR PRESS ESC TO CLOSE</span>
+  </div>
+
+  <!-- ── CONTACT MODAL ── -->
+  <div id="contact-modal" role="dialog" aria-modal="true" aria-label="Contact form">
+    <div class="contact-modal-box">
+      <div class="contact-modal-titlebar">
+        <span class="contact-modal-title">// GET IN TOUCH</span>
+        <button class="contact-modal-close" id="contact-close" aria-label="Close">&#10005;</button>
+      </div>
+      <div class="contact-modal-body">
+        <label for="contact-subject">Re:</label>
+        <input type="text" id="contact-subject" name="subject" autocomplete="off" />
+        <label for="contact-message">Message:</label>
+        <textarea id="contact-message" name="message" placeholder="Write your message here..."></textarea>
+        <label for="contact-email">Email:</label>
+        <input type="email" id="contact-email" name="email" placeholder="your@email.com" autocomplete="email" />
+        <div class="contact-modal-actions">
+          <button class="contact-send-btn" id="contact-send">&#9658; Send</button>
         </div>
       </div>
     </div>
   </div>
-</section>
 
 
-<section id="dmg-ph1" style="background:var(--cream);border-bottom:2px solid var(--border)">
-  <div class="section-inner">
-    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start">
-      <div>
-        <div style="margin-bottom:0.6rem">
-          <span class="product-tag tag-hybrid" style="margin-bottom:0">Hybrid</span>
-        </div>
-        <div style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--orange);margin:1rem 0 0.4rem;letter-spacing:0.08em">DMG-Ph(I)</div>
-        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Acoustic iPhone Dock</h2>
-        <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-ph(i).visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div class="img-carousel" id="carousel-d40" style="background:#0f0505"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/dmg_phi.jpg" alt="DMG-Ph(I) Docking Station" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center 30%;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 3</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
-        </div>
-        <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
-          <span style="font-family:'Press Start 2P',monospace;font-size:0.42rem;padding:0.3rem 0.75rem;border-radius:4px;border:2px solid var(--orange);background:var(--orange-dim);color:var(--orange);box-shadow:2px 2px 0 var(--orange)">PROTOTYPE</span>
-          <a href="#" class="btn-primary" style="font-size:0.78rem;padding:0.6rem 1.4rem">&#9658; View Guide</a>
-        </div>
-      </div>
-      <div>
-        <p class="description-paragraph">A docking station for iPhone that doubles as a passive acoustic amplifier. The phone inserts horizontally and activates clock, calendar, or picture-frame mode automatically. Below, a purely mechanical trumpet-horn carved from hardwood increases audio volume without any electronics — the same principle as a gramophone horn, scaled for a phone speaker.</p>
-        <button class="contact-me-btn" onclick="openContact('Re: Acoustic iPhone Dock (DMG-Ph(I))')">Contact me!</button>
-        <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar retro-titlebar-green"><span class="retro-titlebar-title">specs.txt</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div class="retro-window-body"><table style="width:100%;border-collapse:collapse"><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Charging</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">MagSafe + USB-C passthrough, 15W</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Phone orientation</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Horizontal, auto-rotates to landscape mode</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Amplification</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Passive acoustic horn, hardwood (walnut or oak)</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Horn geometry</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Exponential flare, ~8 dB passive gain</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Enclosure</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">FDM body + CNC-routed or turned wood horn</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Compatible</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">iPhone 12 and later (MagSafe ring)</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Status</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Prototype — mechanical horn v1 complete, dock electronics in progress</td>
-    </tr></table></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <script>
+    /* Scroll reveal */
+    const obs = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    }), { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-
-<section id="lu1" style="background:var(--cream);border-bottom:2px solid var(--border)">
-  <div class="section-inner">
-    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start">
-      <div>
-        <div style="margin-bottom:0.6rem">
-          <span class="product-tag tag-elec" style="margin-bottom:0">Electronics</span>
-        </div>
-        <div style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--orange);margin:1rem 0 0.4rem;letter-spacing:0.08em">DMG-LU1</div>
-        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Handheld Music Player</h2>
-        <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-lu1.visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div class="img-carousel" id="carousel-lu1" style="background:#0f1f17"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/lu1_real.jpg" alt="DMG LU1 — real prototype" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center 20%;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 3</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
-        </div>
-        <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
-          <span style="font-family:'Press Start 2P',monospace;font-size:0.42rem;padding:0.3rem 0.75rem;border-radius:4px;border:2px solid var(--orange);background:var(--orange-dim);color:var(--orange);box-shadow:2px 2px 0 var(--orange)">PROTOTYPE</span>
-          <a href="#" class="btn-primary" style="font-size:0.78rem;padding:0.6rem 1.4rem">&#9658; View Guide</a>
-        </div>
-      </div>
-      <div>
-        <p class="description-paragraph">A handheld music player that brings ownership and haptics back to digital listening. Stream from Spotify via API, or play local files from SD card. Physical cassettes contain RFID chips that link directly to playlists — drop one in and the music starts. The 2.13&#8221; e-Ink screen is always readable in any light, and the Raspberry Pi Zero 2W provides full Bluetooth audio output.</p>
-        <button class="contact-me-btn" onclick="openContact('Re: Handheld Music Player (DMG-LU1)')">Contact me</button>
-        <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar retro-titlebar-green"><span class="retro-titlebar-title">specs.txt</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div class="retro-window-body"><table style="width:100%;border-collapse:collapse"><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Processor</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Raspberry Pi Zero 2W, 512 MB RAM</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Display</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">2.13&#8221; e-Ink, 250×122 px, bistable (no power when static)</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Audio out</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Bluetooth 5.0 (headphones, speakers, Nautilus dock)</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Playback</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Spotify Connect API + local FLAC/MP3 from microSD</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">RFID</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">PN532 reader — custom cassette inserts trigger playlists</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Battery</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">2000 mAh LiPo, USB-C charging, ~8 hr playback</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Enclosure</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">FDM-printed, Niemeyer-curved edges, replaceable face panels</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Status</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Prototype — hardware assembled, firmware in development</td>
-    </tr></table></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section id="nautilus" style="background:var(--cream);border-bottom:2px solid var(--border)">
-  <div class="section-inner">
-    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start">
-      <div>
-        <div style="margin-bottom:0.6rem">
-          <span class="product-tag tag-audio" style="margin-bottom:0">Audio</span>
-        </div>
-        <div style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--orange);margin:1rem 0 0.4rem;letter-spacing:0.08em">DMG-Nautilus</div>
-        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-0.02em">Nautilus Soundbar</h2>
-        <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar"><span class="retro-titlebar-title">dmg-nautilus.visual</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div class="img-carousel" id="carousel-nautilus" style="background:#1a1a14"><div class="img-carousel__track"><div class="img-carousel__slide"><img src="img/nautilus_render.jpg" alt="DMG Nautilus — main render" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide"><img src="img/nautilus_real.jpg" alt="DMG Nautilus — real prototype on antique cabinet" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center top;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide"><img src="img/nautilus_front.jpg" alt="DMG Nautilus — front render" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/><div class="img-carousel__scanline"></div></div><div class="img-carousel__slide img-carousel__slide--placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg><p>DROP IMAGE HERE<br>img/your-photo.jpg</p></div></div><button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button><button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button><div class="img-carousel__counter">1 / 4</div><div class="img-carousel__dots"><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div><div class="img-carousel__dot"></div></div></div>
-        </div>
-        <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
-          <span style="font-family:'Press Start 2P',monospace;font-size:0.42rem;padding:0.3rem 0.75rem;border-radius:4px;border:2px solid var(--orange);background:var(--orange-dim);color:var(--orange);box-shadow:2px 2px 0 var(--orange)">PROTOTYPE</span>
-          <a href="#" class="btn-primary" style="font-size:0.78rem;padding:0.6rem 1.4rem">&#9658; View Guide</a>
-        </div>
-      </div>
-      <div>
-        <p class="description-paragraph">A high-fidelity soundbar designed around two Tectonic TEBM46C20N-4B bending-wave drivers — a technology that produces a remarkably uniform frequency response across a wide listening area. The two speaker enclosures follow the golden ratio nautilus spiral geometry to optimise internal volume and minimise standing waves. The soundbar also serves as a docking station for the DMG-LU1.</p>
-        <button class="contact-me-btn" onclick="openContact('Re: Nautilus Soundbar (DMG-Nautilus)')">Contact me!</button>
-        <div class="retro-window" style="margin-bottom:2rem">
-          <div class="retro-titlebar retro-titlebar-green"><span class="retro-titlebar-title">specs.txt</span><div class="retro-window-btns"><div class="retro-wbtn retro-wbtn-r"></div><div class="retro-wbtn retro-wbtn-y"></div><div class="retro-wbtn retro-wbtn-g"></div></div></div>
-          <div class="retro-window-body"><table style="width:100%;border-collapse:collapse"><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Drivers</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">2 × Tectonic TEBM46C20N-4B Balanced Mode Radiator</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Amplifier</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">2 × 50W Class-D (TPA3116), 100W total</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Frequency response</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">100 Hz – 20 kHz (&#177;3 dB)</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Enclosures</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Dual nautilus-spiral geometry, golden ratio proportions, FDM + resin</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">LU1 Dock</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Integrated pogo-pin dock, charges and streams via Bluetooth</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Connectivity</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Bluetooth 5.0, optical in, 3.5 mm aux</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Enclosure</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">FDM structural shell, wood veneer panels</td>
-    </tr><tr>
-      <td style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--orange);padding:0.7rem 1rem 0.7rem 0;white-space:nowrap;border-bottom:1px dashed var(--border);vertical-align:top">Status</td>
-      <td style="font-size:0.88rem;color:var(--text-soft);padding:0.7rem 0;border-bottom:1px dashed var(--border);line-height:1.6">Prototype — enclosure design complete, amplifier board in progress</td>
-    </tr></table></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="cta-section reveal">
-  <div class="cta-eyebrow">// ALL FILES OPEN</div>
-  <h2 class="cta-title">Want to build one? <em>Start here.</em></h2>
-  <p class="cta-sub">Every device has a corresponding guide with full BOM, source files, and step-by-step build notes.</p>
-  <div class="cta-actions">
-    <a href="guides.html" class="btn-orange">&#9658; Go to Guides</a>
-    <a href="studio.html" class="btn-ghost-light">About the Studio</a>
-  </div>
-</section>
-
-
-<footer>
-  <a href="index.html" aria-label="DMG Labs home">
-    <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
-      <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#c8ddd0">D</text>
-      <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#c8ddd0">M</text>
-      <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00"/>
-      <circle cx="74" cy="16" r="2.8" fill="#f06a00"/>
-    </svg>
-  </a>
-  <ul class="footer-links">
-    <li><a href="devices.html">Devices</a></li>
-    <li><a href="guides.html">Guides</a></li>
-    <li><a href="studio.html">Studio</a></li>
-  </ul>
-  <div class="footer-copy">&copy; 2025 De Mattos Gabriel Labs</div>
-</footer>
-<script>
-  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}}),{threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-  document.querySelectorAll('.nav-links a').forEach(a=>{
-    if(a.getAttribute('href')===window.location.pathname.split('/').pop())a.classList.add('active');
-  });
-</script>
-<script>
-/* ── IMAGE CAROUSEL LOGIC ─────────────────────────────── */
-(function(){
-  function initCarousel(el){
-    const track  = el.querySelector('.img-carousel__track');
-    const slides = el.querySelectorAll('.img-carousel__slide');
-    const dots   = el.querySelectorAll('.img-carousel__dot');
-    const btnPrev= el.querySelector('.img-carousel__btn--prev');
-    const btnNext= el.querySelector('.img-carousel__btn--next');
-    const counter= el.querySelector('.img-carousel__counter');
-    const n = slides.length;
-    let cur = 0;
-
-    function go(idx){
-      cur = (idx + n) % n;
-      track.style.transform = 'translateX(-' + (cur * 100) + '%)';
-      dots.forEach((d,i)=> d.classList.toggle('active', i===cur));
-      if(counter) counter.textContent = (cur+1) + ' / ' + n;
-      if(btnPrev) btnPrev.disabled = false;
-      if(btnNext) btnNext.disabled = false;
-    }
-
-    if(btnPrev) btnPrev.addEventListener('click', ()=> go(cur-1));
-    if(btnNext) btnNext.addEventListener('click', ()=> go(cur+1));
-    dots.forEach((d,i)=> d.addEventListener('click',()=> go(i)));
-
-    /* keyboard: arrow keys when hovering */
-    el.setAttribute('tabindex','0');
-    el.addEventListener('keydown', e=>{
-      if(e.key==='ArrowLeft')  { go(cur-1); e.preventDefault(); }
-      if(e.key==='ArrowRight') { go(cur+1); e.preventDefault(); }
+    /* Active nav link */
+    document.querySelectorAll('.nav__link').forEach(a => {
+      if (a.getAttribute('href') === window.location.pathname.split('/').pop()) a.classList.add('active');
     });
+  </script>
 
-    /* touch / swipe */
-    let tx0=0, ty0=0;
-    el.addEventListener('touchstart', e=>{ tx0=e.touches[0].clientX; ty0=e.touches[0].clientY; },{passive:true});
-    el.addEventListener('touchend',   e=>{
-      const dx = e.changedTouches[0].clientX - tx0;
-      const dy = e.changedTouches[0].clientY - ty0;
-      if(Math.abs(dx)>Math.abs(dy)*1.5 && Math.abs(dx)>30){
-        go(dx < 0 ? cur+1 : cur-1);
+  <script>
+    /* ── IMAGE CAROUSEL LOGIC ── */
+    (function () {
+      function initCarousel(el) {
+        const track = el.querySelector('.img-carousel__track');
+        const slides = el.querySelectorAll('.img-carousel__slide');
+        const dots = el.querySelectorAll('.img-carousel__dot');
+        const btnPrev = el.querySelector('.img-carousel__btn--prev');
+        const btnNext = el.querySelector('.img-carousel__btn--next');
+        const counter = el.querySelector('.img-carousel__counter');
+        const n = slides.length;
+        let cur = 0;
+
+        function go(idx) {
+          cur = (idx + n) % n;
+          track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+          dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+          if (counter) counter.textContent = (cur + 1) + ' / ' + n;
+          if (btnPrev) btnPrev.disabled = false;
+          if (btnNext) btnNext.disabled = false;
+        }
+
+        if (btnPrev) btnPrev.addEventListener('click', () => go(cur - 1));
+        if (btnNext) btnNext.addEventListener('click', () => go(cur + 1));
+        dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+
+        el.setAttribute('tabindex', '0');
+        el.addEventListener('keydown', e => {
+          if (e.key === 'ArrowLeft') { go(cur - 1); e.preventDefault(); }
+          if (e.key === 'ArrowRight') { go(cur + 1); e.preventDefault(); }
+        });
+
+        let tx0 = 0, ty0 = 0;
+        el.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY; }, { passive: true });
+        el.addEventListener('touchend', e => {
+          const dx = e.changedTouches[0].clientX - tx0;
+          const dy = e.changedTouches[0].clientY - ty0;
+          if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 30) go(dx < 0 ? cur + 1 : cur - 1);
+        }, { passive: true });
+
+        go(0);
       }
-    },{passive:true});
 
-    go(0);
-  }
+      document.querySelectorAll('.img-carousel').forEach(initCarousel);
+    })();
+  </script>
 
-  document.querySelectorAll('.img-carousel').forEach(initCarousel);
-})();
-</script>
+  <script>
+    /* ── LIGHTBOX v3 ── */
+    (function () {
+      var overlay = document.getElementById('lb');
+      var imgEl = document.getElementById('lb-img');
+      var btnClose = document.getElementById('lb-close');
+      var btnPrev = document.getElementById('lb-prev');
+      var btnNext = document.getElementById('lb-next');
+      var counter = document.getElementById('lb-counter');
+      if (!overlay) return;
 
+      var lbImages = [];
+      var lbIdx = 0;
 
+      function getCarouselImages(carousel) {
+        var imgs = [];
+        carousel.querySelectorAll('.img-carousel__slide:not(.img-carousel__slide--placeholder) img').forEach(function (img) {
+          imgs.push({ src: img.src, alt: img.alt || '' });
+        });
+        return imgs;
+      }
 
+      function updateNav() {
+        btnPrev.hidden = (lbImages.length <= 1);
+        btnNext.hidden = (lbImages.length <= 1);
+        counter.textContent = lbImages.length > 1 ? (lbIdx + 1) + ' / ' + lbImages.length : '';
+      }
 
+      function showImage(idx) {
+        lbIdx = (idx + lbImages.length) % lbImages.length;
+        imgEl.src = lbImages[lbIdx].src;
+        imgEl.alt = lbImages[lbIdx].alt;
+        updateNav();
+      }
 
-<!-- ── LIGHTBOX v3 (with navigation) ── -->
-<div id="lb" role="dialog" aria-modal="true" aria-label="Image zoom">
-  <button id="lb-close" aria-label="Close">&#10005; CLOSE</button>
-  <button id="lb-prev" aria-label="Previous image">&#9664;</button>
-  <img id="lb-img" src="" alt=""/>
-  <button id="lb-next" aria-label="Next image">&#9654;</button>
-  <span id="lb-counter"></span>
-  <span id="lb-esc">CLICK BACKDROP OR PRESS ESC TO CLOSE</span>
-</div>
+      function openLB(images, startIdx) {
+        lbImages = images;
+        overlay.classList.add('on');
+        document.body.style.overflow = 'hidden';
+        showImage(startIdx || 0);
+        btnClose.focus();
+      }
 
-<!-- ── CONTACT MODAL ── -->
-<div id="contact-modal" role="dialog" aria-modal="true" aria-label="Contact form">
-  <div class="contact-modal-box">
-    <div class="contact-modal-titlebar">
-      <span class="contact-modal-title">// GET IN TOUCH</span>
-      <button class="contact-modal-close" id="contact-close" aria-label="Close">&#10005;</button>
-    </div>
-    <div class="contact-modal-body">
-      <label for="contact-subject">Re:</label>
-      <input type="text" id="contact-subject" name="subject" autocomplete="off"/>
-      <label for="contact-message">Message:</label>
-      <textarea id="contact-message" name="message" placeholder="Write your message here..."></textarea>
-      <label for="contact-email">Email:</label>
-      <input type="email" id="contact-email" name="email" placeholder="your@email.com" autocomplete="email"/>
-      <div class="contact-modal-actions">
-        <button class="contact-send-btn" id="contact-send">&#9658; Send</button>
-      </div>
-    </div>
-  </div>
-</div>
+      function closeLB() {
+        overlay.classList.remove('on');
+        document.body.style.overflow = '';
+        setTimeout(function () { imgEl.src = ''; lbImages = []; }, 250);
+      }
 
-<script>
-/* ── LIGHTBOX v3 ── */
-(function(){
-  var overlay  = document.getElementById('lb');
-  var imgEl    = document.getElementById('lb-img');
-  var btnClose = document.getElementById('lb-close');
-  var btnPrev  = document.getElementById('lb-prev');
-  var btnNext  = document.getElementById('lb-next');
-  var counter  = document.getElementById('lb-counter');
-  if(!overlay) return;
+      document.querySelectorAll('.img-carousel').forEach(function (carousel) {
+        carousel.addEventListener('click', function (e) {
+          if (e.target.closest('.img-carousel__btn') || e.target.closest('.img-carousel__dots')) return;
+          var slide = e.target.closest('.img-carousel__slide:not(.img-carousel__slide--placeholder)');
+          if (!slide) return;
+          var clickedImg = slide.querySelector('img');
+          if (!clickedImg) return;
+          var images = getCarouselImages(carousel);
+          var startIdx = images.findIndex(function (im) { return im.src === clickedImg.src; });
+          openLB(images, startIdx < 0 ? 0 : startIdx);
+        });
+      });
 
-  var lbImages = []; // [{src,alt}]
-  var lbIdx    = 0;
+      btnPrev.addEventListener('click', function (e) { e.stopPropagation(); showImage(lbIdx - 1); });
+      btnNext.addEventListener('click', function (e) { e.stopPropagation(); showImage(lbIdx + 1); });
 
-  function getCarouselImages(carousel){
-    var imgs = [];
-    carousel.querySelectorAll('.img-carousel__slide:not(.img-carousel__slide--placeholder) img').forEach(function(img){
-      imgs.push({src: img.src, alt: img.alt || ''});
-    });
-    return imgs;
-  }
+      var tx0 = 0;
+      imgEl.addEventListener('touchstart', function (e) { tx0 = e.touches[0].clientX; }, { passive: true });
+      imgEl.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - tx0;
+        if (Math.abs(dx) > 40) showImage(dx < 0 ? lbIdx + 1 : lbIdx - 1);
+      }, { passive: true });
 
-  function updateNav(){
-    btnPrev.hidden = (lbImages.length <= 1);
-    btnNext.hidden = (lbImages.length <= 1);
-    counter.textContent = lbImages.length > 1 ? (lbIdx + 1) + ' / ' + lbImages.length : '';
-  }
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeLB(); });
+      btnClose.addEventListener('click', closeLB);
+      document.addEventListener('keydown', function (e) {
+        if (!overlay.classList.contains('on')) return;
+        if (e.key === 'Escape') { closeLB(); }
+        if (e.key === 'ArrowLeft') { showImage(lbIdx - 1); e.preventDefault(); }
+        if (e.key === 'ArrowRight') { showImage(lbIdx + 1); e.preventDefault(); }
+      });
+    })();
+  </script>
 
-  function showImage(idx){
-    lbIdx = (idx + lbImages.length) % lbImages.length;
-    imgEl.src = lbImages[lbIdx].src;
-    imgEl.alt = lbImages[lbIdx].alt;
-    updateNav();
-  }
+  <script>
+    /* ── CONTACT MODAL ── */
+    (function () {
+      var modal = document.getElementById('contact-modal');
+      var closeBtn = document.getElementById('contact-close');
+      var sendBtn = document.getElementById('contact-send');
+      var subject = document.getElementById('contact-subject');
+      var message = document.getElementById('contact-message');
+      var email = document.getElementById('contact-email');
+      if (!modal) return;
 
-  function openLB(images, startIdx){
-    lbImages = images;
-    overlay.classList.add('on');
-    document.body.style.overflow = 'hidden';
-    showImage(startIdx || 0);
-    btnClose.focus();
-  }
+      window.openContact = function (deviceName) {
+        subject.value = deviceName || '';
+        message.value = '';
+        email.value = '';
+        modal.classList.add('on');
+        document.body.style.overflow = 'hidden';
+        setTimeout(function () { message.focus(); }, 50);
+      };
 
-  function closeLB(){
-    overlay.classList.remove('on');
-    document.body.style.overflow = '';
-    setTimeout(function(){ imgEl.src = ''; lbImages = []; }, 250);
-  }
+      function closeContact() {
+        modal.classList.remove('on');
+        document.body.style.overflow = '';
+      }
 
-  /* attach click to each carousel */
-  document.querySelectorAll('.img-carousel').forEach(function(carousel){
-    carousel.addEventListener('click', function(e){
-      if(e.target.closest('.img-carousel__btn') || e.target.closest('.img-carousel__dots')) return;
-      var slide = e.target.closest('.img-carousel__slide:not(.img-carousel__slide--placeholder)');
-      if(!slide) return;
-      var clickedImg = slide.querySelector('img');
-      if(!clickedImg) return;
-      var images = getCarouselImages(carousel);
-      var startIdx = images.findIndex(function(im){ return im.src === clickedImg.src; });
-      openLB(images, startIdx < 0 ? 0 : startIdx);
-    });
-  });
+      closeBtn.addEventListener('click', closeContact);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeContact(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('on')) closeContact();
+      });
 
-  /* nav buttons */
-  btnPrev.addEventListener('click', function(e){ e.stopPropagation(); showImage(lbIdx - 1); });
-  btnNext.addEventListener('click', function(e){ e.stopPropagation(); showImage(lbIdx + 1); });
-
-  /* touch swipe in lightbox */
-  var tx0 = 0;
-  imgEl.addEventListener('touchstart', function(e){ tx0 = e.touches[0].clientX; }, {passive:true});
-  imgEl.addEventListener('touchend',   function(e){
-    var dx = e.changedTouches[0].clientX - tx0;
-    if(Math.abs(dx) > 40){ showImage(dx < 0 ? lbIdx + 1 : lbIdx - 1); }
-  }, {passive:true});
-
-  /* close handlers */
-  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeLB(); });
-  btnClose.addEventListener('click', closeLB);
-  document.addEventListener('keydown', function(e){
-    if(!overlay.classList.contains('on')) return;
-    if(e.key === 'Escape')      { closeLB(); }
-    if(e.key === 'ArrowLeft')   { showImage(lbIdx - 1); e.preventDefault(); }
-    if(e.key === 'ArrowRight')  { showImage(lbIdx + 1); e.preventDefault(); }
-  });
-})();
-
-/* ── CONTACT MODAL ── */
-(function(){
-  var modal   = document.getElementById('contact-modal');
-  var closeBtn= document.getElementById('contact-close');
-  var sendBtn = document.getElementById('contact-send');
-  var subject = document.getElementById('contact-subject');
-  var message = document.getElementById('contact-message');
-  var email   = document.getElementById('contact-email');
-  if(!modal) return;
-
-  window.openContact = function(deviceName){
-    subject.value = deviceName || '';
-    message.value = '';
-    email.value   = '';
-    modal.classList.add('on');
-    document.body.style.overflow = 'hidden';
-    setTimeout(function(){ message.focus(); }, 50);
-  };
-
-  function closeContact(){
-    modal.classList.remove('on');
-    document.body.style.overflow = '';
-  }
-
-  closeBtn.addEventListener('click', closeContact);
-  modal.addEventListener('click', function(e){ if(e.target === modal) closeContact(); });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && modal.classList.contains('on')) closeContact();
-  });
-
-  sendBtn.addEventListener('click', function(){
-    var subj = subject.value.trim() || 'DMG Labs Enquiry';
-    var msg  = message.value.trim();
-    var from = email.value.trim();
-    var body = '';
-    if(msg)  body += msg;
-    if(from) body += (body ? '\n\n' : '') + 'Reply to: ' + from;
-    var mailto = 'mailto:alexanderdemattosgabriel@gmail.com'
-      + '?subject=' + encodeURIComponent(subj)
-      + '&body='    + encodeURIComponent(body);
-    window.location.href = mailto;
-    closeContact();
-  });
-})();
-</script>
+      sendBtn.addEventListener('click', function () {
+        var subj = subject.value.trim() || 'DMG Labs Enquiry';
+        var msg = message.value.trim();
+        var from = email.value.trim();
+        var body = '';
+        if (msg) body += msg;
+        if (from) body += (body ? '\n\n' : '') + 'Reply to: ' + from;
+        var mailto = 'mailto:alexanderdemattosgabriel@gmail.com'
+          + '?subject=' + encodeURIComponent(subj)
+          + '&body=' + encodeURIComponent(body);
+        window.location.href = mailto;
+        closeContact();
+      });
+    })();
+  </script>
 
 </body>
+
 </html>
