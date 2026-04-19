@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>DMG Labs — Guide 02: Transit Clock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=DM+Mono:wght@300;400&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<style>
+
+/* ── GUIDE PAGE LAYOUT ── */
+:root {
+  --guide-max: 780px;
+  --guide-wide: 1100px;
+}
+
+.guide-hero {
+  background: var(--color-ink);
+  padding: 5rem 2.5rem 4rem;
+  border-bottom: 3px solid var(--color-orange);
+}
+.guide-hero__inner {
+  max-width: var(--guide-wide);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.guide-hero__breadcrumb {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(200,221,208,0.4);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.guide-hero__breadcrumb a { color: inherit; text-decoration: none; transition: color 0.15s; }
+.guide-hero__breadcrumb a:hover { color: var(--color-orange); }
+.guide-hero__breadcrumb-sep { opacity: 0.3; }
+.guide-hero__eyebrow {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.45rem;
+  color: var(--color-orange);
+  letter-spacing: 0.14em;
+  margin-bottom: 1rem;
+}
+.guide-hero__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--color-mist);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.2rem;
+}
+.guide-hero__title em { color: var(--color-orange); font-style: italic; font-weight: 300; }
+.guide-hero__desc {
+  font-size: 0.97rem;
+  color: rgba(200,221,208,0.62);
+  line-height: 1.85;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+
+/* Skill tags row */
+.guide-skill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.skill-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  border: 1.5px solid currentColor;
+  display: inline-block;
+}
+.skill-tag--elec  { color: #7aab8a; }
+.skill-tag--fdm   { color: #4a7c59; }
+.skill-tag--api   { color: var(--color-orange); }
+.skill-tag--code  { color: rgba(200,221,208,0.55); }
+
+/* Stat strip inside hero */
+.guide-hero__stats {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 1.2rem 0;
+  border-top: 1px dashed rgba(200,221,208,0.14);
+  border-bottom: 1px dashed rgba(200,221,208,0.14);
+  margin-bottom: 2rem;
+}
+.guide-stat-item { display: flex; flex-direction: column; gap: 0.2rem; }
+.guide-stat-item__label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.38rem;
+  color: rgba(200,221,208,0.35);
+  letter-spacing: 0.1em;
+}
+.guide-stat-item__value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-orange);
+  line-height: 1;
+}
+
+/* Hero image / carousel */
+.guide-hero__visual {
+  position: relative;
+}
+.guide-hero__visual .retro-window {
+  border: 2px solid rgba(200,221,208,0.18);
+  box-shadow: 6px 6px 0 rgba(240,106,0,0.2);
+}
+
+/* ── DOWNLOAD BANNER ── */
+.download-banner {
+  background: var(--color-forest);
+  border-top: 3px solid var(--color-ink);
+  border-bottom: 3px solid var(--color-ink);
+  padding: 1.8rem 2.5rem;
+}
+.download-banner__inner {
+  max-width: var(--guide-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.download-banner__label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.42rem;
+  color: var(--color-orange);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.4rem;
+}
+.download-banner__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-mist);
+  line-height: 1.1;
+}
+.download-banner__files {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+.file-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(200,221,208,0.55);
+  background: rgba(200,221,208,0.07);
+  border: 1px solid rgba(200,221,208,0.14);
+  border-radius: 4px;
+  padding: 0.25rem 0.6rem;
+  letter-spacing: 0.08em;
+}
+
+/* ── GUIDE BODY ── */
+.guide-body {
+  background: var(--color-cream);
+  padding: 5rem 2.5rem;
+}
+.guide-body__inner {
+  max-width: var(--guide-wide);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+/* Sticky sidebar TOC */
+.guide-toc {
+  position: sticky;
+  top: 80px;
+}
+.guide-toc__heading {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.38rem;
+  color: var(--color-orange);
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+}
+.guide-toc__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.guide-toc__links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-soft);
+  text-decoration: none;
+  padding: 0.3rem 0.5rem;
+  border-left: 2px solid transparent;
+  display: block;
+  transition: color 0.15s, border-color 0.15s;
+}
+.guide-toc__links a:hover,
+.guide-toc__links a.active {
+  color: var(--color-orange);
+  border-left-color: var(--color-orange);
+}
+.guide-toc__divider {
+  height: 1px;
+  background: rgba(26,58,42,0.12);
+  margin: 0.75rem 0.5rem;
+}
+
+/* Guide main content */
+.guide-content { min-width: 0; }
+
+/* Section headers */
+.guide-section { margin-bottom: 4.5rem; scroll-margin-top: 100px; }
+.guide-section__eyebrow {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.42rem;
+  color: var(--color-orange);
+  letter-spacing: 0.14em;
+  margin-bottom: 0.6rem;
+}
+.guide-section__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+}
+.guide-section__body {
+  font-size: 0.97rem;
+  color: var(--color-text-soft);
+  line-height: 1.85;
+}
+.guide-section__body p + p { margin-top: 1rem; }
+.guide-section__body strong { color: var(--color-ink); }
+.guide-section__body a { color: var(--color-orange); text-underline-offset: 3px; }
+
+/* ── BOM TABLE ── */
+.bom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin: 1.5rem 0;
+}
+.bom-table thead th {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.38rem;
+  color: var(--color-orange);
+  letter-spacing: 0.1em;
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 2px solid rgba(26,58,42,0.14);
+  background: var(--color-parchment);
+  white-space: nowrap;
+}
+.bom-table tbody tr {
+  border-bottom: 1px dashed rgba(26,58,42,0.1);
+  transition: background 0.12s;
+}
+.bom-table tbody tr:last-child { border-bottom: none; }
+.bom-table tbody tr:hover { background: rgba(240,106,0,0.04); }
+.bom-table td {
+  padding: 0.7rem 0.8rem;
+  color: var(--color-text-soft);
+  vertical-align: top;
+}
+.bom-table td:first-child { font-weight: 600; color: var(--color-ink); }
+.bom-table td:nth-child(2) { font-family: 'DM Mono', monospace; font-size: 0.78rem; }
+.bom-qty {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.45rem;
+  color: var(--color-orange);
+  white-space: nowrap;
+}
+.bom-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--color-orange);
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
+  transition: opacity 0.15s;
+}
+.bom-link:hover { opacity: 0.7; }
+.bom-optional {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.36rem;
+  color: var(--color-text-faint);
+  vertical-align: middle;
+  margin-left: 0.3rem;
+  letter-spacing: 0.06em;
+}
+
+/* ── BUILD STEPS ── */
+.step-list { display: flex; flex-direction: column; gap: 2rem; margin-top: 1.5rem; }
+.step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+.step__num {
+  width: 48px; height: 48px;
+  border-radius: 6px;
+  border: 2px solid var(--color-ink);
+  background: var(--color-ink);
+  box-shadow: 3px 3px 0 var(--color-orange);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.5rem;
+  color: var(--color-orange);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.step__body {}
+.step__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+}
+.step__text {
+  font-size: 0.92rem;
+  color: var(--color-text-soft);
+  line-height: 1.8;
+}
+.step__text p + p { margin-top: 0.7rem; }
+.step__text code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8em;
+  background: rgba(26,58,42,0.08);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  color: var(--color-forest);
+}
+.step__text pre {
+  background: var(--color-ink);
+  color: #a8d8b8;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  line-height: 1.75;
+  overflow-x: auto;
+  border-left: 3px solid var(--color-orange);
+  margin: 0.75rem 0;
+}
+.step__divider {
+  height: 1px;
+  background: rgba(26,58,42,0.1);
+  margin-top: 2rem;
+  grid-column: 1 / -1;
+}
+
+/* ── MEDIA INSERTS ── */
+.guide-media { margin: 2.5rem 0; }
+.guide-media--wide { margin-left: -1rem; margin-right: -1rem; }
+.guide-media__caption {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--color-text-faint);
+  letter-spacing: 0.08em;
+  margin-top: 0.6rem;
+  padding-left: 0.25rem;
+}
+
+/* Media grid for side-by-side images */
+.guide-media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+/* ── CALLOUT BOXES ── */
+.guide-callout {
+  border-left: 4px solid var(--color-orange);
+  background: rgba(240,106,0,0.07);
+  padding: 1rem 1.4rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  color: var(--color-text-soft);
+  line-height: 1.75;
+}
+.guide-callout__label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.38rem;
+  color: var(--color-orange);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+}
+.guide-callout--tip { border-left-color: #4a7c59; background: rgba(74,124,89,0.07); }
+.guide-callout--tip .guide-callout__label { color: #4a7c59; }
+.guide-callout--warn { border-left-color: #c62828; background: rgba(198,40,40,0.06); }
+.guide-callout--warn .guide-callout__label { color: #c62828; }
+
+.img-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: 2px dashed rgba(240,106,0,0.4);
+  border-radius: 8px;
+  overflow: hidden;        /* clips the image to the rounded border */
+  position: relative;      /* context for the absolute img */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: rgba(240,106,0,0.5);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.4rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+.img-placeholder--tall { aspect-ratio: 4/3; }
+.img-placeholder svg { opacity: 0.4; }
+
+/* When a real image is present, stretch it to fill the box */
+.img-placeholder img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .guide-hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .guide-body__inner { grid-template-columns: 1fr; }
+  .guide-toc { display: none; }
+  .guide-media-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .guide-hero { padding: 3.5rem 1.5rem 3rem; }
+  .guide-body { padding: 3rem 1.5rem; }
+  .download-banner { padding: 1.4rem 1.5rem; }
+  .step { grid-template-columns: 36px 1fr; gap: 1rem; }
+  .step__num { width: 36px; height: 36px; font-size: 0.4rem; }
+}
+
+/* Image carousel inside guide (same styles as devices.html) */
+.img-carousel{position:relative;overflow:hidden;user-select:none}
+.img-carousel__track{display:flex;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);will-change:transform;height:340px}
+.img-carousel__slide{flex:0 0 100%;height:340px;position:relative;overflow:hidden}
+.img-carousel__slide img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.img-carousel__scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.07) 3px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:2}
+.img-carousel__btn{position:absolute;top:50%;transform:translateY(-50%);z-index:10;cursor:pointer;background:rgba(15,31,23,0.72);border:2px solid rgba(240,106,0,0.7);color:#f06a00;font-family:'Press Start 2P',monospace;font-size:0.55rem;padding:0.5rem 0.65rem;line-height:1;border-radius:4px;box-shadow:2px 2px 0 rgba(196,85,0,0.8);transition:background 0.15s;backdrop-filter:blur(4px)}
+.img-carousel__btn:hover{background:rgba(240,106,0,0.25)}
+.img-carousel__btn--prev{left:10px}
+.img-carousel__btn--next{right:10px}
+.img-carousel__dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10}
+.img-carousel__dot{width:8px;height:8px;border-radius:2px;background:rgba(200,221,208,0.35);border:1.5px solid rgba(240,106,0,0.4);cursor:pointer;transition:background 0.15s,border-color 0.15s,transform 0.15s}
+.img-carousel__dot.active{background:#f06a00;border-color:#c45500;transform:scale(1.25)}
+.img-carousel__counter{position:absolute;top:10px;right:10px;z-index:10;font-family:'Press Start 2P',monospace;font-size:0.38rem;color:rgba(200,221,208,0.7);background:rgba(15,31,23,0.7);padding:0.3rem 0.55rem;border-radius:3px;border:1px solid rgba(240,106,0,0.3);backdrop-filter:blur(4px);letter-spacing:0.08em}
+.img-carousel__slide--placeholder{background:rgba(26,58,42,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem}
+.img-carousel__slide--placeholder p{font-family:'Press Start 2P',monospace;font-size:0.4rem;color:rgba(200,221,208,0.4);letter-spacing:0.1em;text-align:center;line-height:2}
+
+/* Video slide */
+.img-carousel__slide--video{background:#000;position:relative}
+.img-carousel__slide--video video{width:100%;height:100%;object-fit:cover;display:block}
+.carousel-video-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;background:rgba(15,31,23,0.62);cursor:pointer;z-index:5;transition:opacity 0.2s}
+.carousel-video-play.hidden{opacity:0;pointer-events:none}
+.carousel-video-play__icon{width:52px;height:52px;border-radius:50%;border:2.5px solid #f06a00;background:rgba(240,106,0,0.18);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#f06a00;box-shadow:0 0 0 6px rgba(240,106,0,0.1)}
+.carousel-video-play__label{font-family:'Press Start 2P',monospace;font-size:0.38rem;color:rgba(200,221,208,0.7);letter-spacing:0.12em}
+.carousel-video-mute{position:absolute;bottom:38px;right:10px;z-index:10;background:rgba(15,31,23,0.72);border:2px solid rgba(240,106,0,0.6);color:#f06a00;font-family:'Press Start 2P',monospace;font-size:0.45rem;padding:0.35rem 0.55rem;border-radius:4px;cursor:pointer;backdrop-filter:blur(4px);line-height:1;display:none}
+.carousel-video-mute.visible{display:block}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo" aria-label="DMG Labs">
+    <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
+      <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#0f1f17">D</text>
+      <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#0f1f17">M</text>
+      <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00"/>
+      <circle cx="74" cy="16" r="2.8" fill="#f06a00"/>
+    </svg>
+  </a>
+  <ul class="nav__links">
+    <li><a href="devices.html" class="nav__link">Devices</a></li>
+    <li><a href="guides.html" class="nav__link">Guides</a></li>
+    <li><a href="studio.html" class="nav__link">Studio</a></li>
+  </ul>
+  <a href="guides.html" class="btn btn-nav-cta">&#9658; Start Building</a>
+</nav>
+
+
+<!-- ── HERO ── -->
+<section class="guide-hero">
+  <div class="guide-hero__inner">
+
+    <!-- Left: meta + description -->
+    <div>
+      <div class="guide-hero__breadcrumb">
+        <a href="guides.html">Guides</a>
+        <span class="guide-hero__breadcrumb-sep">/</span>
+        <span>02 — Transit Clock</span>
+      </div>
+      <div class="guide-hero__eyebrow">// GUIDE 02 &middot; DMG-40 TRANSIT CLOCK</div>
+      <h1 class="guide-hero__title">Build the<br><em>Transit Clock.</em></h1>
+      <p class="guide-hero__desc">A real-time LED departure board for trains and metros, inspired by the Braun DN 40. Four 8×8 LED matrix panels, a Pico W, a 3D-printed enclosure and some code to query the public, transit API of your city.</p>
+
+      <div class="guide-skill-row">
+        <span class="skill-tag skill-tag--elec">Electronics</span>
+        <span class="skill-tag skill-tag--fdm">3D Printing</span>
+        <span class="skill-tag skill-tag--api">API Integration</span>
+        <span class="skill-tag skill-tag--code">MicroPython</span>
+      </div>
+
+      <div class="guide-hero__stats">
+        <div class="guide-stat-item">
+          <span class="guide-stat-item__label">Difficulty</span>
+          <span class="guide-stat-item__value" style="font-size:1.1rem;letter-spacing:0.02em">BEGINNER</span>
+        </div>
+        <div class="guide-stat-item">
+          <span class="guide-stat-item__label">Steps</span>
+          <span class="guide-stat-item__value">10</span>
+        </div>
+        <div class="guide-stat-item">
+          <span class="guide-stat-item__label">Est. time</span>
+          <span class="guide-stat-item__value" style="font-size:1.1rem">~&nbsp;6&nbsp;hrs</span>
+        </div>
+        <div class="guide-stat-item">
+          <span class="guide-stat-item__label">Approx. cost</span>
+          <span class="guide-stat-item__value" style="font-size:1.1rem">~&nbsp;50&nbsp;€</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+        <a href="#downloads" class="btn btn-orange">&#9658; Get the Files</a>
+        <a href="#build" class="btn btn-ghost">Jump to Build</a>
+      </div>
+    </div>
+
+    <!-- Right: device image carousel -->
+    <div class="guide-hero__visual">
+      <div class="retro-window">
+        <div class="retro-window__titlebar">
+          <span class="retro-window__title">dmg-40.visual</span>
+          <div class="window-btns">
+            <div class="window-btn window-btn--red"></div>
+            <div class="window-btn window-btn--yellow"></div>
+            <div class="window-btn window-btn--green"></div>
+          </div>
+        </div>
+        <div class="img-carousel" id="hero-carousel" style="background:#1a1a14;">
+          <div class="img-carousel__track">
+            <div class="img-carousel__slide">
+              <img src="img/dmg40_render.jpg" alt="DMG-40 Transit Clock — three-view render" style="object-position:center top;"/>
+              <div class="img-carousel__scanline"></div>
+            </div>
+            <div class="img-carousel__slide">
+              <img src="img/DMG-DN40-Rendering-Iso-L_Gradient.png" alt="DMG-40 Transit Clock gradient render" style="object-position:center top;"/>
+              <div class="img-carousel__scanline"></div>
+            </div>
+            <div class="img-carousel__slide">
+              <img src="img/DMG-DN40-Rendering-Iso-L_Gradient_2.png" alt="DMG-40 Transit Clock gradient render 2" style="object-position:center top;"/>
+              <div class="img-carousel__scanline"></div>
+            </div>
+            <div class="img-carousel__slide">
+              <img src="img/DMG-DN40-Technical-Drawing-Illustrative-only.png" alt="DMG-40 Transit Clock - illustrative drawing" style="object-position:center top;"/>
+              <div class="img-carousel__scanline"></div>
+            </div>
+            <div class="img-carousel__slide img-carousel__slide--video">
+              <video src="video/DMG-DN40_WorkingVid-Window.mp4" loop playsinline preload="none" poster="img/dmg40_render.jpg"></video>
+              <div class="img-carousel__scanline"></div>
+              <div class="carousel-video-play" aria-label="Play video">
+                <div class="carousel-video-play__icon">&#9654;</div>
+                <span class="carousel-video-play__label">PLAY VIDEO</span>
+              </div>
+              <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+            </div>
+          </div>
+          <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+          <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+          <div class="img-carousel__counter">1 / 5</div>
+          <div class="img-carousel__dots">
+            <div class="img-carousel__dot"></div>
+            <div class="img-carousel__dot"></div>
+            <div class="img-carousel__dot"></div>
+            <div class="img-carousel__dot"></div>
+            <div class="img-carousel__dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── DOWNLOAD BANNER ── -->
+<div class="download-banner" id="downloads">
+  <div class="download-banner__inner">
+    <div>
+      <div class="download-banner__label">// ALL FILES OPEN SOURCE</div>
+      <div class="download-banner__title">Download everything — STLs, firmware, config templates.</div>
+      <div class="download-banner__files">
+        <span class="file-chip">dmg40_enclosure_v2.stl</span>
+        <span class="file-chip">dmg40_firmware.py</span>
+        <span class="file-chip">config_template.json</span>
+        <span class="file-chip">wiring_diagram.pdf</span>
+        <span class="file-chip">BOM.csv</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;flex-shrink:0">
+      <a href="https://drive.google.com/drive/folders/YOUR_FOLDER_ID" target="_blank" rel="noopener" class="btn btn-orange">&#9658; Open in Google Drive</a>
+      <a href="https://github.com/YOUR_USERNAME/dmg-40" target="_blank" rel="noopener" class="btn btn-ghost-light">GitHub Repo</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── GUIDE BODY ── -->
+<div class="guide-body">
+  <div class="guide-body__inner">
+
+    <!-- Sidebar TOC -->
+    <aside class="guide-toc">
+      <div class="guide-toc__heading">// IN THIS GUIDE</div>
+      <ul class="guide-toc__links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#bom">Bill of Materials</a></li>
+        <div class="guide-toc__divider"></div>
+        <li><a href="#build">Build Steps</a></li>
+        <li><a href="#step-01">01 — Print the enclosure</a></li>
+        <li><a href="#step-02">02 — Assemble the matrix</a></li>
+        <li><a href="#step-03">03 — Wire up the Pico W</a></li>
+        <li><a href="#step-04">04 — Flash the firmware</a></li>
+        <li><a href="#step-05">05 — Configure your transit API</a></li>
+        <li><a href="#step-06">06 — Set the NTP clock</a></li>
+        <li><a href="#step-07">07 — Final wiring & routing</a></li>
+        <li><a href="#step-08">08 — Close the enclosure</a></li>
+        <li><a href="#step-09">09 — First power-on</a></li>
+        <li><a href="#step-10">10 — Customising the display</a></li>
+        <div class="guide-toc__divider"></div>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main class="guide-content">
+
+      <!-- Overview -->
+      <section class="guide-section" id="overview">
+        <div class="guide-section__eyebrow">// OVERVIEW</div>
+        <h2 class="guide-section__title">What you're building</h2>
+        <div class="guide-section__body">
+          <p>The DMG-40 is a compact real-time departure board for the trains and metros you actually take. Four 8×8 LED matrix panels sit behind a smoked acrylic diffuser inside a Braun-inspired FDM enclosure, showing the next two departures for any combination of stops you configure. The Pico W polls the transit API every 30 seconds over Wi-Fi and syncs its clock with NTP so the time is always accurate — even after a power cut.</p>
+          <p>The enclosure is a single-piece FDM print with a friction-fit back panel, so it requires no screws and opens easily for cable access. The red-on-black color scheme is a nod to the Nuremberg city colors that inspired the original.</p>
+          <p>This guide covers everything from printing to a working display. The firmware step assumes no prior MicroPython experience — all the scripts you need are in the download package.</p>
+        </div>
+
+        <!-- Two-photo grid -->
+        <div class="guide-media-grid" style="margin-top:2rem">
+          <div>
+            <div class="img-placeholder img-placeholder--tall">
+              <img src="img/DMG-DN40_Rendering_Classic_EU-Urban_Metro.png" alt="DMG-40 Transit Clock — European Urban Render" style="object-position:center top;"/>
+            </div>
+            <p class="guide-media__caption">The rendered DMG-40 in an urban European setting.</p>
+          </div>
+          <div>
+            <div class="img-placeholder img-placeholder--tall">
+              <img src="img/DMG-DN40_Rendering_Industrial_Urban.png" alt="DMG-40 Transit Clock — Industrial Setting Render" style="object-position:center top;"/>
+            </div>
+            <p class="guide-media__caption">Also looks great in any industrial or Bauhaus-inspired ambience.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- BOM -->
+      <section class="guide-section" id="bom">
+        <div class="guide-section__eyebrow">// BILL OF MATERIALS</div>
+        <h2 class="guide-section__title">What you'll need</h2>
+        <div class="guide-section__body">
+          <p>All components are widely available. Links point to the suppliers I used — feel free to source equivalents. Total cost is roughly 40–50&nbsp;€ depending on shipping and where you buy the filament.</p>
+        </div>
+
+        <div class="retro-window" style="margin-top:1.5rem">
+          <div class="retro-window__titlebar retro-window--green">
+            <span class="retro-window__title">BOM.csv</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="retro-window__body" style="padding:0;overflow:hidden">
+            <table class="bom-table">
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Spec / Notes</th>
+                  <th style="text-align:center">Qty</th>
+                  <th>Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><p class="bom-qty">Microcontroller</p><p>RPi Pico 2W</p></td>
+                  <td>The Wi-Fi (W) variant is required. If you want to avoid soldering, choose "with Header".</td>
+                  <td style="text-align:center"><span class="bom-qty">× 1</span></td>
+                  <td><a href="https://www.berrybase.de/raspberry-pi-pico-2w-rp2350-wlan-bluetooth-mikrocontroller-board-mit-headern" target="_blank" rel="noopener" class="bom-link">berrybase.de ↗</a></td>
+                </tr>
+                <tr>
+                  <td><p class="bom-qty">LED Matrix Module</p><p>MAX7219</p></td>
+                  <td>8×8 dot matrix, daisy-chainable, 5&nbsp;V</td>
+                  <td style="text-align:center"><span class="bom-qty">× 4</span></td>
+                  <td><a href="https://www.amazon.de/s?k=MAX7219+LED+8x8" target="_blank" rel="noopener" class="bom-link">Amazon.de ↗</a></td>
+                </tr>
+                <tr>
+                  <td>Jumper wires</td>
+                  <td>Female–female, 10&nbsp;cm — for matrix to Pico connections</td>
+                  <td style="text-align:center"><span class="bom-qty">× 8</span></td>
+                  <td><a href="https://www.berrybase.de" target="_blank" rel="noopener" class="bom-link">BerryBase ↗</a></td>
+                </tr>
+                <tr>
+                  <td><p class="bom-qty">Filament</p><p>PLA or PETG</p></td>
+                  <td>Color of your choice — PETG is more UV-resistant, but also more difficult to print (needs drying).</td>
+                  <td style="text-align:center"><span class="bom-qty">~200 g</span></td>
+                  <td>
+                    <p><a href="https://eu.store.bambulab.com/collections/bambu-lab-3d-printer-filament?srsltid=AfmBOopbsq2X_c6hBngYXidiqL1NEYbOoXGUH8QKgUjVOax9Lr2QDPFp" target="_blank" rel="noopener" class="bom-link">Bambu ↗</a></p>
+                    <p><a href="https://de.elegoo.com/pages/elegoo-filaments?gad_source=1&gad_campaignid=23298776357&gbraid=0AAAABB9J7KAkGjLXQSYv9yWbZlM0IcpAJ&gclid=Cj0KCQjw-pHPBhCdARIsAHXYWP9tOkxHWY4ofEyCV7a6-DTaE8Zn93Jti9FPVXuF2sfyOgCNw8ryrVcaAv5mEALw_wcB" class="bom-link">Elegoo ↗</a></p>    
+                    <p><a href="https://store.sunlu.com/en-de/collections/3d-printer-filament" class="bom-link">Sunlu ↗</a></p>
+                    <p><a href="https://www.amazon.de/s?k=3d+printer+filament&__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=33FZO1AA4WZGT&sprefix=3d+printer+filament%2Caps%2C122&ref=nb_sb_noss_1" class="bom-link">Amazon ↗</a></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><p class="bom-qty">Screws</p><p>M2 × 6 mm screws</p></td>
+                  <td>For mounting the Raspberry Pi inside the enclosure.</td>
+                  <td style="text-align:center"><span class="bom-qty">× 4</span></td>
+                  <td><a href="https://www.amazon.de/Innensechskantschrauben-Unterlegscheiben-Sortiment-Linsenkopf-Gewindeschrauben/dp/B0BQHK9LVJ/ref=sr_1_7?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3RHWLV4IN1088&dib=eyJ2IjoiMSJ9.zPZobmt3I6L7WMoS4Dw5CD_EPud8WRG2yUZA6jrmz-n4trTIfEzyaE_keDX66iMuVBnzMCmAB_cev8q_tQkAfdBDIxLtwQOkMj5wnfkIn4VxKyX6Pj1RwXiBjmGvxrZ5X4qS4rilUuWCLragNjPDghwst9OW_X1pFGu_lG5YJN1eR0qYQO_PieewZSlrcH_XzUFjty9hMl8egiB_GLFb6nITR3lMDJ5QZHWmn3hb0XUyFfpBsQqwe243XnB0kieYlim-2I1blXiulSZ3RkY324Le5BdAqbQVWqEvoP-VnhQ.edkOHFOZdHgiiVoQdP2ALrjvqe4K_fHpSCZf6WO7jVk&dib_tag=se&keywords=linsenkopfschrauben&qid=1776602184&sprefix=linsenkopfschrauben%2Caps%2C125&sr=8-7&th=1" target="_blank" rel="noopener" class="bom-link">Amazon.de ↗</a></td>
+                </tr>
+                <tr>
+                  <td><p class="bom-qty">Heat Inserts </p><p>M2 heat inserts</p></td>
+                  <td>For mounting the Raspberry Pi inside the enclosure. M2 thread, Outer Diameter: ~3 - 3.5 mm </td>
+                  <td style="text-align:center"><span class="bom-qty">× 4</span></td>
+                  <td><a href="https://www.amazon.de/M2-5-Bolatus-Einschmelzmuttern-Einschmelzhilfe-Einschmelzgewinde/dp/B0F2TGGBMC/ref=sr_1_3_sspa?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=CZXXSE0Y7FPX&dib=eyJ2IjoiMSJ9.12UT8NcLWRyLpW6u7T9kkMYRiwjno6ghiUaSZUG3s85LZnD6OTQzPZXeFfIf_79DgZ15lpFmFJXYEJ0ww25JjTN00QsIIRQudkhEcc0e2wux6IGjDBdS9j0XwZFiAcAmWKUY1Y2G0X3SMDem4JIo0_Lh6qivUq90DK4kQwBf-oIWN7BztGqOTRPcJ07bH3snzHShAhCJblvHFZzzgtplomRbvSdHP8LkTrX0TurIRFGtcc0zcSAsyeNY4YakR34Gqxa1zQrZCPXvQKaFxNBYDzYyUyvAHVpXVeWOR1d7TUg.JTsf2V9MW4onphhehMErRLS1h78NXF73srwK1S8SoGM&dib_tag=se&keywords=heat%2Binserts&qid=1776602247&sprefix=heat%2Binserts%2Caps%2C114&sr=8-3-spons&aref=CN9XZimLg7&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1" target="_blank" rel="noopener" class="bom-link">Amazon.de ↗</a></td>
+                </tr>
+                <tr>
+                  <td>USB-C cable</td>
+                  <td>For power — any decent 5&nbsp;V / 1&nbsp;A cable</td>
+                  <td style="text-align:center"><span class="bom-qty">× 1</span></td>
+                  <td><span class="bom-optional">YOU LIKELY HAVE ONE</span></td>
+                </tr>
+                <tr>
+                  <td><p class="bom-qty">Optional</p><p>USB-C Breakout</p></td>
+                  <td>If you want to use a USB-C connector instead of the Micro-USB on the Pico</td>
+                  <td style="text-align:center"><span class="bom-qty">× 1</span></td>
+                  <td><a href="https://www.berrybase.de/adafruit-usb-type-c-breakout-board-downstream-verbindung" target="_blank" rel="noopener" class="bom-link">BerryBase ↗</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="guide-callout guide-callout--tip" style="margin-top:1.5rem">
+          <div class="guide-callout__label">// TIP — sourcing the matrix modules</div>
+          Buying a 4-in-1 pre-chained MAX7219 module (common on Amazon and AliExpress) saves you the daisy-chaining step and makes the wiring cleaner. The firmware is written for that configuration. If you buy individual modules, you'll need to solder the CLK/CS/DIN chain yourself.
+        </div>
+      </section>
+
+
+      <!-- Build steps -->
+      <section class="guide-section" id="build">
+        <div class="guide-section__eyebrow">// BUILD STEPS</div>
+        <h2 class="guide-section__title">Step by step</h2>
+        <div class="guide-section__body">
+          <p>Work through these in order. Steps 1–3 are hardware, steps 4–6 are firmware, and steps 7–10 bring it all together. Allow the filament to cure before stressing the enclosure clips.</p>
+        </div>
+
+        <div class="step-list">
+
+          <!-- Step 01 -->
+          <div class="step" id="step-01">
+            <div class="step__num">01</div>
+            <div class="step__body">
+              <div class="step__title">Print the enclosure</div>
+              <div class="step__text">
+                <p>Open <code>dmg40_enclosure_v2.stl</code> in your slicer. The model is pre-oriented — print it flat-side-down with no supports. Recommended settings:</p>
+                <pre>Layer height:   0.2 mm
+Infill:         20 % (gyroid)
+Walls:          3 perimeters
+Bed temp:       60 °C  (PLA)
+Nozzle temp:    215 °C (PLA)</pre>
+                <p>Print time is around 2.5 hours on a Prusa MK4 at 0.2 mm. The front aperture has a 0.1 mm tolerance for the acrylic sheet — if your printer runs tight, scale X/Y by 1.002.</p>
+              </div>
+
+              <div class="guide-media" style="margin-top:1.25rem">
+                <div class="img-placeholder">
+                  <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
+                  <span>SLICER SCREENSHOT<br>img/dmg40_slicer.jpg</span>
+                </div>
+                <p class="guide-media__caption">Slicer view — flat orientation, no supports needed.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 02 -->
+          <div class="step" id="step-02">
+            <div class="step__num">02</div>
+            <div class="step__body">
+              <div class="step__title">Assemble the LED matrix</div>
+              <div class="step__text">
+                <p>If you bought individual 8×8 modules, daisy-chain them by connecting <code>DOUT</code> of each module to <code>DIN</code> of the next. If you have the 4-in-1 pre-chained board, skip this — it ships ready to wire.</p>
+                <p>Slide the acrylic diffuser into the front aperture from the inside. It should sit flush with no adhesive needed; the fit holds it in place. If it's loose, a thin strip of masking tape on the edges does the job neatly.</p>
+              </div>
+
+              <div class="guide-callout" style="margin-top:1rem">
+                <div class="guide-callout__label">// NOTE — orientation</div>
+                The matrix modules have a correct orientation for the text direction. The <code>DIN</code> connector faces right when the display is oriented horizontally. If your departure text scrolls backwards, rotate the module 180° and update <code>ROTATE = True</code> in <code>config.json</code>.
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 03 -->
+          <div class="step" id="step-03">
+            <div class="step__num">03</div>
+            <div class="step__body">
+              <div class="step__title">Wire up the Pico W</div>
+              <div class="step__text">
+                <p>Connect the MAX7219 chain to the Pico W using the wiring diagram in <code>wiring_diagram.pdf</code>. The key connections are:</p>
+                <pre>Matrix DIN  →  Pico GP11  (SPI0 MOSI)
+Matrix CLK  →  Pico GP10  (SPI0 SCK)
+Matrix CS   →  Pico GP9   (chip select)
+Matrix VCC  →  Pico VBUS  (5 V)
+Matrix GND  →  Pico GND</pre>
+                <p>Use female–female Dupont wires to avoid any soldering. Route the wires along the inside wall of the enclosure before closing — there are two cable-guide clips printed inside the shell.</p>
+              </div>
+
+              <div class="guide-media-grid" style="margin-top:1.25rem">
+                <div>
+                  <div class="img-placeholder img-placeholder--tall">
+                    <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
+                    <span>WIRING PHOTO<br>img/dmg40_wiring.jpg</span>
+                  </div>
+                  <p class="guide-media__caption">Pico W with matrix wired.</p>
+                </div>
+                <div>
+                  <div class="img-placeholder img-placeholder--tall">
+                    <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
+                    <span>WIRING DIAGRAM<br>img/dmg40_wiring_diagram.jpg</span>
+                  </div>
+                  <p class="guide-media__caption">Wiring diagram from the PDF.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 04 -->
+          <div class="step" id="step-04">
+            <div class="step__num">04</div>
+            <div class="step__body">
+              <div class="step__title">Flash the firmware</div>
+              <div class="step__text">
+                <p>Download the latest stable version of the MicroPython distribution for the Pico 2W from here: <a href="https://micropython.org/download/RPI_PICO2_W/" target="_blank" rel="noopener" class="bom-link">micropython.org ↗</a>  Hold the <code>BOOTSEL</code> button on the Pico W while connecting it via USB to your laptop. It mounts as a mass storage device. Drag the downloaded <code>.uf2</code> micropython firmware file onto the drive — the Pico restarts and the drive disappears. That's it; MicroPython is now flashed onto the Pico.</p>
+                <p>Next, use <a href="https://thonny.org" target="_blank" rel="noopener">Thonny IDE</a> (free, cross-platform) to open and upload <code>dmg40_firmware.py</code> and <code>config.json</code> to the Pico's root filesystem. In Thonny: <strong>Run → Select Interpreter → MicroPython (Raspberry Pi Pico)</strong>.</p>
+              </div>
+
+              <div class="guide-callout guide-callout--tip" style="margin-top:1rem">
+                <div class="guide-callout__label">// FIRST TIME WITH THONNY?</div>
+                Install it from <a href="https://thonny.org" target="_blank" rel="noopener" style="color:#4a7c59">thonny.org</a>. Once connected to the Pico, you'll see the device's filesystem in the bottom panel. Right-click any file on your computer and choose "Upload to /" to copy it across.
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 05 -->
+          <div class="step" id="step-05">
+            <div class="step__num">05</div>
+            <div class="step__body">
+              <div class="step__title">Configure your transit API</div>
+              <div class="step__text">
+                <p>Open <code>config.json</code> in any text editor. The key fields to fill in:</p>
+                <pre>{
+  "wifi_ssid":     "YOUR_NETWORK",
+  "wifi_password": "YOUR_PASSWORD",
+  "api_provider":  "VGN",
+  "stop_ids":      ["510", "906"],
+  "lines_filter":  ["U2", "S3"],
+  "api_key":       ""
+}</pre>
+                <p>The firmware supports VGN (Nuremberg), VGA, DB, SNCF, TfL (London), and NYC MTA out of the box. The <code>api_provider</code> field selects the correct endpoint and data parser. Most European open transit APIs require no key — set <code>api_key</code> to an empty string if yours doesn't.</p>
+                <p>To find your stop IDs: search your stop on <a href="https://www.openstreetmap.org" target="_blank" rel="noopener">openstreetmap.org</a>, click the stop, and note the <code>ref</code> tag. Alternatively, the <code>stop_finder.py</code> script in the download package queries the API by name and prints matching IDs.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 06 -->
+          <div class="step" id="step-06">
+            <div class="step__num">06</div>
+            <div class="step__body">
+              <div class="step__title">Set the NTP clock</div>
+              <div class="step__text">
+                <p>The clock syncs automatically on first boot as long as Wi-Fi is configured. Set your timezone offset in <code>config.json</code>:</p>
+                <pre>"timezone_offset": 1    // CET — use 2 for CEST (summer)</pre>
+                <p>The Pico W has no onboard RTC battery, so it re-syncs with NTP each time it powers on. If the display shows <code>--:--</code> on boot, it means Wi-Fi hasn't connected yet — check your credentials and that the SSID is 2.4 GHz (the Pico W doesn't support 5 GHz).</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 07 -->
+          <div class="step" id="step-07">
+            <div class="step__num">07</div>
+            <div class="step__body">
+              <div class="step__title">Final wiring and cable routing</div>
+              <div class="step__text">
+                <p>Route the USB-C cable through the back-panel slot before closing the enclosure. The slot is sized for a right-angle USB-C connector, which makes for a much cleaner exit — it's listed as optional in the BOM, but strongly recommended.</p>
+                <p>Tuck the Dupont wires into the two cable-guide clips on the inside of the enclosure. Give each wire a gentle tug to confirm nothing is loose before sealing up.</p>
+              </div>
+
+              <!-- Video insert -->
+              <div class="guide-media" style="margin-top:1.25rem">
+                <div class="retro-window">
+                  <div class="retro-window__titlebar">
+                    <span class="retro-window__title">routing.visual</span>
+                    <div class="window-btns">
+                      <div class="window-btn window-btn--red"></div>
+                      <div class="window-btn window-btn--yellow"></div>
+                      <div class="window-btn window-btn--green"></div>
+                    </div>
+                  </div>
+                  <div class="img-carousel" id="routing-carousel" style="background:#1a1a14;">
+                    <div class="img-carousel__track">
+                      <div class="img-carousel__slide img-carousel__slide--placeholder">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg>
+                        <p>INTERIOR PHOTO<br>img/dmg40_interior.jpg</p>
+                      </div>
+                      <div class="img-carousel__slide img-carousel__slide--video">
+                        <video src="video/dmg40_routing.mp4" loop playsinline preload="none" poster="img/dmg40_render.jpg"></video>
+                        <div class="img-carousel__scanline"></div>
+                        <div class="carousel-video-play" aria-label="Play video">
+                          <div class="carousel-video-play__icon">&#9654;</div>
+                          <span class="carousel-video-play__label">PLAY VIDEO</span>
+                        </div>
+                        <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                      </div>
+                    </div>
+                    <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+                    <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+                    <div class="img-carousel__counter">1 / 2</div>
+                    <div class="img-carousel__dots">
+                      <div class="img-carousel__dot"></div>
+                      <div class="img-carousel__dot"></div>
+                    </div>
+                  </div>
+                </div>
+                <p class="guide-media__caption">Interior cable routing and the clip positions.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 08 -->
+          <div class="step" id="step-08">
+            <div class="step__num">08</div>
+            <div class="step__body">
+              <div class="step__title">Close the enclosure</div>
+              <div class="step__text">
+                <p>Align the back panel's four corner tabs with the slots in the main body. Press firmly until you hear a click from each corner — the friction-fit doesn't need force, just even pressure. If one corner won't seat, check for a wire caught in the gap.</p>
+                <p>Thread the four M2 × 6 screws into the back panel's recessed holes. They seat into self-tapping channels in the PLA — use a light hand on the final turns to avoid stripping.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 09 -->
+          <div class="step" id="step-09">
+            <div class="step__num">09</div>
+            <div class="step__body">
+              <div class="step__title">First power-on</div>
+              <div class="step__text">
+                <p>Plug into any USB-C 5&nbsp;V power source. The display should show a brief boot animation, then the <code>--:--</code> clock placeholder while it connects to Wi-Fi. Within 10–15 seconds you should see the real time followed by your first departure entry.</p>
+                <p>If nothing lights up: confirm the matrix VCC is on the Pico's <code>VBUS</code> pin (not <code>3V3</code>) — the modules need 5&nbsp;V. If the clock shows but no departures appear, check your <code>stop_ids</code> and API provider in <code>config.json</code>.</p>
+              </div>
+
+              <div class="guide-callout guide-callout--warn" style="margin-top:1rem">
+                <div class="guide-callout__label">// IMPORTANT — power supply</div>
+                The four LED matrix modules can draw up to 400&nbsp;mA combined at full brightness. Use a proper phone charger or USB hub with a dedicated power supply — powering via a laptop USB port may cause flickering at high brightness.
+              </div>
+
+              <div class="guide-media" style="margin-top:1.25rem">
+                <div class="img-placeholder">
+                  <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
+                  <span>FIRST BOOT PHOTO<br>img/dmg40_firstboot.jpg</span>
+                </div>
+                <p class="guide-media__caption">Live departures on first successful boot.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 10 -->
+          <div class="step" id="step-10">
+            <div class="step__num">10</div>
+            <div class="step__body">
+              <div class="step__title">Customising the display</div>
+              <div class="step__text">
+                <p>The display cycles between two modes: a scrolling departure ticker and a real-time clock. You can adjust the cycle timing and brightness in <code>config.json</code>:</p>
+                <pre>"brightness":      6,       // 0–15 (8 is a good indoor level)
+"ticker_speed":    40,      // ms per scroll step — lower = faster
+"clock_dwell":     8000,    // ms to show the clock between tickers
+"display_mode":    "both"   // "ticker", "clock", or "both"</pre>
+                <p>You can also add a second Wi-Fi network (useful if you travel with the device) by adding a <code>wifi_fallback</code> key with an SSID and password. The firmware tries the primary first and falls back automatically.</p>
+                <p>All changes take effect on the next reboot — power cycle or use Thonny's reset button. No reflashing needed.</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end step-list -->
+      </section>
+
+
+      <!-- Troubleshooting -->
+      <section class="guide-section" id="troubleshooting">
+        <div class="guide-section__eyebrow">// TROUBLESHOOTING</div>
+        <h2 class="guide-section__title">Common issues</h2>
+
+        <div class="retro-window">
+          <div class="retro-window__titlebar retro-window--green">
+            <span class="retro-window__title">troubleshoot.txt</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="retro-window__body">
+            <table class="bom-table" style="margin:0">
+              <thead>
+                <tr>
+                  <th>Symptom</th>
+                  <th>Likely cause &amp; fix</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Display stays dark after power-on</td>
+                  <td>Check VCC is on <code>VBUS</code> (5&nbsp;V), not <code>3V3</code>. Re-seat the DIN/CLK/CS wires.</td>
+                </tr>
+                <tr>
+                  <td>Text scrolls in the wrong direction</td>
+                  <td>Set <code>"rotate": true</code> in <code>config.json</code> and reboot.</td>
+                </tr>
+                <tr>
+                  <td>Clock shows but no departures</td>
+                  <td>Wrong <code>stop_ids</code> or <code>api_provider</code>. Run <code>stop_finder.py</code> to confirm valid IDs.</td>
+                </tr>
+                <tr>
+                  <td>Display flickers at high brightness</td>
+                  <td>Insufficient power supply. Use a 5&nbsp;V / 1&nbsp;A+ charger, not a laptop port.</td>
+                </tr>
+                <tr>
+                  <td>Wi-Fi won't connect</td>
+                  <td>Pico W is 2.4&nbsp;GHz only. Confirm the SSID is not a 5&nbsp;GHz-only network. Check password for special characters.</td>
+                </tr>
+                <tr>
+                  <td>Enclosure tabs won't seat</td>
+                  <td>Check for a wire caught in the seam. Scale the back panel STL to 99.8% if your printer runs large.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="guide-callout" style="margin-top:1.5rem">
+          <div class="guide-callout__label">// STILL STUCK?</div>
+          The full source is on GitHub — open an issue with your <code>config.json</code> (remove your Wi-Fi password first) and a description of the symptom. I'll respond within a day or two.
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+
+<!-- ── CTA ── -->
+<section class="cta-section reveal">
+  <div class="cta-section__eyebrow">// ALL FILES OPEN</div>
+  <h2 class="cta-section__title">Built one? <em>Show us.</em></h2>
+  <p class="cta-section__sub">Tag your build, open a PR with any improvements you made to the firmware, or just send a photo. The best versions of these devices come from the community.</p>
+  <div class="cta-section__actions">
+    <a href="devices.html" class="btn btn-orange">&#9658; See All Devices</a>
+    <a href="guides.html" class="btn btn-ghost-light">Back to Guides</a>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <a href="index.html" aria-label="DMG Labs home">
+    <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
+      <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#c8ddd0">D</text>
+      <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#c8ddd0">M</text>
+      <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00"/>
+      <circle cx="74" cy="16" r="2.8" fill="#f06a00"/>
+    </svg>
+  </a>
+  <ul class="footer__links">
+    <li><a href="devices.html" class="footer__link">Devices</a></li>
+    <li><a href="guides.html" class="footer__link">Guides</a></li>
+    <li><a href="studio.html" class="footer__link">Studio</a></li>
+  </ul>
+  <div class="footer__copy">&copy; 2025 De Mattos Gabriel Labs</div>
+</footer>
+
+
+<script>
+/* Scroll reveal */
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+}), { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* Active nav link */
+document.querySelectorAll('.nav__link').forEach(a => {
+  if (a.getAttribute('href') === window.location.pathname.split('/').pop()) a.classList.add('active');
+});
+
+/* Sidebar TOC active state on scroll */
+const sections = document.querySelectorAll('.guide-section, .step');
+const tocLinks  = document.querySelectorAll('.guide-toc__links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) current = s.id; });
+  tocLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}, { passive: true });
+</script>
+
+<script>
+/* ── IMAGE CAROUSEL LOGIC (with video support) ── */
+(function () {
+  function initCarousel(el) {
+    const track   = el.querySelector('.img-carousel__track');
+    const slides  = Array.from(el.querySelectorAll('.img-carousel__slide'));
+    const dots    = el.querySelectorAll('.img-carousel__dot');
+    const btnPrev = el.querySelector('.img-carousel__btn--prev');
+    const btnNext = el.querySelector('.img-carousel__btn--next');
+    const counter = el.querySelector('.img-carousel__counter');
+    const n       = slides.length;
+    let cur       = 0;
+
+    slides.forEach(function (slide) {
+      if (!slide.classList.contains('img-carousel__slide--video')) return;
+      const video   = slide.querySelector('video');
+      const overlay = slide.querySelector('.carousel-video-play');
+      const muteBtn = slide.querySelector('.carousel-video-mute');
+      if (!video) return;
+      function togglePlay() { video.paused ? video.play() : video.pause(); }
+      if (overlay) overlay.addEventListener('click', togglePlay);
+      video.addEventListener('click', togglePlay);
+      video.addEventListener('play', function () {
+        if (overlay) overlay.classList.add('hidden');
+        if (muteBtn) muteBtn.classList.add('visible');
+      });
+      video.addEventListener('pause', function () {
+        if (overlay) overlay.classList.remove('hidden');
+        if (muteBtn) muteBtn.classList.remove('visible');
+      });
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          video.muted = !video.muted;
+          muteBtn.textContent = video.muted ? '\uD83D\uDD07 UNMUTE' : '\uD83D\uDD64 MUTE';
+        });
+      }
+    });
+
+    function go(idx) {
+      const leaving = slides[cur];
+      if (leaving && leaving.classList.contains('img-carousel__slide--video')) {
+        const v = leaving.querySelector('video');
+        if (v && !v.paused) v.pause();
+      }
+      cur = (idx + n) % n;
+      track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === cur); });
+      if (counter) counter.textContent = (cur + 1) + ' / ' + n;
+      const arriving = slides[cur];
+      if (arriving && arriving.classList.contains('img-carousel__slide--video')) {
+        const v = arriving.querySelector('video');
+        if (v && v.currentTime > 0) v.play();
+      }
+    }
+
+    if (btnPrev) btnPrev.addEventListener('click', function () { go(cur - 1); });
+    if (btnNext) btnNext.addEventListener('click', function () { go(cur + 1); });
+    dots.forEach(function (d, i) { d.addEventListener('click', function () { go(i); }); });
+    el.setAttribute('tabindex', '0');
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft')  { go(cur - 1); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { go(cur + 1); e.preventDefault(); }
+    });
+    let tx0 = 0, ty0 = 0;
+    el.addEventListener('touchstart', function (e) {
+      tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY;
+    }, { passive: true });
+    el.addEventListener('touchend', function (e) {
+      const dx = e.changedTouches[0].clientX - tx0;
+      const dy = e.changedTouches[0].clientY - ty0;
+      if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 30) go(dx < 0 ? cur + 1 : cur - 1);
+    }, { passive: true });
+    go(0);
+  }
+  document.querySelectorAll('.img-carousel').forEach(initCarousel);
+})();
+</script>
+
+</body>
+</html>
