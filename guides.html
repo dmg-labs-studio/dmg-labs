@@ -4,6 +4,19 @@
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>DMG Labs — Guides</title>
 <link rel="stylesheet" href="styles.css"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<style>
+  /* Makes a guide-row act as a full-block link */
+  a.guide-row--link {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s;
+  }
+  a.guide-row--link:hover { background: rgba(240,106,0,0.06); }
+  a.guide-row--link:hover .guide-row__arrow { color: var(--color-orange, #f06a00); transform: translate(2px,-2px); }
+  .guide-row__arrow { transition: transform 0.15s, color 0.15s; }
+</style>
 </head>
 <body>
 
@@ -70,7 +83,7 @@
           <div class="window-btns"><div class="window-btn window-btn--red"></div><div class="window-btn window-btn--yellow"></div><div class="window-btn window-btn--green"></div></div>
         </div>
         <div class="retro-window__body retro-window__body--flush">
-          <div class="guide-row">
+          <a href="guide-dmg40.html" class="guide-row guide-row--link">
             <div class="guide-row__number">02</div>
             <div>
               <div class="guide-row__meta">
@@ -86,7 +99,7 @@
               <span class="guide-card__stat">Firmware + config</span>
               <span class="guide-row__arrow">&#8599;</span>
             </div>
-          </div>
+          </a>
         </div>
       </div>
 
