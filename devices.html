@@ -12,6 +12,73 @@
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=DM+Mono:wght@300;400&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <style>
+    /* ── VIDEO SLIDE ── */
+    .img-carousel__slide--video {
+      background: #000;
+      position: relative;
+    }
+    .img-carousel__slide--video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* Play-button overlay shown before user interacts */
+    .carousel-video-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: rgba(15, 31, 23, 0.62);
+      cursor: pointer;
+      z-index: 5;
+      transition: opacity 0.2s;
+    }
+    .carousel-video-play.hidden { opacity: 0; pointer-events: none; }
+    .carousel-video-play__icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2.5px solid #f06a00;
+      background: rgba(240, 106, 0, 0.18);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: #f06a00;
+      box-shadow: 0 0 0 6px rgba(240,106,0,0.1);
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .carousel-video-play:hover .carousel-video-play__icon {
+      background: rgba(240,106,0,0.32);
+      box-shadow: 0 0 0 10px rgba(240,106,0,0.08);
+    }
+    .carousel-video-play__label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.38rem;
+      color: rgba(200,221,208,0.7);
+      letter-spacing: 0.12em;
+    }
+    /* Mute toggle inside the video slide */
+    .carousel-video-mute {
+      position: absolute;
+      bottom: 38px; right: 10px;
+      z-index: 10;
+      background: rgba(15,31,23,0.72);
+      border: 2px solid rgba(240,106,0,0.6);
+      color: #f06a00;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.45rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 4px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      line-height: 1;
+      display: none;
+    }
+    .carousel-video-mute.visible { display: block; }
+  </style>
 </head>
 
 <body>
@@ -174,11 +241,22 @@
                   </svg>
                   <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
                 </div>
+                <div class="img-carousel__slide img-carousel__slide--video">
+                  <video src="video/DMG-DN40_WorkingVid-Window.mp4" loop playsinline preload="none"
+                    poster="img/dmg40_render.jpg"></video>
+                  <div class="img-carousel__scanline"></div>
+                  <div class="carousel-video-play" aria-label="Play video">
+                    <div class="carousel-video-play__icon">&#9654;</div>
+                    <span class="carousel-video-play__label">PLAY VIDEO</span>
+                  </div>
+                  <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                </div>
               </div>
               <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
               <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
-              <div class="img-carousel__counter">1 / 3</div>
+              <div class="img-carousel__counter">1 / 4</div>
               <div class="img-carousel__dots">
+                <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
@@ -299,11 +377,22 @@
                   </svg>
                   <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
                 </div>
+                <div class="img-carousel__slide img-carousel__slide--video">
+                  <video src="video/dmg_phi_demo.mp4" loop playsinline preload="none"
+                    poster="img/dmg_phi.jpg"></video>
+                  <div class="img-carousel__scanline"></div>
+                  <div class="carousel-video-play" aria-label="Play video">
+                    <div class="carousel-video-play__icon">&#9654;</div>
+                    <span class="carousel-video-play__label">PLAY VIDEO</span>
+                  </div>
+                  <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                </div>
               </div>
               <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
               <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
-              <div class="img-carousel__counter">1 / 3</div>
+              <div class="img-carousel__counter">1 / 4</div>
               <div class="img-carousel__dots">
+                <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
@@ -420,11 +509,22 @@
                   </svg>
                   <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
                 </div>
+                <div class="img-carousel__slide img-carousel__slide--video">
+                  <video src="video/dmg_lu1_demo.mp4" loop playsinline preload="none"
+                    poster="img/lu1_real.jpg"></video>
+                  <div class="img-carousel__scanline"></div>
+                  <div class="carousel-video-play" aria-label="Play video">
+                    <div class="carousel-video-play__icon">&#9654;</div>
+                    <span class="carousel-video-play__label">PLAY VIDEO</span>
+                  </div>
+                  <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                </div>
               </div>
               <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
               <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
-              <div class="img-carousel__counter">1 / 3</div>
+              <div class="img-carousel__counter">1 / 4</div>
               <div class="img-carousel__dots">
+                <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
@@ -544,11 +644,22 @@
                   </svg>
                   <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
                 </div>
+                <div class="img-carousel__slide img-carousel__slide--video">
+                  <video src="video/dmg_nautilus_demo.mp4" loop playsinline preload="none"
+                    poster="img/nautilus_render.jpg"></video>
+                  <div class="img-carousel__scanline"></div>
+                  <div class="carousel-video-play" aria-label="Play video">
+                    <div class="carousel-video-play__icon">&#9654;</div>
+                    <span class="carousel-video-play__label">PLAY VIDEO</span>
+                  </div>
+                  <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                </div>
               </div>
               <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
               <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
-              <div class="img-carousel__counter">1 / 4</div>
+              <div class="img-carousel__counter">1 / 5</div>
               <div class="img-carousel__dots">
+                <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
@@ -707,40 +818,100 @@
   </script>
 
   <script>
-    /* ── IMAGE CAROUSEL LOGIC ── */
+    /* ── IMAGE CAROUSEL LOGIC (with video support) ── */
     (function () {
       function initCarousel(el) {
-        const track = el.querySelector('.img-carousel__track');
-        const slides = el.querySelectorAll('.img-carousel__slide');
-        const dots = el.querySelectorAll('.img-carousel__dot');
-        const btnPrev = el.querySelector('.img-carousel__btn--prev');
-        const btnNext = el.querySelector('.img-carousel__btn--next');
-        const counter = el.querySelector('.img-carousel__counter');
-        const n = slides.length;
-        let cur = 0;
+        const track    = el.querySelector('.img-carousel__track');
+        const slides   = Array.from(el.querySelectorAll('.img-carousel__slide'));
+        const dots     = el.querySelectorAll('.img-carousel__dot');
+        const btnPrev  = el.querySelector('.img-carousel__btn--prev');
+        const btnNext  = el.querySelector('.img-carousel__btn--next');
+        const counter  = el.querySelector('.img-carousel__counter');
+        const n        = slides.length;
+        let cur        = 0;
 
+        /* ── Per-slide video setup ── */
+        slides.forEach(function (slide) {
+          if (!slide.classList.contains('img-carousel__slide--video')) return;
+
+          const video    = slide.querySelector('video');
+          const overlay  = slide.querySelector('.carousel-video-play');
+          const muteBtn  = slide.querySelector('.carousel-video-mute');
+          if (!video) return;
+
+          /* Clicking the overlay OR the video itself toggles play/pause */
+          function togglePlay() {
+            if (video.paused) {
+              video.play();
+            } else {
+              video.pause();
+            }
+          }
+
+          overlay.addEventListener('click', togglePlay);
+          video.addEventListener('click', togglePlay);
+
+          /* Keep overlay and mute button in sync with actual playback state */
+          video.addEventListener('play', function () {
+            overlay.classList.add('hidden');
+            if (muteBtn) muteBtn.classList.add('visible');
+          });
+          video.addEventListener('pause', function () {
+            overlay.classList.remove('hidden');
+            if (muteBtn) muteBtn.classList.remove('visible');
+          });
+
+          /* Mute toggle */
+          if (muteBtn) {
+            muteBtn.addEventListener('click', function (e) {
+              e.stopPropagation();
+              video.muted = !video.muted;
+              muteBtn.textContent = video.muted ? '\uD83D\uDD07 UNMUTE' : '\uD83D\uDD08 MUTE';
+            });
+          }
+        });
+
+        /* ── Navigation ── */
         function go(idx) {
+          /* Pause any playing video on the slide we're leaving */
+          const leavingSlide = slides[cur];
+          if (leavingSlide && leavingSlide.classList.contains('img-carousel__slide--video')) {
+            const leavingVideo = leavingSlide.querySelector('video');
+            if (leavingVideo && !leavingVideo.paused) leavingVideo.pause();
+          }
+
           cur = (idx + n) % n;
           track.style.transform = 'translateX(-' + (cur * 100) + '%)';
-          dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+          dots.forEach(function (d, i) { d.classList.toggle('active', i === cur); });
           if (counter) counter.textContent = (cur + 1) + ' / ' + n;
-          if (btnPrev) btnPrev.disabled = false;
-          if (btnNext) btnNext.disabled = false;
+
+          /* Auto-resume video if it was playing before we left */
+          const arrivingSlide = slides[cur];
+          if (arrivingSlide && arrivingSlide.classList.contains('img-carousel__slide--video')) {
+            const arrivingVideo = arrivingSlide.querySelector('video');
+            /* Only auto-resume if the video has been started at least once
+               (currentTime > 0 means the user has pressed play before) */
+            if (arrivingVideo && arrivingVideo.currentTime > 0) {
+              arrivingVideo.play();
+            }
+          }
         }
 
-        if (btnPrev) btnPrev.addEventListener('click', () => go(cur - 1));
-        if (btnNext) btnNext.addEventListener('click', () => go(cur + 1));
-        dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+        if (btnPrev) btnPrev.addEventListener('click', function () { go(cur - 1); });
+        if (btnNext) btnNext.addEventListener('click', function () { go(cur + 1); });
+        dots.forEach(function (d, i) { d.addEventListener('click', function () { go(i); }); });
 
         el.setAttribute('tabindex', '0');
-        el.addEventListener('keydown', e => {
-          if (e.key === 'ArrowLeft') { go(cur - 1); e.preventDefault(); }
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowLeft')  { go(cur - 1); e.preventDefault(); }
           if (e.key === 'ArrowRight') { go(cur + 1); e.preventDefault(); }
         });
 
         let tx0 = 0, ty0 = 0;
-        el.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY; }, { passive: true });
-        el.addEventListener('touchend', e => {
+        el.addEventListener('touchstart', function (e) {
+          tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY;
+        }, { passive: true });
+        el.addEventListener('touchend', function (e) {
           const dx = e.changedTouches[0].clientX - tx0;
           const dy = e.changedTouches[0].clientY - ty0;
           if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 30) go(dx < 0 ? cur + 1 : cur - 1);
@@ -807,6 +978,8 @@
           if (e.target.closest('.img-carousel__btn') || e.target.closest('.img-carousel__dots')) return;
           var slide = e.target.closest('.img-carousel__slide:not(.img-carousel__slide--placeholder)');
           if (!slide) return;
+          /* Video slides handle their own click — don't open the lightbox */
+          if (slide.classList.contains('img-carousel__slide--video')) return;
           var clickedImg = slide.querySelector('img');
           if (!clickedImg) return;
           var images = getCarouselImages(carousel);
