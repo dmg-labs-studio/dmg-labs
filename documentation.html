@@ -191,6 +191,17 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
 .img-carousel__counter{position:absolute;top:10px;right:10px;z-index:10;font-family:'Press Start 2P',monospace;font-size:0.38rem;color:rgba(200,221,208,0.7);background:rgba(15,31,23,0.7);padding:0.3rem 0.55rem;border-radius:3px;border:1px solid rgba(240,106,0,0.3);backdrop-filter:blur(4px);letter-spacing:0.08em}
 .img-carousel__slide--placeholder{background:rgba(26,58,42,0.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem}
 .img-carousel__slide--placeholder p{font-family:'Press Start 2P',monospace;font-size:0.4rem;color:rgba(200,221,208,0.4);letter-spacing:0.1em;text-align:center;line-height:2}
+
+/* ── VIDEO SLIDE (docs mirror of devices.html styles) ── */
+.img-carousel__slide--video{background:#000;position:relative}
+.img-carousel__slide--video video{width:100%;height:100%;object-fit:cover;display:block}
+.carousel-video-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;background:rgba(15,31,23,0.62);cursor:pointer;z-index:5;transition:opacity 0.2s}
+.carousel-video-play.hidden{opacity:0;pointer-events:none}
+.carousel-video-play__icon{width:52px;height:52px;border-radius:50%;border:2.5px solid #f06a00;background:rgba(240,106,0,0.18);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#f06a00;box-shadow:0 0 0 6px rgba(240,106,0,0.1);transition:background 0.15s,box-shadow 0.15s}
+.carousel-video-play:hover .carousel-video-play__icon{background:rgba(240,106,0,0.32);box-shadow:0 0 0 10px rgba(240,106,0,0.08)}
+.carousel-video-play__label{font-family:'Press Start 2P',monospace;font-size:0.38rem;color:rgba(200,221,208,0.7);letter-spacing:0.12em}
+.carousel-video-mute{position:absolute;bottom:38px;right:10px;z-index:10;background:rgba(15,31,23,0.72);border:2px solid rgba(240,106,0,0.6);color:#f06a00;font-family:'Press Start 2P',monospace;font-size:0.45rem;padding:0.35rem 0.55rem;border-radius:4px;cursor:pointer;backdrop-filter:blur(4px);line-height:1;display:none}
+.carousel-video-mute.visible{display:block}
 </style>
 </head>
 <body>
@@ -208,6 +219,8 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
     <a href="#forms">Forms</a>
     <a href="#cards">Cards</a>
     <a href="#windows">Windows</a>
+    <a href="#carousel">Carousel</a>
+    <a href="#video-player">Video</a>
     <a href="#organisms">Organisms</a>
     <a href="#howto">How-to</a>
   </div>
@@ -244,6 +257,7 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
       <li><a href="#windows">Retro windows</a></li>
       <li><a href="#spec-table">Spec table</a></li>
       <li><a href="#carousel">Image Carousel</a></li>
+      <li><a href="#video-player">Video Player</a></li>
     </ul>
   </div>
   <div class="doc-sidebar-section">
@@ -964,6 +978,129 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
 
 
 <!-- ══════════════════════════════════════════════════════════ -->
+<!-- VIDEO PLAYER                                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="doc-section" id="video-player">
+  <div class="section-eyebrow">10c &#8212; Molecules / Video Player</div>
+  <h2 class="section-title">Video Player</h2>
+  <p class="section-intro">The video slide is a drop-in addition to any <code>.img-carousel</code>. Add it as the last slide in the track. It shares the same dimensions, scanline overlay, and nav as image slides, and layers a play/pause overlay plus a mute toggle on top of a native <code>&lt;video&gt;</code> element. Clicking the overlay or the video itself toggles playback.</p>
+
+  <h4 style="margin-bottom:1rem;font-size:1.1rem">Live example &#8212; click the play button</h4>
+  <div class="preview" style="padding:1.5rem">
+    <div class="img-carousel" id="doc-video-demo" style="background:#0f1f17;border-radius:6px;overflow:hidden;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);max-width:460px">
+      <div class="img-carousel__track">
+        <div class="img-carousel__slide img-carousel__slide--placeholder">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg>
+          <p>img/your-photo.jpg</p>
+        </div>
+        <div class="img-carousel__slide img-carousel__slide--video">
+          <!-- No real src in docs — poster image acts as the visual stand-in -->
+          <video src="" loop playsinline preload="none" poster="" style="background:#111;"></video>
+          <div class="img-carousel__scanline"></div>
+          <div class="carousel-video-play" aria-label="Play video">
+            <div class="carousel-video-play__icon">&#9654;</div>
+            <span class="carousel-video-play__label">PLAY VIDEO</span>
+          </div>
+          <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+        </div>
+      </div>
+      <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+      <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+      <div class="img-carousel__counter">1 / 2</div>
+      <div class="img-carousel__dots">
+        <div class="img-carousel__dot active"></div>
+        <div class="img-carousel__dot"></div>
+      </div>
+    </div>
+    <p style="margin-top:1rem;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--text-faint);letter-spacing:0.08em">Click &#9664; &#9654; to reach the video slide &#183; Click overlay or video to toggle play/pause &#183; Navigating away pauses; returning auto-resumes</p>
+  </div>
+
+  <h4 style="margin-top:2rem;margin-bottom:1rem;font-size:1.1rem">HTML structure</h4>
+<pre>&lt;!-- Add as the LAST slide inside .img-carousel__track --&gt;
+&lt;div class="img-carousel__slide img-carousel__slide--video"&gt;
+
+  &lt;!-- Native video element. Use poster= for the thumbnail shown before play. --&gt;
+  &lt;video src="video/dmg40_demo.mp4"
+         loop playsinline preload="none"
+         poster="img/dmg40_render.jpg"&gt;&lt;/video&gt;
+
+  &lt;!-- CRT scanline overlay (same as image slides) --&gt;
+  &lt;div class="img-carousel__scanline"&gt;&lt;/div&gt;
+
+  &lt;!-- Play/pause overlay: hidden while playing, visible while paused --&gt;
+  &lt;div class="carousel-video-play" aria-label="Play video"&gt;
+    &lt;div class="carousel-video-play__icon"&gt;&amp;#9654;&lt;/div&gt;
+    &lt;span class="carousel-video-play__label"&gt;PLAY VIDEO&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Mute toggle: appears only while video is playing --&gt;
+  &lt;button class="carousel-video-mute" aria-label="Toggle mute"&gt;
+    &amp;#128264; MUTE
+  &lt;/button&gt;
+
+&lt;/div&gt;
+
+&lt;!-- Remember to add one extra dot and update the counter: --&gt;
+&lt;div class="img-carousel__dots"&gt;
+  &lt;!-- ... existing dots ... --&gt;
+  &lt;div class="img-carousel__dot"&gt;&lt;/div&gt;  &lt;!-- new dot for video slide --&gt;
+&lt;/div&gt;
+&lt;div class="img-carousel__counter"&gt;1 / 4&lt;/div&gt;  &lt;!-- update total --&gt;</pre>
+
+  <div class="callout">
+    <div class="callout-label">// STEPS — adding a video to a device</div>
+    <p>
+      1. Place your video file in a <code>video/</code> folder next to <code>devices.html</code> — e.g. <code>video/dmg40_demo.mp4</code>. H.264 MP4 is the safest format for broad browser support.<br><br>
+      2. Find the correct carousel in <code>devices.html</code> — look for <code>id="carousel-ph1"</code>, <code>id="carousel-d40"</code>, <code>id="carousel-lu1"</code>, or <code>id="carousel-nautilus"</code>.<br><br>
+      3. Append a <code>.img-carousel__slide--video</code> block inside <code>.img-carousel__track</code> (shown above).<br><br>
+      4. Add one <code>&lt;div class="img-carousel__dot"&gt;&lt;/div&gt;</code> to <code>.img-carousel__dots</code>.<br><br>
+      5. Update the counter text to reflect the new total. The carousel JS handles everything else automatically.
+    </p>
+  </div>
+
+  <h4 style="margin-top:2rem;margin-bottom:0.75rem;font-size:1.1rem">CSS classes at a glance</h4>
+  <table class="token-table">
+    <thead><tr><th>Class</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><code>.img-carousel__slide--video</code></td><td>Modifier on <code>.img-carousel__slide</code>. Sets <code>background:#000</code> and positions child elements.</td></tr>
+      <tr><td><code>.carousel-video-play</code></td><td>Full-slide overlay. Visible when paused, hidden (<code>.hidden</code>) when playing. Toggled by JS on play/pause events.</td></tr>
+      <tr><td><code>.carousel-video-play__icon</code></td><td>Circular orange play button inside the overlay.</td></tr>
+      <tr><td><code>.carousel-video-play__label</code></td><td>&#8220;PLAY VIDEO&#8221; label in Press Start 2P below the icon.</td></tr>
+      <tr><td><code>.carousel-video-mute</code></td><td>Mute/unmute button anchored bottom-right. Hidden by default; <code>.visible</code> is added by JS while the video plays.</td></tr>
+    </tbody>
+  </table>
+
+  <h4 style="margin-top:1.5rem;margin-bottom:0.75rem;font-size:1.1rem">Playback behaviour</h4>
+  <table class="token-table">
+    <thead><tr><th>Interaction</th><th>Behaviour</th></tr></thead>
+    <tbody>
+      <tr><td>Click play overlay</td><td>Starts playback. Overlay fades out; mute button appears.</td></tr>
+      <tr><td>Click video (while playing)</td><td>Pauses. Overlay reappears; mute button hides.</td></tr>
+      <tr><td>Click video (while paused)</td><td>Resumes playback.</td></tr>
+      <tr><td>Navigate away (arrow / dot / swipe)</td><td>Video pauses automatically.</td></tr>
+      <tr><td>Navigate back</td><td>If video was started at least once (<code>currentTime &gt; 0</code>), it auto-resumes. Otherwise the play overlay is shown.</td></tr>
+      <tr><td>Click mute / unmute</td><td>Toggles <code>video.muted</code>. Label updates to &#128267; UNMUTE and back.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="do-dont" style="margin-top:2rem">
+    <div class="do-box">
+      <div class="do-label">&#10003; One video slide per device</div>
+      <div class="do-body">
+        <p style="font-size:0.9rem;color:var(--text-soft);line-height:1.7">Keep the video as the final slide so users see images first. Use a <code>poster=</code> thumbnail that matches the device&#8217;s first photo for visual consistency.</p>
+      </div>
+    </div>
+    <div class="dont-box">
+      <div class="dont-label">&#10007; Multiple video slides in one carousel</div>
+      <div class="dont-body">
+        <p style="font-size:0.9rem;color:#8b2020;line-height:1.7">The carousel pauses the <em>currently visible</em> video on navigation. Two video slides in the same carousel would require additional state tracking and risks unexpected playback overlap.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
 <!-- ORGANISMS                                                  -->
 <!-- ══════════════════════════════════════════════════════════ -->
 <section class="doc-section" id="organisms">
@@ -1188,29 +1325,67 @@ window.addEventListener('scroll', () => {
 (function(){
   function initCarousel(el){
     const track=el.querySelector('.img-carousel__track');
-    const slides=el.querySelectorAll('.img-carousel__slide');
+    const slides=Array.from(el.querySelectorAll('.img-carousel__slide'));
     const dots=el.querySelectorAll('.img-carousel__dot');
     const btnPrev=el.querySelector('.img-carousel__btn--prev');
     const btnNext=el.querySelector('.img-carousel__btn--next');
     const counter=el.querySelector('.img-carousel__counter');
     const n=slides.length; let cur=0;
+
+    /* Per-slide video setup */
+    slides.forEach(function(slide){
+      if(!slide.classList.contains('img-carousel__slide--video'))return;
+      const video=slide.querySelector('video');
+      const overlay=slide.querySelector('.carousel-video-play');
+      const muteBtn=slide.querySelector('.carousel-video-mute');
+      if(!video)return;
+      function togglePlay(){video.paused?video.play():video.pause();}
+      if(overlay)overlay.addEventListener('click',togglePlay);
+      video.addEventListener('click',togglePlay);
+      video.addEventListener('play',function(){
+        if(overlay)overlay.classList.add('hidden');
+        if(muteBtn)muteBtn.classList.add('visible');
+      });
+      video.addEventListener('pause',function(){
+        if(overlay)overlay.classList.remove('hidden');
+        if(muteBtn)muteBtn.classList.remove('visible');
+      });
+      if(muteBtn){
+        muteBtn.addEventListener('click',function(e){
+          e.stopPropagation();
+          video.muted=!video.muted;
+          muteBtn.textContent=video.muted?'\uD83D\uDD07 UNMUTE':'\uD83D\uDD08 MUTE';
+        });
+      }
+    });
+
     function go(idx){
+      const leaving=slides[cur];
+      if(leaving&&leaving.classList.contains('img-carousel__slide--video')){
+        const v=leaving.querySelector('video');
+        if(v&&!v.paused)v.pause();
+      }
       cur=(idx+n)%n;
       track.style.transform='translateX(-'+(cur*100)+'%)';
-      dots.forEach((d,i)=>d.classList.toggle('active',i===cur));
+      dots.forEach(function(d,i){d.classList.toggle('active',i===cur);});
       if(counter)counter.textContent=(cur+1)+' / '+n;
+      const arriving=slides[cur];
+      if(arriving&&arriving.classList.contains('img-carousel__slide--video')){
+        const v=arriving.querySelector('video');
+        if(v&&v.currentTime>0)v.play();
+      }
     }
-    if(btnPrev)btnPrev.addEventListener('click',()=>go(cur-1));
-    if(btnNext)btnNext.addEventListener('click',()=>go(cur+1));
-    dots.forEach((d,i)=>d.addEventListener('click',()=>go(i)));
+    if(btnPrev)btnPrev.addEventListener('click',function(){go(cur-1);});
+    if(btnNext)btnNext.addEventListener('click',function(){go(cur+1);});
+    dots.forEach(function(d,i){d.addEventListener('click',function(){go(i);});});
     el.setAttribute('tabindex','0');
-    el.addEventListener('keydown',e=>{
+    el.addEventListener('keydown',function(e){
       if(e.key==='ArrowLeft'){go(cur-1);e.preventDefault();}
       if(e.key==='ArrowRight'){go(cur+1);e.preventDefault();}
     });
     let tx0=0,ty0=0;
-    el.addEventListener('touchstart',e=>{tx0=e.touches[0].clientX;ty0=e.touches[0].clientY;},{passive:true});
-    el.addEventListener('touchend',e=>{
+    el.addEventListener('touchstart',function(e){tx0=e.touches[0].clientX;ty0=e.touches[0].clientY;},{passive:true});
+    el.addEventListener('touchend',function(e){
       const dx=e.changedTouches[0].clientX-tx0;
       const dy=e.changedTouches[0].clientY-ty0;
       if(Math.abs(dx)>Math.abs(dy)*1.5&&Math.abs(dx)>30){go(dx<0?cur+1:cur-1);}
