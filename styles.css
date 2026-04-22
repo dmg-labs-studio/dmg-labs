@@ -2715,8 +2715,6 @@ h1 em, h2 em, h3 em {
   line-height:     1;
 }
 
-.step__body {}
-
 .step__title {
   font-family:   var(--font-display);
   font-size:     1.25rem;
