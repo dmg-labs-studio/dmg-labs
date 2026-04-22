@@ -9,487 +9,76 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=DM+Mono:wght@300;400&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css"/>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
-<style>
-
-/* ── GUIDE PAGE LAYOUT ── */
-:root {
-  --guide-max: 780px;
-  --guide-wide: 1100px;
-}
-
-.guide-hero {
-  background: var(--color-ink);
-  padding: 5rem 2.5rem 4rem;
-  border-bottom: 3px solid var(--color-orange);
-}
-.guide-hero__inner {
-  max-width: var(--guide-wide);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-.guide-hero__breadcrumb {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  color: rgba(200,221,208,0.4);
-  letter-spacing: 0.1em;
-  margin-bottom: 1.5rem;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-.guide-hero__breadcrumb a { color: inherit; text-decoration: none; transition: color 0.15s; }
-.guide-hero__breadcrumb a:hover { color: var(--color-orange); }
-.guide-hero__breadcrumb-sep { opacity: 0.3; }
-.guide-hero__eyebrow {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.45rem;
-  color: var(--color-orange);
-  letter-spacing: 0.14em;
-  margin-bottom: 1rem;
-}
-.guide-hero__title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  font-weight: 700;
-  color: var(--color-mist);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.2rem;
-}
-.guide-hero__title em { color: var(--color-orange); font-style: italic; font-weight: 300; }
-.guide-hero__desc {
-  font-size: 0.97rem;
-  color: rgba(200,221,208,0.62);
-  line-height: 1.85;
-  max-width: 480px;
-  margin-bottom: 2rem;
-}
-
-/* Skill tags row */
-.guide-skill-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-.skill-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.55rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.3rem 0.75rem;
-  border-radius: 4px;
-  border: 1.5px solid currentColor;
-  display: inline-block;
-}
-.skill-tag--elec  { color: #7aab8a; }
-.skill-tag--fdm   { color: #4a7c59; }
-.skill-tag--api   { color: var(--color-orange); }
-.skill-tag--code  { color: rgba(200,221,208,0.55); }
-
-/* Stat strip inside hero */
-.guide-hero__stats {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  padding: 1.2rem 0;
-  border-top: 1px dashed rgba(200,221,208,0.14);
-  border-bottom: 1px dashed rgba(200,221,208,0.14);
-  margin-bottom: 2rem;
-}
-.guide-stat-item { display: flex; flex-direction: column; gap: 0.2rem; }
-.guide-stat-item__label {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.38rem;
-  color: rgba(200,221,208,0.35);
-  letter-spacing: 0.1em;
-}
-.guide-stat-item__value {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--color-orange);
-  line-height: 1;
-}
-
-/* Hero image / carousel */
-.guide-hero__visual {
-  position: relative;
-}
-.guide-hero__visual .retro-window {
-  border: 2px solid rgba(200,221,208,0.18);
-  box-shadow: 6px 6px 0 rgba(240,106,0,0.2);
-}
-
-/* ── DOWNLOAD BANNER ── */
-.download-banner {
-  background: var(--color-forest);
-  border-top: 3px solid var(--color-ink);
-  border-bottom: 3px solid var(--color-ink);
-  padding: 1.8rem 2.5rem;
-}
-.download-banner__inner {
-  max-width: var(--guide-wide);
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-.download-banner__label {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.42rem;
-  color: var(--color-orange);
-  letter-spacing: 0.12em;
-  margin-bottom: 0.4rem;
-}
-.download-banner__title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-mist);
-  line-height: 1.1;
-}
-.download-banner__files {
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  margin-top: 0.75rem;
-}
-.file-chip {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  color: rgba(200,221,208,0.55);
-  background: rgba(200,221,208,0.07);
-  border: 1px solid rgba(200,221,208,0.14);
-  border-radius: 4px;
-  padding: 0.25rem 0.6rem;
-  letter-spacing: 0.08em;
-}
-
-/* ── GUIDE BODY ── */
-.guide-body {
-  background: var(--color-cream);
-  padding: 5rem 2.5rem;
-}
-.guide-body__inner {
-  max-width: var(--guide-wide);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 5rem;
-  align-items: start;
-}
-
-/* Sticky sidebar TOC */
-.guide-toc {
-  position: sticky;
-  top: 80px;
-}
-.guide-toc__heading {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.38rem;
-  color: var(--color-orange);
-  letter-spacing: 0.12em;
-  margin-bottom: 1rem;
-  opacity: 0.7;
-}
-.guide-toc__links {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
-.guide-toc__links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.06em;
-  color: var(--color-text-soft);
-  text-decoration: none;
-  padding: 0.3rem 0.5rem;
-  border-left: 2px solid transparent;
-  display: block;
-  transition: color 0.15s, border-color 0.15s;
-}
-.guide-toc__links a:hover,
-.guide-toc__links a.active {
-  color: var(--color-orange);
-  border-left-color: var(--color-orange);
-}
-.guide-toc__divider {
-  height: 1px;
-  background: rgba(26,58,42,0.12);
-  margin: 0.75rem 0.5rem;
-}
-
-/* Guide main content */
-.guide-content { min-width: 0; }
-
-/* Section headers */
-.guide-section { margin-bottom: 4.5rem; scroll-margin-top: 100px; }
-.guide-section__eyebrow {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.42rem;
-  color: var(--color-orange);
-  letter-spacing: 0.14em;
-  margin-bottom: 0.6rem;
-}
-.guide-section__title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  font-weight: 700;
-  color: var(--color-ink);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin-bottom: 1.2rem;
-}
-.guide-section__body {
-  font-size: 0.97rem;
-  color: var(--color-text-soft);
-  line-height: 1.85;
-}
-.guide-section__body p + p { margin-top: 1rem; }
-.guide-section__body strong { color: var(--color-ink); }
-.guide-section__body a { color: var(--color-orange); text-underline-offset: 3px; }
-
-/* ── BOM TABLE ── */
-.bom-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.88rem;
-  margin: 1.5rem 0;
-}
-.bom-table thead th {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.38rem;
-  color: var(--color-orange);
-  letter-spacing: 0.1em;
-  text-align: left;
-  padding: 0.6rem 0.8rem;
-  border-bottom: 2px solid rgba(26,58,42,0.14);
-  background: var(--color-parchment);
-  white-space: nowrap;
-}
-.bom-table tbody tr {
-  border-bottom: 1px dashed rgba(26,58,42,0.1);
-  transition: background 0.12s;
-}
-.bom-table tbody tr:last-child { border-bottom: none; }
-.bom-table tbody tr:hover { background: rgba(240,106,0,0.04); }
-.bom-table td {
-  padding: 0.7rem 0.8rem;
-  color: var(--color-text-soft);
-  vertical-align: top;
-}
-.bom-table td:first-child { font-weight: 600; color: var(--color-ink); }
-.bom-table td:nth-child(2) { font-family: 'DM Mono', monospace; font-size: 0.78rem; }
-.bom-qty {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.45rem;
-  color: var(--color-orange);
-  white-space: nowrap;
-}
-.bom-link {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--color-orange);
-  text-decoration: none;
-  border-bottom: 1px dashed currentColor;
-  transition: opacity 0.15s;
-}
-.bom-link:hover { opacity: 0.7; }
-.bom-optional {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.36rem;
-  color: var(--color-text-faint);
-  vertical-align: middle;
-  margin-left: 0.3rem;
-  letter-spacing: 0.06em;
-}
-
-/* ── BUILD STEPS ── */
-.step-list { display: flex; flex-direction: column; gap: 2rem; margin-top: 1.5rem; }
-.step {
-  display: grid;
-  grid-template-columns: 48px 1fr;
-  gap: 1.25rem;
-  align-items: start;
-}
-.step__num {
-  width: 48px; height: 48px;
-  border-radius: 6px;
-  border: 2px solid var(--color-ink);
-  background: var(--color-ink);
-  box-shadow: 3px 3px 0 var(--color-orange);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.5rem;
-  color: var(--color-orange);
-  flex-shrink: 0;
-  line-height: 1;
-}
-.step__body {}
-.step__title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-ink);
-  margin-bottom: 0.4rem;
-  line-height: 1.2;
-}
-.step__text {
-  font-size: 0.92rem;
-  color: var(--color-text-soft);
-  line-height: 1.8;
-}
-.step__text p + p { margin-top: 0.7rem; }
-.step__text code {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.8em;
-  background: rgba(26,58,42,0.08);
-  padding: 0.1em 0.4em;
-  border-radius: 3px;
-  color: var(--color-forest);
-}
-.step__text pre {
-  background: var(--color-ink);
-  color: #a8d8b8;
-  padding: 1rem 1.25rem;
-  border-radius: 6px;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.7rem;
-  line-height: 1.75;
-  overflow-x: auto;
-  border-left: 3px solid var(--color-orange);
-  margin: 0.75rem 0;
-}
-.step__divider {
-  height: 1px;
-  background: rgba(26,58,42,0.1);
-  margin-top: 2rem;
-  grid-column: 1 / -1;
-}
-
-/* ── MEDIA INSERTS ── */
-.guide-media { margin: 2.5rem 0; }
-.guide-media--wide { margin-left: -1rem; margin-right: -1rem; }
-.guide-media__caption {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  color: var(--color-text-faint);
-  letter-spacing: 0.08em;
-  margin-top: 0.6rem;
-  padding-left: 0.25rem;
-}
-
-/* Media grid for side-by-side images */
-.guide-media-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin: 2rem 0;
-}
-
-/* ── CALLOUT BOXES ── */
-.guide-callout {
-  border-left: 4px solid var(--color-orange);
-  background: rgba(240,106,0,0.07);
-  padding: 1rem 1.4rem;
-  border-radius: 0 8px 8px 0;
-  margin: 1.5rem 0;
-  font-size: 0.9rem;
-  color: var(--color-text-soft);
-  line-height: 1.75;
-}
-.guide-callout__label {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.38rem;
-  color: var(--color-orange);
-  letter-spacing: 0.1em;
-  margin-bottom: 0.4rem;
-}
-.guide-callout--tip { border-left-color: #4a7c59; background: rgba(74,124,89,0.07); }
-.guide-callout--tip .guide-callout__label { color: #4a7c59; }
-.guide-callout--warn { border-left-color: #c62828; background: rgba(198,40,40,0.06); }
-.guide-callout--warn .guide-callout__label { color: #c62828; }
-
-.img-placeholder {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border: 2px dashed rgba(240,106,0,0.4);
-  border-radius: 8px;
-  overflow: hidden;        /* clips the image to the rounded border */
-  position: relative;      /* context for the absolute img */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  color: rgba(240,106,0,0.5);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.4rem;
-  letter-spacing: 0.1em;
-  text-align: center;
-}
-.img-placeholder--tall { aspect-ratio: 4/3; }
-.img-placeholder svg { opacity: 0.4; }
-
-/* When a real image is present, stretch it to fill the box */
-.img-placeholder img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .guide-hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-  .guide-body__inner { grid-template-columns: 1fr; }
-  .guide-toc { display: none; }
-  .guide-media-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 600px) {
-  .guide-hero { padding: 3.5rem 1.5rem 3rem; }
-  .guide-body { padding: 3rem 1.5rem; }
-  .download-banner { padding: 1.4rem 1.5rem; }
-  .step { grid-template-columns: 36px 1fr; gap: 1rem; }
-  .step__num { width: 36px; height: 36px; font-size: 0.4rem; }
-}
-
-/* Image carousel inside guide (same styles as devices.html) */
-.img-carousel{position:relative;overflow:hidden;user-select:none}
-.img-carousel__track{display:flex;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);will-change:transform;height:340px}
-.img-carousel__slide{flex:0 0 100%;height:340px;position:relative;overflow:hidden}
-.img-carousel__slide img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-.img-carousel__scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.07) 3px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:2}
-.img-carousel__btn{position:absolute;top:50%;transform:translateY(-50%);z-index:10;cursor:pointer;background:rgba(15,31,23,0.72);border:2px solid rgba(240,106,0,0.7);color:#f06a00;font-family:'Press Start 2P',monospace;font-size:0.55rem;padding:0.5rem 0.65rem;line-height:1;border-radius:4px;box-shadow:2px 2px 0 rgba(196,85,0,0.8);transition:background 0.15s;backdrop-filter:blur(4px)}
-.img-carousel__btn:hover{background:rgba(240,106,0,0.25)}
-.img-carousel__btn--prev{left:10px}
-.img-carousel__btn--next{right:10px}
-.img-carousel__dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10}
-.img-carousel__dot{width:8px;height:8px;border-radius:2px;background:rgba(200,221,208,0.35);border:1.5px solid rgba(240,106,0,0.4);cursor:pointer;transition:background 0.15s,border-color 0.15s,transform 0.15s}
-.img-carousel__dot.active{background:#f06a00;border-color:#c45500;transform:scale(1.25)}
-.img-carousel__counter{position:absolute;top:10px;right:10px;z-index:10;font-family:'Press Start 2P',monospace;font-size:0.38rem;color:rgba(200,221,208,0.7);background:rgba(15,31,23,0.7);padding:0.3rem 0.55rem;border-radius:3px;border:1px solid rgba(240,106,0,0.3);backdrop-filter:blur(4px);letter-spacing:0.08em}
-.img-carousel__slide--placeholder{background:rgba(26,58,42,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem}
-.img-carousel__slide--placeholder p{font-family:'Press Start 2P',monospace;font-size:0.4rem;color:rgba(200,221,208,0.4);letter-spacing:0.1em;text-align:center;line-height:2}
-
-/* Video slide */
-.img-carousel__slide--video{background:#000;position:relative}
-.img-carousel__slide--video video{width:100%;height:100%;object-fit:cover;display:block}
-.carousel-video-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;background:rgba(15,31,23,0.62);cursor:pointer;z-index:5;transition:opacity 0.2s}
-.carousel-video-play.hidden{opacity:0;pointer-events:none}
-.carousel-video-play__icon{width:52px;height:52px;border-radius:50%;border:2.5px solid #f06a00;background:rgba(240,106,0,0.18);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#f06a00;box-shadow:0 0 0 6px rgba(240,106,0,0.1)}
-.carousel-video-play__label{font-family:'Press Start 2P',monospace;font-size:0.38rem;color:rgba(200,221,208,0.7);letter-spacing:0.12em}
-.carousel-video-mute{position:absolute;bottom:38px;right:10px;z-index:10;background:rgba(15,31,23,0.72);border:2px solid rgba(240,106,0,0.6);color:#f06a00;font-family:'Press Start 2P',monospace;font-size:0.45rem;padding:0.35rem 0.55rem;border-radius:4px;cursor:pointer;backdrop-filter:blur(4px);line-height:1;display:none}
-.carousel-video-mute.visible{display:block}
-</style>
+  <style>
+    /* ── VIDEO SLIDE ── */
+    .img-carousel__slide--video {
+      background: #000;
+      position: relative;
+    }
+    .img-carousel__slide--video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* Play-button overlay shown before user interacts */
+    .carousel-video-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: rgba(15, 31, 23, 0.62);
+      cursor: pointer;
+      z-index: 5;
+      transition: opacity 0.2s;
+    }
+    .carousel-video-play.hidden { opacity: 0; pointer-events: none; }
+    .carousel-video-play__icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2.5px solid #f06a00;
+      background: rgba(240, 106, 0, 0.18);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: #f06a00;
+      box-shadow: 0 0 0 6px rgba(240,106,0,0.1);
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .carousel-video-play:hover .carousel-video-play__icon {
+      background: rgba(240,106,0,0.32);
+      box-shadow: 0 0 0 10px rgba(240,106,0,0.08);
+    }
+    .carousel-video-play__label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.38rem;
+      color: rgba(200,221,208,0.7);
+      letter-spacing: 0.12em;
+    }
+    /* Mute toggle inside the video slide */
+    .carousel-video-mute {
+      position: absolute;
+      bottom: 38px; right: 10px;
+      z-index: 10;
+      background: rgba(15,31,23,0.72);
+      border: 2px solid rgba(240,106,0,0.6);
+      color: #f06a00;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.45rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 4px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      line-height: 1;
+      display: none;
+    }
+    .carousel-video-mute.visible { display: block; }
+  </style>
+<!-- Prism.js — core + autoloader (fetches grammar files on demand) -->
+<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css"/-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </head>
 <body>
 
@@ -537,7 +126,7 @@
       <div class="guide-hero__stats">
         <div class="guide-stat-item">
           <span class="guide-stat-item__label">Difficulty</span>
-          <span class="guide-stat-item__value" style="font-size:1.1rem;letter-spacing:0.02em">BEGINNER</span>
+          <span class="guide-stat-item__value guide-stat-item__value--sm">BEGINNER</span>
         </div>
         <div class="guide-stat-item">
           <span class="guide-stat-item__label">Steps</span>
@@ -545,15 +134,15 @@
         </div>
         <div class="guide-stat-item">
           <span class="guide-stat-item__label">Est. time</span>
-          <span class="guide-stat-item__value" style="font-size:1.1rem">~&nbsp;6&nbsp;hrs</span>
+          <span class="guide-stat-item__value guide-stat-item__value--sm">~&nbsp;6&nbsp;hrs</span>
         </div>
         <div class="guide-stat-item">
           <span class="guide-stat-item__label">Approx. cost</span>
-          <span class="guide-stat-item__value" style="font-size:1.1rem">~&nbsp;50&nbsp;€</span>
+          <span class="guide-stat-item__value guide-stat-item__value--sm">~&nbsp;50&nbsp;€</span>
         </div>
       </div>
 
-      <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+      <div class="guide-hero__actions">
         <a href="#downloads" class="btn btn-orange">&#9658; Get the Files</a>
         <a href="#build" class="btn btn-ghost">Jump to Build</a>
       </div>
@@ -570,22 +159,22 @@
             <div class="window-btn window-btn--green"></div>
           </div>
         </div>
-        <div class="img-carousel" id="hero-carousel" style="background:#1a1a14;">
+        <div class="img-carousel img-carousel--pine" id="hero-carousel">
           <div class="img-carousel__track">
             <div class="img-carousel__slide">
-              <img src="img/dmg40_render.jpg" alt="DMG-40 Transit Clock — three-view render" style="object-position:center top;"/>
+              <img src="img/dmg40_render.jpg" alt="DMG-40 Transit Clock — three-view render" class="img--top"/>
               <div class="img-carousel__scanline"></div>
             </div>
             <div class="img-carousel__slide">
-              <img src="img/DMG-DN40-Rendering-Iso-L_Gradient.png" alt="DMG-40 Transit Clock gradient render" style="object-position:center top;"/>
+              <img src="img/DMG-DN40-Rendering-Iso-L_Gradient.png" alt="DMG-40 Transit Clock gradient render" class="img--top"/>
               <div class="img-carousel__scanline"></div>
             </div>
             <div class="img-carousel__slide">
-              <img src="img/DMG-DN40-Rendering-Iso-L_Gradient_2.png" alt="DMG-40 Transit Clock gradient render 2" style="object-position:center top;"/>
+              <img src="img/DMG-DN40-Rendering-Iso-L_Gradient_2.png" alt="DMG-40 Transit Clock gradient render 2" class="img--top"/>
               <div class="img-carousel__scanline"></div>
             </div>
             <div class="img-carousel__slide">
-              <img src="img/DMG-DN40-Technical-Drawing-Illustrative-only.png" alt="DMG-40 Transit Clock - illustrative drawing" style="object-position:center top;"/>
+              <img src="img/DMG-DN40-Technical-Drawing-Illustrative-only.png" alt="DMG-40 Transit Clock - illustrative drawing" class="img--top"/>
               <div class="img-carousel__scanline"></div>
             </div>
             <div class="img-carousel__slide img-carousel__slide--video">
@@ -615,7 +204,6 @@
   </div>
 </section>
 
-
 <!-- ── DOWNLOAD BANNER ── -->
 <div class="download-banner" id="downloads">
   <div class="download-banner__inner">
@@ -630,9 +218,10 @@
         <span class="file-chip">BOM.csv</span>
       </div>
     </div>
-    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;flex-shrink:0">
-      <a href="https://drive.google.com/drive/folders/YOUR_FOLDER_ID" target="_blank" rel="noopener" class="btn btn-orange">&#9658; Open in Google Drive</a>
-      <a href="https://github.com/YOUR_USERNAME/dmg-40" target="_blank" rel="noopener" class="btn btn-ghost-light">GitHub Repo</a>
+    <div class="download-banner__actions">
+      <a href="https://drive.google.com/drive/folders/1TzlHBHNbzyrmJCdPlM2KUP1ojNR4K2oM?usp=sharing" target="_blank" rel="noopener" class="btn btn-orange">&#9658; Open in Google Drive</a>
+      <a href="https://github.com/dmg-labs-studio/DMG-40#" target="_blank" rel="noopener" class="btn btn-ghost-light">GitHub Repo</a>
+      
     </div>
   </div>
 </div>
@@ -674,21 +263,21 @@
         <h2 class="guide-section__title">What you're building</h2>
         <div class="guide-section__body">
           <p>The DMG-40 is a compact real-time departure board for the trains and metros you actually take. Four 8×8 LED matrix panels sit behind a smoked acrylic diffuser inside a Braun-inspired FDM enclosure, showing the next two departures for any combination of stops you configure. The Pico W polls the transit API every 30 seconds over Wi-Fi and syncs its clock with NTP so the time is always accurate — even after a power cut.</p>
-          <p>The enclosure is a single-piece FDM print with a friction-fit back panel, so it requires no screws and opens easily for cable access. The red-on-black color scheme is a nod to the Nuremberg city colors that inspired the original.</p>
+          <p>The enclosure is a single-piece FDM print with a friction-fit back panel, so it opens easily for cable access. The red-on-black color scheme is a nod to the Nuremberg city colors that inspired the original.</p>
           <p>This guide covers everything from printing to a working display. The firmware step assumes no prior MicroPython experience — all the scripts you need are in the download package.</p>
         </div>
 
         <!-- Two-photo grid -->
-        <div class="guide-media-grid" style="margin-top:2rem">
+        <div class="guide-media-grid">
           <div>
             <div class="img-placeholder img-placeholder--tall">
-              <img src="img/DMG-DN40_Rendering_Classic_EU-Urban_Metro.png" alt="DMG-40 Transit Clock — European Urban Render" style="object-position:center top;"/>
+              <img src="img/DMG-DN40_Rendering_Classic_EU-Urban_Metro.png" alt="DMG-40 Transit Clock — European Urban Render" class="img--top"/>
             </div>
             <p class="guide-media__caption">The rendered DMG-40 in an urban European setting.</p>
           </div>
           <div>
             <div class="img-placeholder img-placeholder--tall">
-              <img src="img/DMG-DN40_Rendering_Industrial_Urban.png" alt="DMG-40 Transit Clock — Industrial Setting Render" style="object-position:center top;"/>
+              <img src="img/DMG-DN40_Rendering_Industrial_Urban.png" alt="DMG-40 Transit Clock — Industrial Setting Render" class="img--top"/>
             </div>
             <p class="guide-media__caption">Also looks great in any industrial or Bauhaus-inspired ambience.</p>
           </div>
@@ -704,7 +293,7 @@
           <p>All components are widely available. Links point to the suppliers I used — feel free to source equivalents. Total cost is roughly 40–50&nbsp;€ depending on shipping and where you buy the filament.</p>
         </div>
 
-        <div class="retro-window" style="margin-top:1.5rem">
+        <div class="retro-window">
           <div class="retro-window__titlebar retro-window--green">
             <span class="retro-window__title">BOM.csv</span>
             <div class="window-btns">
@@ -713,39 +302,39 @@
               <div class="window-btn window-btn--green"></div>
             </div>
           </div>
-          <div class="retro-window__body" style="padding:0;overflow:hidden">
+          <div class="retro-window__body retro-window__body--flush">
             <table class="bom-table">
               <thead>
                 <tr>
                   <th>Component</th>
                   <th>Spec / Notes</th>
-                  <th style="text-align:center">Qty</th>
+                  <th class="bom-table__th--center">Qty</th>
                   <th>Link</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><p class="bom-qty">Microcontroller</p><p>RPi Pico 2W</p></td>
+                  <td><p class="bom-qty">Microcontroller</p>RPi Pico 2W</p></td>
                   <td>The Wi-Fi (W) variant is required. If you want to avoid soldering, choose "with Header".</td>
-                  <td style="text-align:center"><span class="bom-qty">× 1</span></td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 1</span></td>
                   <td><a href="https://www.berrybase.de/raspberry-pi-pico-2w-rp2350-wlan-bluetooth-mikrocontroller-board-mit-headern" target="_blank" rel="noopener" class="bom-link">berrybase.de ↗</a></td>
                 </tr>
                 <tr>
                   <td><p class="bom-qty">LED Matrix Module</p><p>MAX7219</p></td>
                   <td>8×8 dot matrix, daisy-chainable, 5&nbsp;V</td>
-                  <td style="text-align:center"><span class="bom-qty">× 4</span></td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 4</span></td>
                   <td><a href="https://www.amazon.de/s?k=MAX7219+LED+8x8" target="_blank" rel="noopener" class="bom-link">Amazon.de ↗</a></td>
                 </tr>
                 <tr>
                   <td>Jumper wires</td>
                   <td>Female–female, 10&nbsp;cm — for matrix to Pico connections</td>
-                  <td style="text-align:center"><span class="bom-qty">× 8</span></td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 8</span></td>
                   <td><a href="https://www.berrybase.de" target="_blank" rel="noopener" class="bom-link">BerryBase ↗</a></td>
                 </tr>
                 <tr>
                   <td><p class="bom-qty">Filament</p><p>PLA or PETG</p></td>
                   <td>Color of your choice — PETG is more UV-resistant, but also more difficult to print (needs drying).</td>
-                  <td style="text-align:center"><span class="bom-qty">~200 g</span></td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">~200 g</span></td>
                   <td>
                     <p><a href="https://eu.store.bambulab.com/collections/bambu-lab-3d-printer-filament?srsltid=AfmBOopbsq2X_c6hBngYXidiqL1NEYbOoXGUH8QKgUjVOax9Lr2QDPFp" target="_blank" rel="noopener" class="bom-link">Bambu ↗</a></p>
                     <p><a href="https://de.elegoo.com/pages/elegoo-filaments?gad_source=1&gad_campaignid=23298776357&gbraid=0AAAABB9J7KAkGjLXQSYv9yWbZlM0IcpAJ&gclid=Cj0KCQjw-pHPBhCdARIsAHXYWP9tOkxHWY4ofEyCV7a6-DTaE8Zn93Jti9FPVXuF2sfyOgCNw8ryrVcaAv5mEALw_wcB" class="bom-link">Elegoo ↗</a></p>    
@@ -754,27 +343,27 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><p class="bom-qty">Screws</p><p>M2 × 6 mm screws</p></td>
-                  <td>For mounting the Raspberry Pi inside the enclosure.</td>
-                  <td style="text-align:center"><span class="bom-qty">× 4</span></td>
+                  <td><p class="bom-qty">Screws and Nuts</p><p>M2 × 6 mm screws and M2 nuts (x4)</p></td>
+                  <td>For mounting the Pico inside the enclosure and the LED matrix on the holding plate.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 8</span></td>
                   <td><a href="https://www.amazon.de/Innensechskantschrauben-Unterlegscheiben-Sortiment-Linsenkopf-Gewindeschrauben/dp/B0BQHK9LVJ/ref=sr_1_7?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3RHWLV4IN1088&dib=eyJ2IjoiMSJ9.zPZobmt3I6L7WMoS4Dw5CD_EPud8WRG2yUZA6jrmz-n4trTIfEzyaE_keDX66iMuVBnzMCmAB_cev8q_tQkAfdBDIxLtwQOkMj5wnfkIn4VxKyX6Pj1RwXiBjmGvxrZ5X4qS4rilUuWCLragNjPDghwst9OW_X1pFGu_lG5YJN1eR0qYQO_PieewZSlrcH_XzUFjty9hMl8egiB_GLFb6nITR3lMDJ5QZHWmn3hb0XUyFfpBsQqwe243XnB0kieYlim-2I1blXiulSZ3RkY324Le5BdAqbQVWqEvoP-VnhQ.edkOHFOZdHgiiVoQdP2ALrjvqe4K_fHpSCZf6WO7jVk&dib_tag=se&keywords=linsenkopfschrauben&qid=1776602184&sprefix=linsenkopfschrauben%2Caps%2C125&sr=8-7&th=1" target="_blank" rel="noopener" class="bom-link">Amazon.de ↗</a></td>
                 </tr>
                 <tr>
                   <td><p class="bom-qty">Heat Inserts </p><p>M2 heat inserts</p></td>
                   <td>For mounting the Raspberry Pi inside the enclosure. M2 thread, Outer Diameter: ~3 - 3.5 mm </td>
-                  <td style="text-align:center"><span class="bom-qty">× 4</span></td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 4</span></td>
                   <td><a href="https://www.amazon.de/M2-5-Bolatus-Einschmelzmuttern-Einschmelzhilfe-Einschmelzgewinde/dp/B0F2TGGBMC/ref=sr_1_3_sspa?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=CZXXSE0Y7FPX&dib=eyJ2IjoiMSJ9.12UT8NcLWRyLpW6u7T9kkMYRiwjno6ghiUaSZUG3s85LZnD6OTQzPZXeFfIf_79DgZ15lpFmFJXYEJ0ww25JjTN00QsIIRQudkhEcc0e2wux6IGjDBdS9j0XwZFiAcAmWKUY1Y2G0X3SMDem4JIo0_Lh6qivUq90DK4kQwBf-oIWN7BztGqOTRPcJ07bH3snzHShAhCJblvHFZzzgtplomRbvSdHP8LkTrX0TurIRFGtcc0zcSAsyeNY4YakR34Gqxa1zQrZCPXvQKaFxNBYDzYyUyvAHVpXVeWOR1d7TUg.JTsf2V9MW4onphhehMErRLS1h78NXF73srwK1S8SoGM&dib_tag=se&keywords=heat%2Binserts&qid=1776602247&sprefix=heat%2Binserts%2Caps%2C114&sr=8-3-spons&aref=CN9XZimLg7&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1" target="_blank" rel="noopener" class="bom-link">Amazon.de ↗</a></td>
                 </tr>
                 <tr>
                   <td>USB-C cable</td>
                   <td>For power — any decent 5&nbsp;V / 1&nbsp;A cable</td>
-                  <td style="text-align:center"><span class="bom-qty">× 1</span></td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 1</span></td>
                   <td><span class="bom-optional">YOU LIKELY HAVE ONE</span></td>
                 </tr>
                 <tr>
                   <td><p class="bom-qty">Optional</p><p>USB-C Breakout</p></td>
                   <td>If you want to use a USB-C connector instead of the Micro-USB on the Pico</td>
-                  <td style="text-align:center"><span class="bom-qty">× 1</span></td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 1</span></td>
                   <td><a href="https://www.berrybase.de/adafruit-usb-type-c-breakout-board-downstream-verbindung" target="_blank" rel="noopener" class="bom-link">BerryBase ↗</a></td>
                 </tr>
               </tbody>
@@ -782,7 +371,7 @@
           </div>
         </div>
 
-        <div class="guide-callout guide-callout--tip" style="margin-top:1.5rem">
+        <div class="guide-callout guide-callout--tip">
           <div class="guide-callout__label">// TIP — sourcing the matrix modules</div>
           Buying a 4-in-1 pre-chained MAX7219 module (common on Amazon and AliExpress) saves you the daisy-chaining step and makes the wiring cleaner. The firmware is written for that configuration. If you buy individual modules, you'll need to solder the CLK/CS/DIN chain yourself.
         </div>
@@ -805,21 +394,68 @@
             <div class="step__body">
               <div class="step__title">Print the enclosure</div>
               <div class="step__text">
-                <p>Open <code>dmg40_enclosure_v2.stl</code> in your slicer. The model is pre-oriented — print it flat-side-down with no supports. Recommended settings:</p>
-                <pre>Layer height:   0.2 mm
-Infill:         20 % (gyroid)
-Walls:          3 perimeters
-Bed temp:       60 °C  (PLA)
-Nozzle temp:    215 °C (PLA)</pre>
-                <p>Print time is around 2.5 hours on a Prusa MK4 at 0.2 mm. The front aperture has a 0.1 mm tolerance for the acrylic sheet — if your printer runs tight, scale X/Y by 1.002.</p>
-              </div>
-
-              <div class="guide-media" style="margin-top:1.25rem">
-                <div class="img-placeholder">
-                  <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
-                  <span>SLICER SCREENSHOT<br>img/dmg40_slicer.jpg</span>
+                <p>Open <code>dmg40_enclosure_v2.stl</code> from the Google Drive link in your slicer. I printed the back enclosure with the back side down. The front enclosure was printed with the right side down. However, I'd recommend to try orienting it in such a way to fit best with your printer and turn on supports where needed. The bottom and support parts are easy to print. I used regular Elegoo PLA Black for the front and inner parts and Elegoo Red PLA+ for the back enclosure, using standard settings on my BambuLab P1S. Recommended settings:</p>
+                <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__header-left">
+                    <div class="code-block__dots">
+                      <div class="code-block__dot code-block__dot--r"></div>
+                      <div class="code-block__dot code-block__dot--y"></div>
+                      <div class="code-block__dot code-block__dot--g"></div>
+                    </div>
+                    <span class="code-block__filename">slicer_settings.txt</span>
+                  </div>
+                  <div class="code-block__header-right">
+                    <span class="code-block__lang">settings</span>
+                    <button class="code-block__copy">COPY</button>
+                  </div>
                 </div>
-                <p class="guide-media__caption">Slicer view — flat orientation, no supports needed.</p>
+                <div class="code-block__body">
+                  <pre>
+                    <code class="language-none">
+Layer height:   0.2 mm
+Infill:         10 - 15 % (gyroid or honeycomb)
+Walls:          2 perimeters
+Bed temp:       55 °C  (PLA)
+Nozzle temp:    210 - 230 °C (PLA; check your filament specs)
+                    </code>
+                  </pre>
+                </div>
+              </div>
+                <p>Print time is around 2.5 hours total on a BambuLab P1S at 0.2 mm.</p>
+                <p>It might make sense to sand down the edges and wherever you had supports for a smoother finish, although for me this printed pretty good out of the box.</p>
+              </div>
+              <div class="retro-window device-window-wrap">
+                  <div class="img-carousel" id="carousel-d40" style="background:#0f0505; object-fit: cover;">
+                    <div class="img-carousel__track">
+                      <div class="img-carousel__slide img-carousel__slide--video video" style="object-fit: cover; overflow:hidden">
+                        <video src="video/DMG40_Print_Video_Main-Components.mp4" loop playsinline preload="none"></video>
+                        <div class="img-carousel__scanline"></div>
+                        <div class="carousel-video-play" aria-label="Play video">
+                          <div class="carousel-video-play__icon">&#9654;</div>
+                          <span class="carousel-video-play__label">PLAY VIDEO</span>
+                        </div>
+                        <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                      </div>
+                      <div class="img-carousel__slide img-carousel__slide--video video">
+                        <video src="video/DMG40_Print_Video_Back.mp4" loop playsinline preload="none"></video>
+                        <div class="img-carousel__scanline"></div>
+                        <div class="carousel-video-play" aria-label="Play video">
+                          <div class="carousel-video-play__icon">&#9654;</div>
+                          <span class="carousel-video-play__label">PLAY VIDEO</span>
+                        </div>
+                        <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                      </div>
+                    </div>
+                    <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+                    <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+                    <div class="img-carousel__counter">1 / 2</div>
+                    <div class="img-carousel__dots">
+                      <div class="img-carousel__dot"></div>
+                      <div class="img-carousel__dot"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -827,36 +463,80 @@ Nozzle temp:    215 °C (PLA)</pre>
           <!-- Step 02 -->
           <div class="step" id="step-02">
             <div class="step__num">02</div>
-            <div class="step__body">
-              <div class="step__title">Assemble the LED matrix</div>
-              <div class="step__text">
-                <p>If you bought individual 8×8 modules, daisy-chain them by connecting <code>DOUT</code> of each module to <code>DIN</code> of the next. If you have the 4-in-1 pre-chained board, skip this — it ships ready to wire.</p>
-                <p>Slide the acrylic diffuser into the front aperture from the inside. It should sit flush with no adhesive needed; the fit holds it in place. If it's loose, a thin strip of masking tape on the edges does the job neatly.</p>
-              </div>
-
-              <div class="guide-callout" style="margin-top:1rem">
-                <div class="guide-callout__label">// NOTE — orientation</div>
-                The matrix modules have a correct orientation for the text direction. The <code>DIN</code> connector faces right when the display is oriented horizontally. If your departure text scrolls backwards, rotate the module 180° and update <code>ROTATE = True</code> in <code>config.json</code>.
+              <div class="step__body">
+                <div class="step__title">Mount the Pico and LED-Matrix</div>
+                  <div class="step__text">
+                    <p>First, fire up your soldering iron (~200°C for PLA) and drive the heat inserts into the 4 designated holes on the bottom plate of the front print. Make sure to hold the soldering iron steady and orthogonally to the surface. It makes sense to use a small spatula or pliers with your free hand to easily remove the solder iron from the heat inserts after insertion. Avoid staying too long on each insert to prevent the plastic from melting too much.</p>
+                    <p>Next, screw the Pico W onto the proud surface on the bottom plate, right where you just put the heat inserts.</p>
+                  </div>
+                  <div class="step__text">
+                    <p>Insert the four small nuts carefully into the opening between LED module and PCB backplate right where the mounting holes are. Position the module in front of the holding plate and screw the LEDs to the holding plate. Pliers can be very useful to hold the nuts in place while screwing</p>
+                    <p style="margin-bottom: 1.56rem">Push the holding plate with the attached LED matrix from behind into the respective opening of the  enclosure. The four diamond shaped pins go into the matching holes in the enclosure. The fit is designed to be snug. If it doesn't fit immediately, sand down the diamond pins a bit and try again. Apply even and steady force while inserting. Make sure that the LED-matrix PIN heads are oriented to the right (looking from the front).</p>
+                  </div>
+                  <div class="guide-media-grid">
+                    <div>
+                      <div class="img-placeholder img-placeholder--tall">
+                        <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
+                        <span>Pico Mounting<br>img/dmg40_wiring.jpg</span>
+                      </div>
+                      <p class="guide-media__caption">Pico W mounted to bottom plate</p>
+                    </div>
+                    <div>
+                      <div class="img-placeholder img-placeholder--tall">
+                        <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
+                        <span>LED Matrix mounted to the holding plate<br>img/dmg40_wiring_diagram.jpg</span>
+                      </div>
+                      <p class="guide-media__caption">LED Matrix mounted to the holding plate</p>
+                    </div>
+                  </div>                    
               </div>
             </div>
-          </div>
 
           <!-- Step 03 -->
           <div class="step" id="step-03">
             <div class="step__num">03</div>
             <div class="step__body">
               <div class="step__title">Wire up the Pico W</div>
+                <div class="step__text">
+                  <p>If you bought individual 8×8 modules, you have to daisy-chain them. You can follow a tutorial like this <a href="https://www.youtube.com/watch?v=3-kDEDpWsEs" target="_blank" rel="noopener" class="bom-link">Youtube ↗></a>. If you have the 4-in-1 pre-chained board, skip this — it ships ready to wire.</p>
+                  <p>Please make sure that the holes align with the mounting points on the DN40 enclosure and the back fastening plate. The device was designed to have a flex-fit and provide some tolerance for different 4 x 8 x 8 LED modules.</p>
+                </div>
+
+                <div class="guide-callout">
+                  <div class="guide-callout__label">// NOTE — orientation</div>
+                  The matrix modules have a correct orientation for the text direction. The <code>DIN</code> connector faces right when the display is oriented horizontally. If your departure text scrolls backwards, rotate the module 180° and update <code>ROTATE = True</code> in <code>config.json</code>.
+                </div>
               <div class="step__text">
                 <p>Connect the MAX7219 chain to the Pico W using the wiring diagram in <code>wiring_diagram.pdf</code>. The key connections are:</p>
-                <pre>Matrix DIN  →  Pico GP11  (SPI0 MOSI)
-Matrix CLK  →  Pico GP10  (SPI0 SCK)
-Matrix CS   →  Pico GP9   (chip select)
-Matrix VCC  →  Pico VBUS  (5 V)
-Matrix GND  →  Pico GND</pre>
+                <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__header-left">
+                    <div class="code-block__dots">
+                      <div class="code-block__dot code-block__dot--r"></div>
+                      <div class="code-block__dot code-block__dot--y"></div>
+                      <div class="code-block__dot code-block__dot--g"></div>
+                    </div>
+                    <span class="code-block__filename">wiring.txt</span>
+                  </div>
+                  <div class="code-block__header-right">
+                    <span class="code-block__lang">pinout</span>
+                    <button class="code-block__copy">COPY</button>
+                  </div>
+                </div>
+                <div class="code-block__body">
+<pre><code class="language-none">
+Matrix DIN  →  Pico GP3  (SPI0 MOSI)
+Matrix CLK  →  Pico GP2  (SPI0 SCK)
+Matrix CS   →  Pico GP5  (chip select)
+Matrix VCC  →  Pico 3V3
+Matrix GND  →  Pico GND
+</code></pre>
+                </div>
+              </div>
                 <p>Use female–female Dupont wires to avoid any soldering. Route the wires along the inside wall of the enclosure before closing — there are two cable-guide clips printed inside the shell.</p>
               </div>
 
-              <div class="guide-media-grid" style="margin-top:1.25rem">
+              <div class="guide-media-grid">
                 <div>
                   <div class="img-placeholder img-placeholder--tall">
                     <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
@@ -882,12 +562,31 @@ Matrix GND  →  Pico GND</pre>
               <div class="step__title">Flash the firmware</div>
               <div class="step__text">
                 <p>Download the latest stable version of the MicroPython distribution for the Pico 2W from here: <a href="https://micropython.org/download/RPI_PICO2_W/" target="_blank" rel="noopener" class="bom-link">micropython.org ↗</a>  Hold the <code>BOOTSEL</code> button on the Pico W while connecting it via USB to your laptop. It mounts as a mass storage device. Drag the downloaded <code>.uf2</code> micropython firmware file onto the drive — the Pico restarts and the drive disappears. That's it; MicroPython is now flashed onto the Pico.</p>
-                <p>Next, use <a href="https://thonny.org" target="_blank" rel="noopener">Thonny IDE</a> (free, cross-platform) to open and upload <code>dmg40_firmware.py</code> and <code>config.json</code> to the Pico's root filesystem. In Thonny: <strong>Run → Select Interpreter → MicroPython (Raspberry Pi Pico)</strong>.</p>
+                <p>Next, use <a href="https://thonny.org" target="_blank" rel="noopener">Thonny IDE</a> (free, cross-platform) to open and upload <code>main.py</code>, <code>LED_Matrix.py</code>, <code>max7219.py</code> (keep the file with the <code>/lib</code> folder structure) and <code>config.json</code> to the Pico's root filesystem (<a href="https://github.com/dmg-labs-studio/DMG-40#" target="_blank" rel="noopener" class="bom-link">Github ↗</a>). In Thonny (see below): <strong>Run → Select Interpreter → MicroPython (Raspberry Pi Pico)</strong>.</p>
               </div>
-
-              <div class="guide-callout guide-callout--tip" style="margin-top:1rem">
+              <div class="guide-media-grid">
+                <div>
+                  <div class="img-placeholder img-placeholder--tall">
+                    <img src="img/thonny_file_system.png" alt="Thonny File system" class="img--top"/>
+                  </div>
+                  <p class="guide-media__caption">The Thonny file system (bottom).</p>
+                </div>
+                <div>
+                  <div class="img-placeholder img-placeholder--tall">
+                    <img src="img/Thonny_Configure_Interpreter.png" alt="How to configure Thonny to connect to Pico" class="img--top"/>
+                  </div>
+                  <p class="guide-media__caption">Select "Run" -> "Configure interpreter..."</p>
+                </div>
+                <div>
+                  <div class="img-placeholder img-placeholder--tall">
+                    <img src="img/Thonny_Interpreter_Option.png" alt="Choose correct interpreter option for Thonny" class="img--top"/>
+                  </div>
+                  <p class="guide-media__caption">Configure Thonny to connect to the Pico: "Board in FS mode [...]"</p>
+                </div>
+              </div>
+              <div class="guide-callout guide-callout--tip">
                 <div class="guide-callout__label">// FIRST TIME WITH THONNY?</div>
-                Install it from <a href="https://thonny.org" target="_blank" rel="noopener" style="color:#4a7c59">thonny.org</a>. Once connected to the Pico, you'll see the device's filesystem in the bottom panel. Right-click any file on your computer and choose "Upload to /" to copy it across.
+                Install it from <a href="https://thonny.org" target="_blank" rel="noopener" class="link--tip">thonny.org</a>. Once connected to the Pico, you'll see the device's filesystem in the bottom panel. Right-click any file on your computer and choose "Upload to /" to copy it across.
               </div>
             </div>
           </div>
@@ -899,16 +598,49 @@ Matrix GND  →  Pico GND</pre>
               <div class="step__title">Configure your transit API</div>
               <div class="step__text">
                 <p>Open <code>config.json</code> in any text editor. The key fields to fill in:</p>
-                <pre>{
-  "wifi_ssid":     "YOUR_NETWORK",
-  "wifi_password": "YOUR_PASSWORD",
-  "api_provider":  "VGN",
-  "stop_ids":      ["510", "906"],
-  "lines_filter":  ["U2", "S3"],
-  "api_key":       ""
-}</pre>
-                <p>The firmware supports VGN (Nuremberg), VGA, DB, SNCF, TfL (London), and NYC MTA out of the box. The <code>api_provider</code> field selects the correct endpoint and data parser. Most European open transit APIs require no key — set <code>api_key</code> to an empty string if yours doesn't.</p>
-                <p>To find your stop IDs: search your stop on <a href="https://www.openstreetmap.org" target="_blank" rel="noopener">openstreetmap.org</a>, click the stop, and note the <code>ref</code> tag. Alternatively, the <code>stop_finder.py</code> script in the download package queries the API by name and prints matching IDs.</p>
+                <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__header-left">
+                    <div class="code-block__dots">
+                      <div class="code-block__dot code-block__dot--r"></div>
+                      <div class="code-block__dot code-block__dot--y"></div>
+                      <div class="code-block__dot code-block__dot--g"></div>
+                    </div>
+                    <span class="code-block__filename">config.json</span>
+                  </div>
+                  <div class="code-block__header-right">
+                    <span class="code-block__lang">JSON</span>
+                    <button class="code-block__copy">COPY</button>
+                  </div>
+                </div>
+                <div class="code-block__body">
+                  <pre><code class="language-json">
+{
+    "wifi": {
+        "ssid": "YOUR-WIFI-NAME",
+        "password": "YOUR-WIFI-PASSWORD"
+    },
+    "settings": {
+        "vag_network": "vgn",
+        "hid": "701",
+        "brightness": 6,
+        "clock_duration_seconds": 30
+        "timezone_offset": 7200
+    },
+    "lines": [
+        {"num": 1, "id": 510, "code": "RE1", "scroll": 9},
+        {"num": 40, "id": 510, "code": "RE40", "scroll": 13},
+        {"num": 30, "id": 510, "code": "RB30", "scroll": 13}
+    ]
+}
+                  </code></pre>
+                </div>
+              </div>
+                <p>The current script supports the VGN (Nuremberg) transit API. To find your stop IDs: search your stop on <a href="https://bundesapi.github.io/vag-api/" target="_blank" rel="noopener" class="bom-link">VAG API</a>, or on the "Swagger UI". </p>
+                <p>There are two parts in <code>config.json</code> to configure desired departures. One for the metro ("settings") and one for the trains ("lines").</p>
+                <p>Metro: <code>hid</code> defines the start station (701 = Maximiliansstraße) for which to show any real-time metro departures in any direction. <code>clock_duration_seconds</code> defines how long the time shall be shown when in the "Clock" section.</p>
+                </p> Trains (lines): The parameter <code>num</code> defines the train number, the <code>id</code> defines the start station (501 = Nuremberg Hbf), <code>code</code> is the handle for the train line and <code>scroll</code> is the number of LED pixels counted from the left at which to start the scrolling band.</p>                
+                <p>Please adjust to your desired transit API provider, where you see fit. If you need support in configuring a different API, feel free to reach out!</p>
               </div>
             </div>
           </div>
@@ -920,24 +652,207 @@ Matrix GND  →  Pico GND</pre>
               <div class="step__title">Set the NTP clock</div>
               <div class="step__text">
                 <p>The clock syncs automatically on first boot as long as Wi-Fi is configured. Set your timezone offset in <code>config.json</code>:</p>
-                <pre>"timezone_offset": 1    // CET — use 2 for CEST (summer)</pre>
-                <p>The Pico W has no onboard RTC battery, so it re-syncs with NTP each time it powers on. If the display shows <code>--:--</code> on boot, it means Wi-Fi hasn't connected yet — check your credentials and that the SSID is 2.4 GHz (the Pico W doesn't support 5 GHz).</p>
+                <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__header-left">
+                    <div class="code-block__dots">
+                      <div class="code-block__dot code-block__dot--r"></div>
+                      <div class="code-block__dot code-block__dot--y"></div>
+                      <div class="code-block__dot code-block__dot--g"></div>
+                    </div>
+                    <span class="code-block__filename">config.json</span>
+                  </div>
+                  <div class="code-block__header-right">
+                    <span class="code-block__lang">JSON</span>
+                    <button class="code-block__copy">COPY</button>
+                  </div>
+                </div>
+                <div class="code-block__body">
+<pre><code class="language-json">"timezone_offset": 7200    // CEST (UTC+2) during summertime; change to 3600 for CET (UTC+1) during wintertime
+</code></pre>
+                </div>
               </div>
+                <p>The Pico W has no onboard RTC battery, so it re-syncs with NTP each time it powers on. Adjust the timezone_offset in the <code>config.json</code> by calculating 3600*UTC+1 (e.g., for UTC+8: 8*3600 = 28800).The order of display is as follows: flash all LEDs briefly on boot, show the DMG running animation, metro departures, train departures, current time and restart. If the display is stuck on boot, it means Wi-Fi hasn't connected yet — check your credentials and that the SSID is 2.4 GHz (the Pico W doesn't support 5 GHz).</p>
+                <p>If the time to the next departures is orders of magnitude off, you might not have set the correct timezone offset. Feel free to re-adjust. Note: if your timezone changes between summer and winter, you have to re-adjust twice a year.</p>              
+              </div>
+<div class="code-block">
+            <div class="code-block__header">
+              <div class="code-block__header-left">
+                <div class="code-block__dots">
+                  <div class="code-block__dot code-block__dot--r"></div>
+                  <div class="code-block__dot code-block__dot--y"></div>
+                  <div class="code-block__dot code-block__dot--g"></div>
+                </div>
+                <span class="code-block__filename">main.py</span>
+              </div>
+              <div class="code-block__header-right">
+                <span class="code-block__lang">Python</span>
+                <button class="code-block__copy">COPY</button>
+              </div>
+            </div>
+            <div class="code-block__body">
+              <pre><code class="language-python">
+    import json
+    import network
+    import requests
+    import ntptime
+    import machine
+    import time
+    from machine import Pin, SPI, RTC
+    from time import sleep
+    import max7219
+
+    # --- Load Configuration ---
+    def load_config():
+        try:
+            with open('config.json', 'r') as f:
+                return json.load(f)
+        except:
+            return {}
+
+    config = load_config()
+
+    # --- Hardware Setup ---
+    spi = SPI(0, sck=Pin(2), mosi=Pin(3))
+    cs = Pin(5, Pin.OUT)
+    display = max7219.Matrix8x8(spi, cs, 4)
+    rtc = RTC()
+    display.brightness(config['settings'].get('brightness', 1))
+    request_timeout = 20
+
+    # --- Global Config Variables ---
+    SSID = config['wifi']['ssid']
+    PASSWORD = config['wifi']['password']
+    VAG_NET = config['settings']['vag_network']
+    HID = config['settings']['hid']
+
+    def draw_pacman_pixel(x, direction="LEFT", mouth_open=True):
+        bitmap_open   = [0x38, 0x7C, 0xF8, 0xF0, 0xF0, 0xF8, 0x7C, 0x38]
+        bitmap_closed = [0x38, 0x7C, 0xFE, 0xFE, 0xFE, 0xFE, 0x7C, 0x38]
+        current_map = bitmap_closed if not mouth_open else bitmap_open
+        for y, row in enumerate(current_map):
+            for bit in range(8):
+                pixel_val = (row >> (7 - bit)) & 1 if direction == "RIGHT" else (row >> bit) & 1
+                if pixel_val: display.pixel(x + bit, y, 1)
+
+    def welcome_animation():
+        for x in range(32, -12, -1):
+            display.fill(0)
+            if x > 4: display.fill_rect(x-6, 3, 2, 2, 1)
+            draw_pacman_pixel(x, "LEFT", mouth_open=(x % 4 != 0))
+            display.show(); sleep(0.06)
+        for x in range(-12, 13, 1):
+            display.fill(0)
+            draw_pacman_pixel(x, "RIGHT", mouth_open=(x % 4 != 0))
+            display.show(); sleep(0.09)
+        display.fill(0)
+        display.write_text("DM", 6, 1, min_x=0)
+        draw_pacman_pixel(18, "RIGHT", mouth_open=True)
+        display.show()
+
+    def init_wifi(ssid, password):
+        wlan = network.WLAN(network.STA_IF)
+        wlan.active(True)
+        if not wlan.isconnected():
+            wlan.connect(ssid, password)
+            timeout = 15
+            while timeout > 0 and not wlan.isconnected():
+                timeout -= 1
+                time.sleep(1)
+        if wlan.isconnected():
+            try:
+                ntptime.settime()
+                l = time.localtime(time.time() + config['settings']['timezone_offset'])
+                rtc.datetime((l[0], l[1], l[2], l[6], l[3], l[4], l[5], 0))
+            except: pass
+            return True
+        return False
+
+    def query_VAG_API(stop_id, line):
+        url = f'https://start.vag.de/dm/api/abfahrten.json/{VAG_NET}/{stop_id}/{line}'
+        response = None
+        try:
+            # CRITICAL: strict timeout ensures the script never hangs
+            response = requests.get(url, timeout=request_timeout)
+            data = response.json()
+            deps = data.get('Abfahrten', [])
+            return [d["Richtungstext"] for d in deps], [d["AbfahrtszeitIst"] for d in deps]
+        except Exception as e:
+            print(f"Connection error for {line}: {e}")
+            return [], []
+        finally:
+            # CRITICAL: always close the connection to free memory
+            if response:
+                response.close()
+
+    def get_mins(t_str):
+        try:
+            target = time.mktime((
+                int(t_str[0:4]),  int(t_str[5:7]),  int(t_str[8:10]),
+                int(t_str[11:13]), int(t_str[14:16]), int(t_str[17:19]), 0, 0
+            ))
+            return int((target - time.time()) / 60)
+        except: return 0
+
+    # --- Initial Execution ---
+    welcome_animation()
+    wifi_status = init_wifi(SSID, PASSWORD)
+
+    while True:
+        # 1. Regional Lines
+        for line_cfg in config['lines']:
+            dirs, tms = query_VAG_API(line_cfg['id'], line_cfg['code'])
+            if tms:
+                mins = get_mins(tms[0])
+                display.scroll_text_split_rect(
+                    line_cfg['num'], dirs[0],
+                    delay_ms=45, scroll_start=line_cfg['scroll']
+                )
+                display.fill(0)
+                box_w = 12 if line_cfg['num'] > 9 else 8
+                display.vline(0, 0, 8, 1); display.hline(1, 0, box_w-2, 1)
+                display.vline(box_w-2, 0, 8, 1); display.hline(1, 7, box_w-2, 1)
+                for j, char in enumerate(str(line_cfg['num'])):
+                    display.draw_digit(int(char), j*5+1, 1)
+                txt = "NOW" if mins <= 0 else str(mins)
+                lx = display.write_text(txt, line_cfg['scroll'], 1)
+                if mins > 0: display.write_text("M", lx + 1, 1)
+                display.show(); sleep(4)
+
+        # 2. Clock Phase
+        for _ in range(config['settings'].get('clock_duration_seconds', 30)):
+            t = rtc.datetime()
+            display.draw_clock(t[4], t[5], show_colon=(t[6] % 2 == 0))
+            display.show(); sleep(1.0)
+
+        # 3. Metro Phase
+        m_dirs, m_tms = query_VAG_API(HID, "U1")
+        if m_tms:
+            mins = get_mins(m_tms[0])
+            display.scroll_text_split(m_dirs[0], delay_ms=45)
+            display.fill(0); display.draw_8x8_circle(0); display.draw_one(2, 1)
+            txt = "NOW" if mins <= 0 else str(mins)
+            lx = display.write_text(txt, 9, 1)
+            if mins > 0: display.write_text("MIN", lx, 1, 1, -1)
+            display.show(); sleep(4)
+              </code></pre>
             </div>
           </div>
 
+            </div>
+          </div>
           <!-- Step 07 -->
           <div class="step" id="step-07">
             <div class="step__num">07</div>
             <div class="step__body">
               <div class="step__title">Final wiring and cable routing</div>
               <div class="step__text">
-                <p>Route the USB-C cable through the back-panel slot before closing the enclosure. The slot is sized for a right-angle USB-C connector, which makes for a much cleaner exit — it's listed as optional in the BOM, but strongly recommended.</p>
+                <p>Route the USB-C cable through the back-  panel slot before closing the enclosure. The slot is sized for a right-angle USB-C connector, which makes for a much cleaner exit — it's listed as optional in the BOM, but strongly recommended.</p>
                 <p>Tuck the Dupont wires into the two cable-guide clips on the inside of the enclosure. Give each wire a gentle tug to confirm nothing is loose before sealing up.</p>
               </div>
 
               <!-- Video insert -->
-              <div class="guide-media" style="margin-top:1.25rem">
+              <div class="guide-media">
                 <div class="retro-window">
                   <div class="retro-window__titlebar">
                     <span class="retro-window__title">routing.visual</span>
@@ -947,7 +862,7 @@ Matrix GND  →  Pico GND</pre>
                       <div class="window-btn window-btn--green"></div>
                     </div>
                   </div>
-                  <div class="img-carousel" id="routing-carousel" style="background:#1a1a14;">
+                  <div class="img-carousel img-carousel--pine" id="routing-carousel">
                     <div class="img-carousel__track">
                       <div class="img-carousel__slide img-carousel__slide--placeholder">
                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg>
@@ -999,12 +914,12 @@ Matrix GND  →  Pico GND</pre>
                 <p>If nothing lights up: confirm the matrix VCC is on the Pico's <code>VBUS</code> pin (not <code>3V3</code>) — the modules need 5&nbsp;V. If the clock shows but no departures appear, check your <code>stop_ids</code> and API provider in <code>config.json</code>.</p>
               </div>
 
-              <div class="guide-callout guide-callout--warn" style="margin-top:1rem">
+              <div class="guide-callout guide-callout--warn">
                 <div class="guide-callout__label">// IMPORTANT — power supply</div>
                 The four LED matrix modules can draw up to 400&nbsp;mA combined at full brightness. Use a proper phone charger or USB hub with a dedicated power supply — powering via a laptop USB port may cause flickering at high brightness.
               </div>
 
-              <div class="guide-media" style="margin-top:1.25rem">
+              <div class="guide-media">
                 <div class="img-placeholder">
                   <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
                   <span>FIRST BOOT PHOTO<br>img/dmg40_firstboot.jpg</span>
@@ -1021,10 +936,29 @@ Matrix GND  →  Pico GND</pre>
               <div class="step__title">Customising the display</div>
               <div class="step__text">
                 <p>The display cycles between two modes: a scrolling departure ticker and a real-time clock. You can adjust the cycle timing and brightness in <code>config.json</code>:</p>
-                <pre>"brightness":      6,       // 0–15 (8 is a good indoor level)
+                <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__header-left">
+                    <div class="code-block__dots">
+                      <div class="code-block__dot code-block__dot--r"></div>
+                      <div class="code-block__dot code-block__dot--y"></div>
+                      <div class="code-block__dot code-block__dot--g"></div>
+                    </div>
+                    <span class="code-block__filename">config.json</span>
+                  </div>
+                  <div class="code-block__header-right">
+                    <span class="code-block__lang">JSON</span>
+                    <button class="code-block__copy">COPY</button>
+                  </div>
+                </div>
+                <div class="code-block__body">
+<pre><code class="language-json">"brightness":      6,       // 0–15 (8 is a good indoor level)
 "ticker_speed":    40,      // ms per scroll step — lower = faster
 "clock_dwell":     8000,    // ms to show the clock between tickers
-"display_mode":    "both"   // "ticker", "clock", or "both"</pre>
+"display_mode":    "both"   // "ticker", "clock", or "both"
+</code></pre>
+                </div>
+              </div>
                 <p>You can also add a second Wi-Fi network (useful if you travel with the device) by adding a <code>wifi_fallback</code> key with an SSID and password. The firmware tries the primary first and falls back automatically.</p>
                 <p>All changes take effect on the next reboot — power cycle or use Thonny's reset button. No reflashing needed.</p>
               </div>
@@ -1050,7 +984,7 @@ Matrix GND  →  Pico GND</pre>
             </div>
           </div>
           <div class="retro-window__body">
-            <table class="bom-table" style="margin:0">
+            <table class="bom-table bom-table--flush">
               <thead>
                 <tr>
                   <th>Symptom</th>
@@ -1087,7 +1021,7 @@ Matrix GND  →  Pico GND</pre>
           </div>
         </div>
 
-        <div class="guide-callout" style="margin-top:1.5rem">
+        <div class="guide-callout">
           <div class="guide-callout__label">// STILL STUCK?</div>
           The full source is on GitHub — open an issue with your <code>config.json</code> (remove your Wi-Fi password first) and a description of the symptom. I'll respond within a day or two.
         </div>
@@ -1128,108 +1062,260 @@ Matrix GND  →  Pico GND</pre>
   <div class="footer__copy">&copy; 2025 De Mattos Gabriel Labs</div>
 </footer>
 
+  <!-- ── LIGHTBOX v3 (with navigation) ── -->
+  <div id="lb" role="dialog" aria-modal="true" aria-label="Image zoom">
+    <button id="lb-close" aria-label="Close">&#10005; CLOSE</button>
+    <button id="lb-prev" aria-label="Previous image">&#9664;</button>
+    <img id="lb-img" src="" alt="" />
+    <button id="lb-next" aria-label="Next image">&#9654;</button>
+    <span id="lb-counter"></span>
+    <span id="lb-esc">CLICK BACKDROP OR PRESS ESC TO CLOSE</span>
+  </div>
+
+  <script>
+    /* Scroll reveal */
+    const obs = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    }), { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    /* Active nav link */
+    document.querySelectorAll('.nav__link').forEach(a => {
+      if (a.getAttribute('href') === window.location.pathname.split('/').pop()) a.classList.add('active');
+    });
+  </script>
+
+  <script>
+    /* ── IMAGE CAROUSEL LOGIC (with video support) ── */
+    (function () {
+      function initCarousel(el) {
+        const track    = el.querySelector('.img-carousel__track');
+        const slides   = Array.from(el.querySelectorAll('.img-carousel__slide'));
+        const dots     = el.querySelectorAll('.img-carousel__dot');
+        const btnPrev  = el.querySelector('.img-carousel__btn--prev');
+        const btnNext  = el.querySelector('.img-carousel__btn--next');
+        const counter  = el.querySelector('.img-carousel__counter');
+        const n        = slides.length;
+        let cur        = 0;
+
+        /* ── Per-slide video setup ── */
+        slides.forEach(function (slide) {
+          if (!slide.classList.contains('img-carousel__slide--video')) return;
+
+          const video    = slide.querySelector('video');
+          const overlay  = slide.querySelector('.carousel-video-play');
+          const muteBtn  = slide.querySelector('.carousel-video-mute');
+          if (!video) return;
+
+          /* Clicking the overlay OR the video itself toggles play/pause */
+          function togglePlay() {
+            if (video.paused) {
+              video.play();
+            } else {
+              video.pause();
+            }
+          }
+
+          overlay.addEventListener('click', togglePlay);
+          video.addEventListener('click', togglePlay);
+
+          /* Keep overlay and mute button in sync with actual playback state */
+          video.addEventListener('play', function () {
+            overlay.classList.add('hidden');
+            if (muteBtn) muteBtn.classList.add('visible');
+          });
+          video.addEventListener('pause', function () {
+            overlay.classList.remove('hidden');
+            if (muteBtn) muteBtn.classList.remove('visible');
+          });
+
+          /* Mute toggle */
+          if (muteBtn) {
+            muteBtn.addEventListener('click', function (e) {
+              e.stopPropagation();
+              video.muted = !video.muted;
+              muteBtn.textContent = video.muted ? '\uD83D\uDD07 UNMUTE' : '\uD83D\uDD08 MUTE';
+            });
+          }
+        });
+
+        /* ── Navigation ── */
+        function go(idx) {
+          /* Pause any playing video on the slide we're leaving */
+          const leavingSlide = slides[cur];
+          if (leavingSlide && leavingSlide.classList.contains('img-carousel__slide--video')) {
+            const leavingVideo = leavingSlide.querySelector('video');
+            if (leavingVideo && !leavingVideo.paused) leavingVideo.pause();
+          }
+
+          cur = (idx + n) % n;
+          track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+          dots.forEach(function (d, i) { d.classList.toggle('active', i === cur); });
+          if (counter) counter.textContent = (cur + 1) + ' / ' + n;
+
+          /* Auto-resume video if it was playing before we left */
+          const arrivingSlide = slides[cur];
+          if (arrivingSlide && arrivingSlide.classList.contains('img-carousel__slide--video')) {
+            const arrivingVideo = arrivingSlide.querySelector('video');
+            /* Only auto-resume if the video has been started at least once
+               (currentTime > 0 means the user has pressed play before) */
+            if (arrivingVideo && arrivingVideo.currentTime > 0) {
+              arrivingVideo.play();
+            }
+          }
+        }
+
+        if (btnPrev) btnPrev.addEventListener('click', function () { go(cur - 1); });
+        if (btnNext) btnNext.addEventListener('click', function () { go(cur + 1); });
+        dots.forEach(function (d, i) { d.addEventListener('click', function () { go(i); }); });
+
+        el.setAttribute('tabindex', '0');
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowLeft')  { go(cur - 1); e.preventDefault(); }
+          if (e.key === 'ArrowRight') { go(cur + 1); e.preventDefault(); }
+        });
+
+        let tx0 = 0, ty0 = 0;
+        el.addEventListener('touchstart', function (e) {
+          tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY;
+        }, { passive: true });
+        el.addEventListener('touchend', function (e) {
+          const dx = e.changedTouches[0].clientX - tx0;
+          const dy = e.changedTouches[0].clientY - ty0;
+          if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 30) go(dx < 0 ? cur + 1 : cur - 1);
+        }, { passive: true });
+
+        go(0);
+      }
+
+      document.querySelectorAll('.img-carousel').forEach(initCarousel);
+    })();
+  </script>
+
+  <script>
+    /* ── LIGHTBOX v3 ── */
+    (function () {
+      var overlay = document.getElementById('lb');
+      var imgEl = document.getElementById('lb-img');
+      var btnClose = document.getElementById('lb-close');
+      var btnPrev = document.getElementById('lb-prev');
+      var btnNext = document.getElementById('lb-next');
+      var counter = document.getElementById('lb-counter');
+      if (!overlay) return;
+
+      var lbImages = [];
+      var lbIdx = 0;
+
+      function getCarouselImages(carousel) {
+        var imgs = [];
+        carousel.querySelectorAll('.img-carousel__slide:not(.img-carousel__slide--placeholder) img').forEach(function (img) {
+          imgs.push({ src: img.src, alt: img.alt || '' });
+        });
+        return imgs;
+      }
+
+      function updateNav() {
+        btnPrev.hidden = (lbImages.length <= 1);
+        btnNext.hidden = (lbImages.length <= 1);
+        counter.textContent = lbImages.length > 1 ? (lbIdx + 1) + ' / ' + lbImages.length : '';
+      }
+
+      function showImage(idx) {
+        lbIdx = (idx + lbImages.length) % lbImages.length;
+        imgEl.src = lbImages[lbIdx].src;
+        imgEl.alt = lbImages[lbIdx].alt;
+        updateNav();
+      }
+
+      function openLB(images, startIdx) {
+        lbImages = images;
+        overlay.classList.add('on');
+        document.body.style.overflow = 'hidden';
+        showImage(startIdx || 0);
+        btnClose.focus();
+      }
+
+      function closeLB() {
+        overlay.classList.remove('on');
+        document.body.style.overflow = '';
+        setTimeout(function () { imgEl.src = ''; lbImages = []; }, 250);
+      }
+
+      document.querySelectorAll('.img-carousel').forEach(function (carousel) {
+        carousel.addEventListener('click', function (e) {
+          if (e.target.closest('.img-carousel__btn') || e.target.closest('.img-carousel__dots')) return;
+          var slide = e.target.closest('.img-carousel__slide:not(.img-carousel__slide--placeholder)');
+          if (!slide) return;
+          /* Video slides handle their own click — don't open the lightbox */
+          if (slide.classList.contains('img-carousel__slide--video')) return;
+          var clickedImg = slide.querySelector('img');
+          if (!clickedImg) return;
+          var images = getCarouselImages(carousel);
+          var startIdx = images.findIndex(function (im) { return im.src === clickedImg.src; });
+          openLB(images, startIdx < 0 ? 0 : startIdx);
+        });
+      });
+
+      btnPrev.addEventListener('click', function (e) { e.stopPropagation(); showImage(lbIdx - 1); });
+      btnNext.addEventListener('click', function (e) { e.stopPropagation(); showImage(lbIdx + 1); });
+
+      var tx0 = 0;
+      imgEl.addEventListener('touchstart', function (e) { tx0 = e.touches[0].clientX; }, { passive: true });
+      imgEl.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - tx0;
+        if (Math.abs(dx) > 40) showImage(dx < 0 ? lbIdx + 1 : lbIdx - 1);
+      }, { passive: true });
+
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeLB(); });
+      btnClose.addEventListener('click', closeLB);
+      document.addEventListener('keydown', function (e) {
+        if (!overlay.classList.contains('on')) return;
+        if (e.key === 'Escape') { closeLB(); }
+        if (e.key === 'ArrowLeft') { showImage(lbIdx - 1); e.preventDefault(); }
+        if (e.key === 'ArrowRight') { showImage(lbIdx + 1); e.preventDefault(); }
+      });
+    })();
+  </script>
 
 <script>
-/* Scroll reveal */
-const obs = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-}), { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-/* Active nav link */
-document.querySelectorAll('.nav__link').forEach(a => {
-  if (a.getAttribute('href') === window.location.pathname.split('/').pop()) a.classList.add('active');
+/* ── CODE BLOCK: copy-to-clipboard ── */
+document.querySelectorAll('.code-block__copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var codeEl = btn.closest('.code-block').querySelector('pre code');
+    var text   = codeEl ? codeEl.textContent : '';
+    navigator.clipboard.writeText(text).then(function () {
+      var orig = btn.textContent;
+      btn.textContent = 'COPIED!';
+      btn.classList.add('code-block__copy--copied');
+      setTimeout(function () {
+        btn.textContent = orig;
+        btn.classList.remove('code-block__copy--copied');
+      }, 2000);
+    }).catch(function () {
+      /* Fallback for non-HTTPS or older browsers */
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      var orig = btn.textContent;
+      btn.textContent = 'COPIED!';
+      btn.classList.add('code-block__copy--copied');
+      setTimeout(function () {
+        btn.textContent = orig;
+        btn.classList.remove('code-block__copy--copied');
+      }, 2000);
+    });
+  });
 });
 
-/* Sidebar TOC active state on scroll */
-const sections = document.querySelectorAll('.guide-section, .step');
-const tocLinks  = document.querySelectorAll('.guide-toc__links a');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) current = s.id; });
-  tocLinks.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
-}, { passive: true });
-</script>
-
-<script>
-/* ── IMAGE CAROUSEL LOGIC (with video support) ── */
-(function () {
-  function initCarousel(el) {
-    const track   = el.querySelector('.img-carousel__track');
-    const slides  = Array.from(el.querySelectorAll('.img-carousel__slide'));
-    const dots    = el.querySelectorAll('.img-carousel__dot');
-    const btnPrev = el.querySelector('.img-carousel__btn--prev');
-    const btnNext = el.querySelector('.img-carousel__btn--next');
-    const counter = el.querySelector('.img-carousel__counter');
-    const n       = slides.length;
-    let cur       = 0;
-
-    slides.forEach(function (slide) {
-      if (!slide.classList.contains('img-carousel__slide--video')) return;
-      const video   = slide.querySelector('video');
-      const overlay = slide.querySelector('.carousel-video-play');
-      const muteBtn = slide.querySelector('.carousel-video-mute');
-      if (!video) return;
-      function togglePlay() { video.paused ? video.play() : video.pause(); }
-      if (overlay) overlay.addEventListener('click', togglePlay);
-      video.addEventListener('click', togglePlay);
-      video.addEventListener('play', function () {
-        if (overlay) overlay.classList.add('hidden');
-        if (muteBtn) muteBtn.classList.add('visible');
-      });
-      video.addEventListener('pause', function () {
-        if (overlay) overlay.classList.remove('hidden');
-        if (muteBtn) muteBtn.classList.remove('visible');
-      });
-      if (muteBtn) {
-        muteBtn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          video.muted = !video.muted;
-          muteBtn.textContent = video.muted ? '\uD83D\uDD07 UNMUTE' : '\uD83D\uDD64 MUTE';
-        });
-      }
-    });
-
-    function go(idx) {
-      const leaving = slides[cur];
-      if (leaving && leaving.classList.contains('img-carousel__slide--video')) {
-        const v = leaving.querySelector('video');
-        if (v && !v.paused) v.pause();
-      }
-      cur = (idx + n) % n;
-      track.style.transform = 'translateX(-' + (cur * 100) + '%)';
-      dots.forEach(function (d, i) { d.classList.toggle('active', i === cur); });
-      if (counter) counter.textContent = (cur + 1) + ' / ' + n;
-      const arriving = slides[cur];
-      if (arriving && arriving.classList.contains('img-carousel__slide--video')) {
-        const v = arriving.querySelector('video');
-        if (v && v.currentTime > 0) v.play();
-      }
-    }
-
-    if (btnPrev) btnPrev.addEventListener('click', function () { go(cur - 1); });
-    if (btnNext) btnNext.addEventListener('click', function () { go(cur + 1); });
-    dots.forEach(function (d, i) { d.addEventListener('click', function () { go(i); }); });
-    el.setAttribute('tabindex', '0');
-    el.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft')  { go(cur - 1); e.preventDefault(); }
-      if (e.key === 'ArrowRight') { go(cur + 1); e.preventDefault(); }
-    });
-    let tx0 = 0, ty0 = 0;
-    el.addEventListener('touchstart', function (e) {
-      tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY;
-    }, { passive: true });
-    el.addEventListener('touchend', function (e) {
-      const dx = e.changedTouches[0].clientX - tx0;
-      const dy = e.changedTouches[0].clientY - ty0;
-      if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 30) go(dx < 0 ? cur + 1 : cur - 1);
-    }, { passive: true });
-    go(0);
-  }
-  document.querySelectorAll('.img-carousel').forEach(initCarousel);
-})();
+/* ── Trigger Prism highlighting on all code blocks ── */
+if (typeof Prism !== 'undefined') {
+  Prism.highlightAll();
+}
 </script>
 
 </body>
