@@ -221,6 +221,8 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
     <a href="#windows">Windows</a>
     <a href="#carousel">Carousel</a>
     <a href="#video-player">Video</a>
+    <a href="#code-block">Code</a>
+    <a href="#guide-hero">Guide</a>
     <a href="#organisms">Organisms</a>
     <a href="#howto">How-to</a>
   </div>
@@ -258,6 +260,24 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
       <li><a href="#spec-table">Spec table</a></li>
       <li><a href="#carousel">Image Carousel</a></li>
       <li><a href="#video-player">Video Player</a></li>
+      <li><a href="#img-placeholder">Image Placeholder</a></li>
+      <li><a href="#guide-callout">Guide Callouts</a></li>
+      <li><a href="#bom-table">BOM Table</a></li>
+      <li><a href="#build-steps">Build Steps</a></li>
+      <li><a href="#code-block">Code Block</a></li>
+    </ul>
+  </div>
+  <div class="doc-sidebar-section">
+    <div class="doc-sidebar-heading">Atoms (guide)</div>
+    <ul class="doc-sidebar-links">
+      <li><a href="#skill-tags">Skill Tags</a></li>
+    </ul>
+  </div>
+  <div class="doc-sidebar-section">
+    <div class="doc-sidebar-heading">Organisms (guide)</div>
+    <ul class="doc-sidebar-links">
+      <li><a href="#guide-hero">Guide Hero</a></li>
+      <li><a href="#download-banner">Download Banner</a></li>
     </ul>
   </div>
   <div class="doc-sidebar-section">
@@ -1101,6 +1121,525 @@ code{font-family:'DM Mono',monospace;font-size:0.78em;background:rgba(26,58,42,0
 
 
 <!-- ══════════════════════════════════════════════════════════ -->
+<!-- SKILL TAGS  (10d — Atoms / Guide-specific)                 -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="doc-section" id="skill-tags">
+  <div class="section-eyebrow">10d &#8212; Atoms / Skill Tags</div>
+  <h2 class="section-title">Skill Tags</h2>
+  <p class="section-intro">Used in the guide hero to communicate required skills at a glance. Built on the same border-radius and DM Mono foundation as category tags, but with guide-specific colour modifiers and a slightly larger touch target.</p>
+
+  <div class="preview">
+    <div class="preview-label">All variants</div>
+    <div class="preview-row">
+      <span class="skill-tag skill-tag--elec">Electronics</span>
+      <span class="skill-tag skill-tag--fdm">3D Printing</span>
+      <span class="skill-tag skill-tag--api">API Integration</span>
+      <span class="skill-tag skill-tag--code">MicroPython</span>
+    </div>
+  </div>
+
+<pre>&lt;div class="guide-skill-row"&gt;
+  &lt;span class="skill-tag skill-tag--elec"&gt;Electronics&lt;/span&gt;
+  &lt;span class="skill-tag skill-tag--fdm"&gt;3D Printing&lt;/span&gt;
+  &lt;span class="skill-tag skill-tag--api"&gt;API Integration&lt;/span&gt;
+  &lt;span class="skill-tag skill-tag--code"&gt;MicroPython&lt;/span&gt;
+&lt;/div&gt;</pre>
+
+  <table class="token-table" style="margin-top:1.5rem">
+    <thead><tr><th>Modifier</th><th>Colour</th><th>Typical use</th></tr></thead>
+    <tbody>
+      <tr><td><code>.skill-tag--elec</code></td><td>Sage <code>--color-sage</code></td><td>Electronics / soldering</td></tr>
+      <tr><td><code>.skill-tag--fdm</code></td><td>Moss <code>--color-moss</code></td><td>FDM / 3D printing</td></tr>
+      <tr><td><code>.skill-tag--api</code></td><td>Orange <code>--color-orange</code></td><td>API / connectivity</td></tr>
+      <tr><td><code>.skill-tag--code</code></td><td>Mist 55% opacity</td><td>Programming / firmware</td></tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- IMAGE PLACEHOLDER  (10e — Molecules / Guide Media)         -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="doc-section" id="img-placeholder">
+  <div class="section-eyebrow">10e &#8212; Molecules / Image Placeholder</div>
+  <h2 class="section-title">Image Placeholder &amp; Media Grid</h2>
+  <p class="section-intro">A responsive container that shows a dashed crosshatch frame when empty, and stretches a real <code>&lt;img&gt;</code> to fill it completely when present. Used standalone or in a two-column <code>.guide-media-grid</code>. Clicking a filled placeholder opens the lightbox.</p>
+
+  <h4 style="margin-bottom:1rem;font-size:1.1rem">Live preview</h4>
+  <div class="preview">
+    <div class="guide-media-grid">
+      <div>
+        <div class="img-placeholder img-placeholder--tall">
+          <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
+          <span>img/your-photo.jpg</span>
+        </div>
+        <p class="guide-media__caption">Empty placeholder — shows dashed frame.</p>
+      </div>
+      <div>
+        <div class="img-placeholder img-placeholder--tall">
+          <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#4a7c59" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#4a7c59" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#4a7c59" stroke-width="1" opacity="0.4"/></svg>
+          <span>img/your-photo-2.jpg</span>
+        </div>
+        <p class="guide-media__caption">Side by side in .guide-media-grid.</p>
+      </div>
+    </div>
+  </div>
+
+<pre>&lt;!-- Standalone with caption --&gt;
+&lt;div class="guide-media"&gt;
+  &lt;div class="img-placeholder"&gt;
+    &lt;img src="img/photo.jpg" alt="Description" class="img--top"/&gt;
+  &lt;/div&gt;
+  &lt;p class="guide-media__caption"&gt;Caption text here.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- 4:3 tall variant --&gt;
+&lt;div class="img-placeholder img-placeholder--tall"&gt;
+  &lt;img src="img/photo.jpg" alt="Description" class="img--top"/&gt;
+&lt;/div&gt;
+
+&lt;!-- Empty placeholder (no image yet) --&gt;
+&lt;div class="img-placeholder img-placeholder--tall"&gt;
+  &lt;svg width="32" height="32" viewBox="0 0 40 40" fill="none"&gt;...&lt;/svg&gt;
+  &lt;span&gt;img/your-photo.jpg&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Two-column grid --&gt;
+&lt;div class="guide-media-grid"&gt;
+  &lt;div&gt;
+    &lt;div class="img-placeholder img-placeholder--tall"&gt;...&lt;/div&gt;
+    &lt;p class="guide-media__caption"&gt;Left caption.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;div class="img-placeholder img-placeholder--tall"&gt;...&lt;/div&gt;
+    &lt;p class="guide-media__caption"&gt;Right caption.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+
+  <table class="token-table" style="margin-top:1rem">
+    <thead><tr><th>Class</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><code>.img-placeholder</code></td><td>16:9 container. Dashed orange frame when no image is present.</td></tr>
+      <tr><td><code>.img-placeholder--tall</code></td><td>Modifier — changes aspect ratio to 4:3.</td></tr>
+      <tr><td><code>.img-placeholder img</code></td><td>Auto-positioned absolute fill via CSS. No inline styles needed.</td></tr>
+      <tr><td><code>.img--top</code></td><td>Utility — sets <code>object-position: center top</code>. Useful for portrait shots.</td></tr>
+      <tr><td><code>.img-placeholder.lb-trigger</code></td><td>Added automatically by the lightbox JS when an image is present.</td></tr>
+      <tr><td><code>.guide-media</code></td><td>Wrapper adding consistent vertical margin around any media block.</td></tr>
+      <tr><td><code>.guide-media__caption</code></td><td>DM Mono caption below an image or carousel.</td></tr>
+      <tr><td><code>.guide-media-grid</code></td><td>Two-column 1fr / 1fr grid. Collapses to single column below 600px.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- GUIDE CALLOUTS  (10f — Molecules)                          -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="doc-section" id="guide-callout">
+  <div class="section-eyebrow">10f &#8212; Molecules / Guide Callouts</div>
+  <h2 class="section-title">Guide Callouts</h2>
+  <p class="section-intro">Left-border callout boxes for contextual notes inside guide steps. Three semantic variants: default orange (general notes), tip (green, positive guidance), warn (red, risks or requirements).</p>
+
+  <div class="preview">
+    <div class="guide-callout">
+      <div class="guide-callout__label">// NOTE</div>
+      Use this for general clarifications that don&#8217;t fit in the main prose — alternative methods, optional steps, or context that&#8217;s good to know but not essential.
+    </div>
+    <div class="guide-callout guide-callout--tip">
+      <div class="guide-callout__label">// TIP</div>
+      Positive guidance, shortcuts, or recommended practices. Signals a better path the reader might not have found on their own.
+    </div>
+    <div class="guide-callout guide-callout--warn">
+      <div class="guide-callout__label">// WARNING</div>
+      Risks, hard requirements, or actions that are difficult to reverse. Reserve this for things that can actually break the build.
+    </div>
+  </div>
+
+<pre>&lt;!-- Default (orange) --&gt;
+&lt;div class="guide-callout"&gt;
+  &lt;div class="guide-callout__label"&gt;// NOTE&lt;/div&gt;
+  Body text here.
+&lt;/div&gt;
+
+&lt;!-- Tip (green) --&gt;
+&lt;div class="guide-callout guide-callout--tip"&gt;
+  &lt;div class="guide-callout__label"&gt;// TIP&lt;/div&gt;
+  Body text here.
+&lt;/div&gt;
+
+&lt;!-- Warning (red) --&gt;
+&lt;div class="guide-callout guide-callout--warn"&gt;
+  &lt;div class="guide-callout__label"&gt;// WARNING&lt;/div&gt;
+  Body text here.
+&lt;/div&gt;</pre>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- BOM TABLE  (10g — Molecules)                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="doc-section" id="bom-table">
+  <div class="section-eyebrow">10g &#8212; Molecules / BOM Table</div>
+  <h2 class="section-title">Bill of Materials Table</h2>
+  <p class="section-intro">A structured parts list used inside a <code>.retro-window</code> body. Columns: component name, spec notes, quantity (<code>.bom-qty</code>), and a purchase link (<code>.bom-link</code>). Optional items use <code>.bom-optional</code>.</p>
+
+  <div class="preview" style="padding:0;overflow:hidden;border-radius:8px">
+    <div class="retro-window" style="box-shadow:none;border:none">
+      <div class="retro-window__titlebar retro-window--green">
+        <span class="retro-window__title">BOM.csv</span>
+        <div class="window-btns"><div class="window-btn window-btn--red"></div><div class="window-btn window-btn--yellow"></div><div class="window-btn window-btn--green"></div></div>
+      </div>
+      <div class="retro-window__body retro-window__body--flush">
+        <table class="bom-table bom-table--flush">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Spec / Notes</th>
+              <th class="bom-table__th--center">Qty</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Raspberry Pi Pico W</td>
+              <td>Wi-Fi variant required</td>
+              <td class="bom-table__qty-cell"><span class="bom-qty">× 1</span></td>
+              <td><a href="#" class="bom-link">raspberrypi.com ↗</a></td>
+            </tr>
+            <tr>
+              <td>MAX7219 LED Matrix</td>
+              <td>8×8 dot matrix, 5 V</td>
+              <td class="bom-table__qty-cell"><span class="bom-qty">× 4</span></td>
+              <td><a href="#" class="bom-link">Amazon.de ↗</a></td>
+            </tr>
+            <tr>
+              <td>Red PLA filament</td>
+              <td>Accent ring only</td>
+              <td class="bom-table__qty-cell"><span class="bom-qty">~15 g</span></td>
+              <td><span class="bom-optional">OPTIONAL</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<pre>&lt;div class="retro-window"&gt;
+  &lt;div class="retro-window__titlebar retro-window--green"&gt;
+    &lt;span class="retro-window__title"&gt;BOM.csv&lt;/span&gt;
+    ... window buttons ...
+  &lt;/div&gt;
+  &lt;div class="retro-window__body retro-window__body--flush"&gt;
+    &lt;table class="bom-table bom-table--flush"&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Component&lt;/th&gt;
+          &lt;th&gt;Spec / Notes&lt;/th&gt;
+          &lt;th class="bom-table__th--center"&gt;Qty&lt;/th&gt;
+          &lt;th&gt;Link&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Raspberry Pi Pico W&lt;/td&gt;
+          &lt;td&gt;Wi-Fi variant required&lt;/td&gt;
+          &lt;td class="bom-table__qty-cell"&gt;
+            &lt;span class="bom-qty"&gt;&times; 1&lt;/span&gt;
+          &lt;/td&gt;
+          &lt;td&gt;
+            &lt;a href="https://..." class="bom-link"&gt;raspberrypi.com &amp;#8599;&lt;/a&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Red PLA filament&lt;/td&gt;
+          &lt;td&gt;Accent ring only&lt;/td&gt;
+          &lt;td class="bom-table__qty-cell"&gt;
+            &lt;span class="bom-qty"&gt;~15 g&lt;/span&gt;
+          &lt;/td&gt;
+          &lt;td&gt;&lt;span class="bom-optional"&gt;OPTIONAL&lt;/span&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- BUILD STEPS  (10h — Molecules)                             -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="doc-section" id="build-steps">
+  <div class="section-eyebrow">10h &#8212; Molecules / Build Steps</div>
+  <h2 class="section-title">Build Steps</h2>
+  <p class="section-intro">A numbered step list for guide pages. Each step is a two-column grid: an ink-background number badge on the left, a title and body on the right. Steps can contain inline <code>&lt;code&gt;</code>, callouts, media grids, and code blocks.</p>
+
+  <h4 style="margin-bottom:1rem;font-size:1.1rem">Live example</h4>
+  <div class="preview">
+    <div class="step-list">
+      <div class="step">
+        <div class="step__num">01</div>
+        <div class="step__body">
+          <div class="step__title">Print the enclosure</div>
+          <div class="step__text">
+            <p>Open <code>dmg40_enclosure_v2.stl</code> in your slicer. The model is pre-oriented — print flat-side-down with no supports. Use <code>0.2 mm</code> layer height and <code>20 %</code> gyroid infill.</p>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">02</div>
+        <div class="step__body">
+          <div class="step__title">Wire up the Pico W</div>
+          <div class="step__text">
+            <p>Connect the MAX7219 chain using the wiring diagram. Key connections: <code>DIN → GP11</code>, <code>CLK → GP10</code>, <code>CS → GP9</code>, <code>VCC → VBUS</code>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<pre>&lt;div class="step-list"&gt;
+
+  &lt;div class="step" id="step-01"&gt;
+    &lt;div class="step__num"&gt;01&lt;/div&gt;
+    &lt;div class="step__body"&gt;
+      &lt;div class="step__title"&gt;Step title&lt;/div&gt;
+      &lt;div class="step__text"&gt;
+        &lt;p&gt;Body text. Use &lt;code&gt;inline code&lt;/code&gt; for values.&lt;/p&gt;
+        &lt;!-- Optionally embed a .guide-callout or .code-block here --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="step" id="step-02"&gt;...&lt;/div&gt;
+
+&lt;/div&gt;</pre>
+
+  <div class="callout">
+    <div class="callout-label">// SIDEBAR TOC</div>
+    <p>Each <code>.step</code> should have a unique <code>id="step-NN"</code>. The guide TOC JS tracks these alongside <code>.guide-section</code> elements and highlights the correct sidebar link as you scroll.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- CODE BLOCK  (10i — Molecules)                              -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="doc-section" id="code-block">
+  <div class="section-eyebrow">10i &#8212; Molecules / Code Block</div>
+  <h2 class="section-title">Code Block</h2>
+  <p class="section-intro">A syntax-highlighted code block styled as a retro OS window. Requires <a href="https://prismjs.com" target="_blank" rel="noopener" style="color:var(--orange)">Prism.js</a> (autoloader build) loaded via CDN. The Prism default theme is fully overridden by the token rules in <code>styles.css</code> section&nbsp;34.</p>
+
+  <h4 style="margin-bottom:1rem;font-size:1.1rem">Live example — JSON</h4>
+  <div class="preview" style="padding:0;overflow:hidden;border-radius:8px">
+    <div class="code-block" style="margin:0;border:none;box-shadow:none;border-radius:0">
+      <div class="code-block__header">
+        <div class="code-block__header-left">
+          <div class="code-block__dots">
+            <div class="code-block__dot code-block__dot--r"></div>
+            <div class="code-block__dot code-block__dot--y"></div>
+            <div class="code-block__dot code-block__dot--g"></div>
+          </div>
+          <span class="code-block__filename">config.json</span>
+        </div>
+        <div class="code-block__header-right">
+          <span class="code-block__lang">JSON</span>
+          <button class="code-block__copy">COPY</button>
+        </div>
+      </div>
+      <div class="code-block__body">
+        <pre><code class="language-json">{
+  "wifi_ssid":     "YOUR_NETWORK",
+  "wifi_password": "YOUR_PASSWORD",
+  "api_provider":  "VGN",
+  "stop_ids":      ["510", "906"],
+  "lines_filter":  ["U2", "S3"],
+  "api_key":       ""
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <h4 style="margin-top:2rem;margin-bottom:1rem;font-size:1.1rem">HTML structure</h4>
+<pre>&lt;div class="code-block"&gt;
+  &lt;div class="code-block__header"&gt;
+    &lt;div class="code-block__header-left"&gt;
+      &lt;div class="code-block__dots"&gt;
+        &lt;div class="code-block__dot code-block__dot--r"&gt;&lt;/div&gt;
+        &lt;div class="code-block__dot code-block__dot--y"&gt;&lt;/div&gt;
+        &lt;div class="code-block__dot code-block__dot--g"&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;span class="code-block__filename"&gt;config.json&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="code-block__header-right"&gt;
+      &lt;span class="code-block__lang"&gt;JSON&lt;/span&gt;
+      &lt;button class="code-block__copy"&gt;COPY&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="code-block__body"&gt;
+    &lt;pre&gt;&lt;code class="language-json"&gt;{ your code here }&lt;/code&gt;&lt;/pre&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+
+  <div class="callout">
+    <div class="callout-label">// PRISM SETUP</div>
+    <p>Add these three tags to any page that uses <code>.code-block</code>. The autoloader fetches only the grammar files it needs, so there&#8217;s no bloat from unused languages.</p>
+  </div>
+<pre>&lt;!-- In &lt;head&gt; — Prism default theme (immediately overridden by styles.css tokens) --&gt;
+&lt;link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css"/&gt;
+
+&lt;!-- Before &lt;/body&gt; --&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js" defer&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer&gt;&lt;/script&gt;</pre>
+
+  <h4 style="margin-top:2rem;margin-bottom:0.75rem;font-size:1.1rem">CSS classes at a glance</h4>
+  <table class="token-table">
+    <thead><tr><th>Class</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><code>.code-block</code></td><td>Outer wrapper. Adds border, shadow, and overflow clip.</td></tr>
+      <tr><td><code>.code-block__header</code></td><td>Ink titlebar row — flexbox, space-between.</td></tr>
+      <tr><td><code>.code-block__header-left</code></td><td>Groups the dot trio and filename together.</td></tr>
+      <tr><td><code>.code-block__header-right</code></td><td>Groups the language badge and copy button together.</td></tr>
+      <tr><td><code>.code-block__dots</code></td><td>Container for the three traffic-light dots.</td></tr>
+      <tr><td><code>.code-block__dot--r / --y / --g</code></td><td>Red / yellow / green dot colours.</td></tr>
+      <tr><td><code>.code-block__filename</code></td><td>Press Start 2P filename label in the titlebar.</td></tr>
+      <tr><td><code>.code-block__lang</code></td><td>DM Mono language badge (orange tint).</td></tr>
+      <tr><td><code>.code-block__copy</code></td><td>Copy-to-clipboard button. JS adds <code>--copied</code> modifier on success.</td></tr>
+      <tr><td><code>.code-block__body</code></td><td>Near-black background wrapper for the Prism <code>&lt;pre&gt;</code>.</td></tr>
+    </tbody>
+  </table>
+
+  <h4 style="margin-top:1.5rem;margin-bottom:0.75rem;font-size:1.1rem">Supported language classes</h4>
+  <table class="token-table">
+    <thead><tr><th>Class on <code>&lt;code&gt;</code></th><th>Language</th></tr></thead>
+    <tbody>
+      <tr><td><code>language-python</code></td><td>MicroPython / Python 3</td></tr>
+      <tr><td><code>language-json</code></td><td>JSON config files</td></tr>
+      <tr><td><code>language-javascript</code></td><td>JavaScript</td></tr>
+      <tr><td><code>language-bash</code></td><td>Shell / terminal commands</td></tr>
+      <tr><td><code>language-none</code></td><td>Plain text, no highlighting (pinout tables, settings)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- GUIDE HERO  (11b — Organisms / Guide-specific)             -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="doc-section" id="guide-hero">
+  <div class="section-eyebrow">11b &#8212; Organisms / Guide Hero</div>
+  <h2 class="section-title">Guide Hero</h2>
+  <p class="section-intro">The dark two-column hero used at the top of every guide sub-page. Left column: breadcrumb, eyebrow, title, description, skill tags, stats strip, CTA row. Right column: the device carousel inside a retro window.</p>
+
+  <div class="callout">
+    <div class="callout-label">// STRUCTURE</div>
+    <p><code>.guide-hero</code> → <code>.guide-hero__inner</code> (2-col grid) → left column + <code>.guide-hero__visual</code> (right column). The grid collapses to single column below 900px; the visual column stacks below the text.</p>
+  </div>
+
+<pre>&lt;section class="guide-hero"&gt;
+  &lt;div class="guide-hero__inner"&gt;
+
+    &lt;!-- Left: meta --&gt;
+    &lt;div&gt;
+      &lt;div class="guide-hero__breadcrumb"&gt;
+        &lt;a href="guides.html"&gt;Guides&lt;/a&gt;
+        &lt;span class="guide-hero__breadcrumb-sep"&gt;/&lt;/span&gt;
+        &lt;span&gt;02 — Transit Clock&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class="guide-hero__eyebrow"&gt;// GUIDE 02 &amp;middot; DMG-40&lt;/div&gt;
+      &lt;h1 class="guide-hero__title"&gt;Build the &lt;em&gt;Transit Clock.&lt;/em&gt;&lt;/h1&gt;
+      &lt;p class="guide-hero__desc"&gt;One-paragraph summary.&lt;/p&gt;
+
+      &lt;div class="guide-skill-row"&gt;
+        &lt;span class="skill-tag skill-tag--elec"&gt;Electronics&lt;/span&gt;
+        &lt;span class="skill-tag skill-tag--fdm"&gt;3D Printing&lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div class="guide-hero__stats"&gt;
+        &lt;div class="guide-stat-item"&gt;
+          &lt;span class="guide-stat-item__label"&gt;Difficulty&lt;/span&gt;
+          &lt;span class="guide-stat-item__value guide-stat-item__value--sm"&gt;BEGINNER&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class="guide-stat-item"&gt;
+          &lt;span class="guide-stat-item__label"&gt;Steps&lt;/span&gt;
+          &lt;span class="guide-stat-item__value"&gt;10&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class="guide-stat-item"&gt;
+          &lt;span class="guide-stat-item__label"&gt;Est. time&lt;/span&gt;
+          &lt;span class="guide-stat-item__value guide-stat-item__value--sm"&gt;~&amp;nbsp;6&amp;nbsp;hrs&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class="guide-hero__actions"&gt;
+        &lt;a href="#downloads" class="btn btn-orange"&gt;&amp;#9658; Get the Files&lt;/a&gt;
+        &lt;a href="#build" class="btn btn-ghost-light"&gt;Jump to Build&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Right: carousel --&gt;
+    &lt;div class="guide-hero__visual"&gt;
+      &lt;div class="retro-window"&gt;
+        &lt;div class="retro-window__titlebar"&gt;...&lt;/div&gt;
+        &lt;div class="img-carousel img-carousel--pine" id="hero-carousel"&gt;
+          ...slides...
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;</pre>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- DOWNLOAD BANNER  (11c — Organisms / Guide-specific)        -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="doc-section" id="download-banner">
+  <div class="section-eyebrow">11c &#8212; Organisms / Download Banner</div>
+  <h2 class="section-title">Download Banner</h2>
+  <p class="section-intro">A full-width forest-green band that anchors the file download section of a guide page. It lives between the hero and the guide body, and stays accessible via the <code>#downloads</code> anchor.</p>
+
+<pre>&lt;div class="download-banner" id="downloads"&gt;
+  &lt;div class="download-banner__inner"&gt;
+
+    &lt;div&gt;
+      &lt;div class="download-banner__label"&gt;// ALL FILES OPEN SOURCE&lt;/div&gt;
+      &lt;div class="download-banner__title"&gt;
+        Download everything — STLs, firmware, config templates.
+      &lt;/div&gt;
+      &lt;div class="download-banner__files"&gt;
+        &lt;span class="file-chip"&gt;dmg40_enclosure_v2.stl&lt;/span&gt;
+        &lt;span class="file-chip"&gt;dmg40_firmware.py&lt;/span&gt;
+        &lt;span class="file-chip"&gt;config_template.json&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="download-banner__actions"&gt;
+      &lt;a href="https://drive.google.com/…" class="btn btn-orange"
+         target="_blank" rel="noopener"&gt;&amp;#9658; Open in Google Drive&lt;/a&gt;
+      &lt;a href="https://github.com/…" class="btn btn-ghost-light"
+         target="_blank" rel="noopener"&gt;GitHub Repo&lt;/a&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+
+  <table class="token-table" style="margin-top:1rem">
+    <thead><tr><th>Class</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><code>.download-banner</code></td><td>Forest-green full-width band with 3px ink borders.</td></tr>
+      <tr><td><code>.download-banner__inner</code></td><td>Max-width centred flex row — label+files left, actions right.</td></tr>
+      <tr><td><code>.download-banner__label</code></td><td>Press Start 2P orange eyebrow above the title.</td></tr>
+      <tr><td><code>.download-banner__title</code></td><td>Cormorant Garamond headline in mist.</td></tr>
+      <tr><td><code>.download-banner__files</code></td><td>Flex row of <code>.file-chip</code> elements.</td></tr>
+      <tr><td><code>.download-banner__actions</code></td><td>Flex row for CTA buttons, right-aligned, non-shrinking.</td></tr>
+      <tr><td><code>.file-chip</code></td><td>DM Mono pill showing a filename. Muted mist on dark-green tint.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
 <!-- ORGANISMS                                                  -->
 <!-- ══════════════════════════════════════════════════════════ -->
 <section class="doc-section" id="organisms">
@@ -1394,6 +1933,27 @@ window.addEventListener('scroll', () => {
   }
   document.querySelectorAll('.img-carousel').forEach(initCarousel);
 })();
+</script>
+<!-- Prism syntax highlighting for code-block live demo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script>
+/* Code block copy-to-clipboard */
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('.code-block__copy');
+  if (!btn) return;
+  var pre = btn.closest('.code-block').querySelector('pre');
+  if (!pre) return;
+  navigator.clipboard.writeText(pre.textContent).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = 'COPIED!';
+    btn.classList.add('code-block__copy--copied');
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.classList.remove('code-block__copy--copied');
+    }, 2000);
+  });
+});
 </script>
 </body>
 </html>
