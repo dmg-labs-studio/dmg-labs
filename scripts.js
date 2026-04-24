@@ -338,3 +338,258 @@
   setTimeout(function () { loop(); }, 300);
 })();
 
+/* ── GLB MODEL VIEWER (Three.js, inline) ── */
+(function () {
+
+  var THREE_LOADED = false;
+  var QUEUE        = [];
+
+  /* Lazy-load Three.js + GLTFLoader once, then flush any queued inits */
+  function ensureThree(cb) {
+    if (THREE_LOADED) { cb(); return; }
+    QUEUE.push(cb);
+    if (QUEUE.length > 1) return; /* already loading */
+
+    function loadScript(src, next) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = next;
+      document.head.appendChild(s);
+    }
+
+    loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
+      function () {
+        loadScript(
+          'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js',
+          function () {
+            THREE_LOADED = true;
+            QUEUE.forEach(function (fn) { fn(); });
+            QUEUE = [];
+          }
+        );
+      }
+    );
+  }
+
+  /* ── Core init — call this on any wrapper element ──────────────────
+     wrapper  : the container element (becomes the square canvas host)
+     glbUrl   : path to your .glb file
+     options  : { autoRotate: true, rotateSpeed: 0.004 }
+  ─────────────────────────────────────────────────────────────────── */
+  window.initModelViewer = function (wrapper, glbUrl, options) {
+    options = options || {};
+    var autoRotate   = options.autoRotate !== false; /* default true */
+    var rotateSpeed  = options.rotateSpeed || 0.004;
+
+    /* Mark wrapper so CSS can style it */
+    wrapper.classList.add('model-viewer');
+
+    /* Canvas */
+    var canvas = document.createElement('canvas');
+    canvas.className = 'model-viewer__canvas';
+    wrapper.appendChild(canvas);
+
+    /* Hint */
+    var hint = document.createElement('div');
+    hint.className   = 'model-viewer__hint';
+    hint.textContent = 'DRAG · SCROLL · RIGHT-DRAG TO PAN';
+    wrapper.appendChild(hint);
+
+    /* Loading label */
+    var loadingEl = document.createElement('div');
+    loadingEl.className   = 'model-viewer__loading';
+    loadingEl.textContent = 'LOADING MODEL...';
+    wrapper.appendChild(loadingEl);
+
+    ensureThree(function () {
+      var THREE    = window.THREE;
+      var size     = wrapper.clientWidth;  /* square: height = width */
+
+      /* Renderer */
+      var renderer = new THREE.WebGLRenderer({
+        canvas:    canvas,
+        antialias: true,
+        alpha:     false
+      });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(size, size);
+      renderer.outputEncoding    = THREE.sRGBEncoding;
+      renderer.physicallyCorrectLights = true;
+      renderer.setClearColor(0x071208, 1);
+
+      /* Scene */
+      var scene  = new THREE.Scene();
+
+      /* Camera */
+      var camera = new THREE.PerspectiveCamera(45, 1, 0.001, 10000);
+      camera.position.set(0, 0.8, 3.5);
+
+      /* Lighting — matches your site's palette */
+      scene.add(new THREE.AmbientLight(0xc8ddd0, 0.7));
+
+      var key = new THREE.DirectionalLight(0xffffff, 1.0);
+      key.position.set(2, 3, 3);
+      scene.add(key);
+
+      var fill = new THREE.DirectionalLight(0xf06a00, 0.3);
+      fill.position.set(-3, -1, -2);
+      scene.add(fill);
+
+      var rim = new THREE.DirectionalLight(0x5db870, 0.25);
+      rim.position.set(0, -2, -3);
+      scene.add(rim);
+
+      /* Load GLB */
+      var loader = new THREE.GLTFLoader();
+      loader.load(
+        glbUrl,
+        function (gltf) {
+          var model = gltf.scene;
+
+          /* Centre + normalise scale */
+          var box    = new THREE.Box3().setFromObject(model);
+          var centre = new THREE.Vector3();
+          box.getCenter(centre);
+          model.position.sub(centre);
+
+          var sizeVec = new THREE.Vector3();
+          box.getSize(sizeVec);
+          var maxDim = Math.max(sizeVec.x, sizeVec.y, sizeVec.z);
+          model.scale.setScalar(2.2 / maxDim);
+
+          scene.add(model);
+
+          /* Set a sensible initial camera distance */
+          spherical.radius = 3.2;
+          updateCamera();
+
+          loadingEl.classList.add('model-viewer__loading--hidden');
+          startRender();
+        },
+        undefined,
+        function (err) {
+          loadingEl.textContent = 'FAILED TO LOAD MODEL';
+          console.error(err);
+        }
+      );
+
+      /* ── Orbit state ── */
+      var spherical = { theta: 0.4, phi: 1.2, radius: 3.2 };
+      var panOffset = { x: 0, y: 0 };
+      var isDragging = false, isRightDrag = false;
+      var lastX = 0, lastY = 0;
+      var userInteracted = false;
+
+      function updateCamera() {
+        var x = spherical.radius * Math.sin(spherical.phi) * Math.sin(spherical.theta) + panOffset.x;
+        var y = spherical.radius * Math.cos(spherical.phi)                              + panOffset.y;
+        var z = spherical.radius * Math.sin(spherical.phi) * Math.cos(spherical.theta);
+        camera.position.set(x, y, z);
+        camera.lookAt(panOffset.x, panOffset.y, 0);
+      }
+
+      /* ── Mouse ── */
+      canvas.addEventListener('mousedown', function (e) {
+        isDragging      = true;
+        isRightDrag     = e.button === 2;
+        userInteracted  = true;
+        autoRotate      = false;
+        lastX = e.clientX; lastY = e.clientY;
+        e.preventDefault();
+      });
+      canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+      window.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+        var dx = e.clientX - lastX;
+        var dy = e.clientY - lastY;
+        lastX = e.clientX; lastY = e.clientY;
+        if (isRightDrag) {
+          panOffset.x -= dx * 0.003;
+          panOffset.y += dy * 0.003;
+        } else {
+          spherical.theta -= dx * 0.008;
+          spherical.phi    = Math.max(0.05, Math.min(Math.PI - 0.05, spherical.phi + dy * 0.008));
+        }
+        updateCamera();
+      });
+      window.addEventListener('mouseup', function () { isDragging = false; });
+
+      canvas.addEventListener('wheel', function (e) {
+        spherical.radius = Math.max(0.5, Math.min(20, spherical.radius + e.deltaY * 0.005));
+        userInteracted   = true;
+        autoRotate       = false;
+        updateCamera();
+        e.preventDefault();
+      }, { passive: false });
+
+      /* ── Touch ── */
+      var lastTouchDist = 0;
+      canvas.addEventListener('touchstart', function (e) {
+        userInteracted = true;
+        autoRotate     = false;
+        if (e.touches.length === 1) {
+          isDragging  = true; isRightDrag = false;
+          lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+        } else if (e.touches.length === 2) {
+          lastTouchDist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+        }
+        e.preventDefault();
+      }, { passive: false });
+
+      canvas.addEventListener('touchmove', function (e) {
+        if (e.touches.length === 1 && isDragging) {
+          var dx = e.touches[0].clientX - lastX;
+          var dy = e.touches[0].clientY - lastY;
+          lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+          spherical.theta -= dx * 0.008;
+          spherical.phi    = Math.max(0.05, Math.min(Math.PI - 0.05, spherical.phi + dy * 0.008));
+          updateCamera();
+        } else if (e.touches.length === 2) {
+          var dist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          spherical.radius = Math.max(0.5, Math.min(20, spherical.radius - (dist - lastTouchDist) * 0.01));
+          lastTouchDist    = dist;
+          updateCamera();
+        }
+        e.preventDefault();
+      }, { passive: false });
+
+      canvas.addEventListener('touchend', function () { isDragging = false; });
+
+      /* ── Resize ── */
+      var ro = new ResizeObserver(function () {
+        var s = wrapper.clientWidth;
+        renderer.setSize(s, s);
+        camera.updateProjectionMatrix();
+      });
+      ro.observe(wrapper);
+
+      /* ── Render loop ── */
+      var animId;
+      function startRender() {
+        cancelAnimationFrame(animId);
+        (function loop() {
+          animId = requestAnimationFrame(loop);
+          if (autoRotate) {
+            spherical.theta += rotateSpeed;
+            updateCamera();
+          }
+          renderer.render(scene, camera);
+        })();
+      }
+    }); /* end ensureThree */
+  };
+
+  /* Auto-init any element with data-model-viewer on the page */
+  document.querySelectorAll('[data-model-viewer]').forEach(function (el) {
+    window.initModelViewer(el, el.getAttribute('data-model-viewer'));
+  });
+
+})();
