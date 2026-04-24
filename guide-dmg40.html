@@ -211,11 +211,11 @@
       <div class="download-banner__label">// ALL FILES OPEN SOURCE</div>
       <div class="download-banner__title">Download everything — STLs, firmware, config templates.</div>
       <div class="download-banner__files">
-        <span class="file-chip">dmg40_enclosure_v2.stl</span>
-        <span class="file-chip">dmg40_firmware.py</span>
-        <span class="file-chip">config_template.json</span>
-        <span class="file-chip">wiring_diagram.pdf</span>
-        <span class="file-chip">BOM.csv</span>
+        <span class="file-chip">DMG40.step</span>
+        <span class="file-chip">LED_Matrix.py</span>
+        <span class="file-chip">config.json</span>
+        <span class="file-chip">main.py</span>
+        <span class="file-chip">BOM</span>
       </div>
     </div>
     <div class="download-banner__actions">
@@ -343,15 +343,15 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><p class="bom-qty">Screws and Nuts</p><p>M2 × 6 mm screws and M2 nuts (x4)</p></td>
+                  <td><p class="bom-qty">Screws and Nuts</p><p>M2×6 mm screws  <br>M2 nuts (x4)</br></p></td>
                   <td>For mounting the Pico inside the enclosure and the LED matrix on the holding plate.</td>
                   <td class="bom-table__qty-cell"><span class="bom-qty">× 8</span></td>
                   <td><a href="https://www.amazon.de/Innensechskantschrauben-Unterlegscheiben-Sortiment-Linsenkopf-Gewindeschrauben/dp/B0BQHK9LVJ/ref=sr_1_7?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3RHWLV4IN1088&dib=eyJ2IjoiMSJ9.zPZobmt3I6L7WMoS4Dw5CD_EPud8WRG2yUZA6jrmz-n4trTIfEzyaE_keDX66iMuVBnzMCmAB_cev8q_tQkAfdBDIxLtwQOkMj5wnfkIn4VxKyX6Pj1RwXiBjmGvxrZ5X4qS4rilUuWCLragNjPDghwst9OW_X1pFGu_lG5YJN1eR0qYQO_PieewZSlrcH_XzUFjty9hMl8egiB_GLFb6nITR3lMDJ5QZHWmn3hb0XUyFfpBsQqwe243XnB0kieYlim-2I1blXiulSZ3RkY324Le5BdAqbQVWqEvoP-VnhQ.edkOHFOZdHgiiVoQdP2ALrjvqe4K_fHpSCZf6WO7jVk&dib_tag=se&keywords=linsenkopfschrauben&qid=1776602184&sprefix=linsenkopfschrauben%2Caps%2C125&sr=8-7&th=1" target="_blank" rel="noopener" class="bom-link">Amazon.de ↗</a></td>
                 </tr>
                 <tr>
                   <td><p class="bom-qty">Heat Inserts </p><p>M2 heat inserts</p></td>
-                  <td>For mounting the Raspberry Pi inside the enclosure. M2 thread, Outer Diameter: ~3 - 3.5 mm </td>
-                  <td class="bom-table__qty-cell"><span class="bom-qty">× 4</span></td>
+                  <td>For mounting the Raspberry Pi inside the enclosure. M2 thread, Outer Diameter: ~3 - 3.5 mm. Opt.: 4 heat inserts as distancers b/w Pico and the bottom plate. Alternatively, use 3D-printed or brass distancers.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 8</span></td>
                   <td><a href="https://www.amazon.de/M2-5-Bolatus-Einschmelzmuttern-Einschmelzhilfe-Einschmelzgewinde/dp/B0F2TGGBMC/ref=sr_1_3_sspa?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=CZXXSE0Y7FPX&dib=eyJ2IjoiMSJ9.12UT8NcLWRyLpW6u7T9kkMYRiwjno6ghiUaSZUG3s85LZnD6OTQzPZXeFfIf_79DgZ15lpFmFJXYEJ0ww25JjTN00QsIIRQudkhEcc0e2wux6IGjDBdS9j0XwZFiAcAmWKUY1Y2G0X3SMDem4JIo0_Lh6qivUq90DK4kQwBf-oIWN7BztGqOTRPcJ07bH3snzHShAhCJblvHFZzzgtplomRbvSdHP8LkTrX0TurIRFGtcc0zcSAsyeNY4YakR34Gqxa1zQrZCPXvQKaFxNBYDzYyUyvAHVpXVeWOR1d7TUg.JTsf2V9MW4onphhehMErRLS1h78NXF73srwK1S8SoGM&dib_tag=se&keywords=heat%2Binserts&qid=1776602247&sprefix=heat%2Binserts%2Caps%2C114&sr=8-3-spons&aref=CN9XZimLg7&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1" target="_blank" rel="noopener" class="bom-link">Amazon.de ↗</a></td>
                 </tr>
                 <tr>
@@ -592,7 +592,7 @@ Matrix GND  →  Pico GND
           </div>
 
           <!-- Step 05 -->
-          <div class="step" id="step-05">
+          <div class="step" id="step-05" style="margin-bottom: 1.56rem">
             <div class="step__num">05</div>
             <div class="step__body">
               <div class="step__title">Configure your transit API</div>
@@ -947,7 +947,7 @@ Matrix GND  →  Pico GND
               <div class="window-btn window-btn--green"></div>
             </div>
           </div>
-          <div class="retro-window__body">
+          <div class="retro-window__body retro-window__body--flush">
             <table class="bom-table bom-table--flush">
               <thead>
                 <tr>
@@ -980,6 +980,10 @@ Matrix GND  →  Pico GND
                   <td>Enclosure tabs won't seat</td>
                   <td>Check for a wire caught in the seam. Scale the back panel STL to 99.8% if your printer runs large.</td>
                 </tr>
+                <tr>
+                  <td>Script gets stuck</td>
+                  <td>Classic: plug in and out. The script might get stuck in the loop when receiving a wrong response from the API. Add.: check your script and API calls and set 1) a dedicated request_timeout (e.g., 20s) and 2) wrap the calls in try-except blocks.</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -989,6 +993,54 @@ Matrix GND  →  Pico GND
           <div class="guide-callout__label">// STILL STUCK?</div>
           The full source is on GitHub — open an issue with your <code>config.json</code> (remove your Wi-Fi password first) and a description of the symptom. I'll respond within a day or two.
         </div>
+      </section>
+
+      <!-- Backlog -->
+
+      <section class="guide-section" id="backlog">
+        <div class="guide-section__eyebrow">// IMPROVE</div>
+        <h2 class="guide-section__title">Backlog</h2>
+
+        <div class="retro-window">
+          <div class="retro-window__titlebar retro-window--green">
+            <span class="retro-window__title">backlog.txt</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="retro-window__body retro-window__body--flush">
+            <table class="bom-table bom-table--flush">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Solution &amp; fix</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>No reset / power button</td>
+                  <td>Install a push-button for reset and flip-switch to turn on and off.</td>
+                </tr>
+                <tr>
+                  <td>Cable management</td>
+                  <td>The USB cable is currently simply guided between device and the surface it rests on. A more elegant solution would be to incorporate a dedicated (clip-based?)cable management system into the design.</td>
+                </tr>
+                <tr>
+                  <td>Transit API support</td>
+                  <td>Currently, only the VAG/VGN transit API of Nuremberg is supported. Would be great to add other networks (such as SNCF, Trenitalia, DB, TfL, etc.)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="guide-callout">
+          <div class="guide-callout__label">// STILL STUCK?</div>
+          If you improved any of the above issues or added a new feature, please open a PR on GitHub with your changes, or directly contact me. Happy to hear from you!
+        </div>
+        <button class="contact-me-btn" onclick="openContact('Re: Transit Clock (DMG-40)')">Contact me!</button>
       </section>
 
     </main>
@@ -1035,6 +1087,26 @@ Matrix GND  →  Pico GND
     <span id="lb-counter"></span>
     <span id="lb-esc">CLICK BACKDROP OR PRESS ESC TO CLOSE</span>
   </div>
+  
+  <!-- ── CONTACT MODAL ── -->
+  <div id="contact-modal" role="dialog" aria-modal="true" aria-label="Contact form">
+    <div class="contact-modal-box">
+      <div class="contact-modal-titlebar">
+        <span class="contact-modal-title">// GET IN TOUCH</span>
+        <button class="contact-modal-close" id="contact-close" aria-label="Close">&#10005;</button>
+      </div>
+      <div class="contact-modal-body">
+        <label for="contact-subject">Re:</label>
+        <input type="text" id="contact-subject" name="subject" autocomplete="off" />
+        <label for="contact-message">Message:</label>
+        <textarea id="contact-message" name="message" placeholder="Write your message here..."></textarea>
+        <label for="contact-email">Email:</label>
+        <input type="email" id="contact-email" name="email" placeholder="your@email.com" autocomplete="email" />
+        <div class="contact-modal-actions">
+          <button class="contact-send-btn" id="contact-send">&#9658; Send</button>
+        </div>
+      </div>
+    </div>
 
   <script>
     /* Scroll reveal */
@@ -1158,6 +1230,7 @@ Matrix GND  →  Pico GND
 
   <script>
     /* ── LIGHTBOX v3 ── */
+    /* ── CAROUSEL ── */
     (function () {
       var overlay = document.getElementById('lb');
       var imgEl = document.getElementById('lb-img');
@@ -1239,6 +1312,32 @@ Matrix GND  →  Pico GND
         if (e.key === 'ArrowRight') { showImage(lbIdx + 1); e.preventDefault(); }
       });
     })();
+
+    /* ── MEDIA GRID ── */
+    (function() {
+    // 1. Select the lightbox elements
+    const lb = document.getElementById('lb');
+    const lbImg = document.getElementById('lb-img');
+
+    // 2. Function to handle opening the zoom
+    function openZoom(e) {
+      const src = e.currentTarget.getAttribute('src');
+      if (!src) return;
+      
+      lbImg.src = src;
+      lb.classList.add('on');
+      document.body.style.overflow = 'hidden'; // Stop background scrolling
+    }
+
+    // 3. Attach to Media Grid placeholders
+    const zoomableImages = document.querySelectorAll('.img-placeholder img');
+
+    zoomableImages.forEach(img => {
+      // Add a pointer cursor so users know they can click it
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', openZoom);
+    });
+  })();
   </script>
 
 <script>
@@ -1281,6 +1380,52 @@ if (typeof Prism !== 'undefined') {
   Prism.highlightAll();
 }
 </script>
+  <script>
+    /* ── CONTACT MODAL ── */
+    (function () {
+      var modal = document.getElementById('contact-modal');
+      var closeBtn = document.getElementById('contact-close');
+      var sendBtn = document.getElementById('contact-send');
+      var subject = document.getElementById('contact-subject');
+      var message = document.getElementById('contact-message');
+      var email = document.getElementById('contact-email');
+      if (!modal) return;
+
+      window.openContact = function (deviceName) {
+        subject.value = deviceName || '';
+        message.value = '';
+        email.value = '';
+        modal.classList.add('on');
+        document.body.style.overflow = 'hidden';
+        setTimeout(function () { message.focus(); }, 50);
+      };
+
+      function closeContact() {
+        modal.classList.remove('on');
+        document.body.style.overflow = '';
+      }
+
+      closeBtn.addEventListener('click', closeContact);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeContact(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('on')) closeContact();
+      });
+
+      sendBtn.addEventListener('click', function () {
+        var subj = subject.value.trim() || 'DMG Labs Enquiry';
+        var msg = message.value.trim();
+        var from = email.value.trim();
+        var body = '';
+        if (msg) body += msg;
+        if (from) body += (body ? '\n\n' : '') + 'Reply to: ' + from;
+        var mailto = 'mailto:alexanderdemattosgabriel@gmail.com'
+          + '?subject=' + encodeURIComponent(subj)
+          + '&body=' + encodeURIComponent(body);
+        window.location.href = mailto;
+        closeContact();
+      });
+    })();
+  </script>
 
 </body>
 </html>
