@@ -130,8 +130,8 @@
         color, timelessness in design and lack of enshitification. The aim is to create things that are beautiful and
         intriguing by themselves while striving for a clear functionality (like radios and vinyl players were once
         elegant pieces of furniture). Recurring tropes are nature-inspired shapes and my passion for music (although by
-        no means an audiophile yet). Everything you see here carries a personal story. Super happy if you share anything
-        you see here or just chat with me!</p>
+        no means an audiophile yet). Everything carries a personal story. Super happy if you share anything
+        you see here or just reach out!</p>
       <div class="hero__actions">
         <a href="devices.html" class="btn btn-primary">&#9658; See the Devices</a>
         <a href="guides.html" class="btn btn-ghost">Build Something</a>
@@ -575,47 +575,8 @@
     </ul>
     <div class="footer__copy">&copy; 2025 De Mattos Gabriel Labs</div>
   </footer>
-  <script>
-    const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) } }), { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-    document.querySelectorAll('.nav__link').forEach(a => {
-      if (a.getAttribute('href') === window.location.pathname.split('/').pop()) a.classList.add('active');
-    });
-  </script>
-  <script>
-    (function () {
-      const CV = document.getElementById('pacman-canvas');
-      if (!CV) return;
-      const CTX = CV.getContext('2d');
-      const W = CV.width, H = CV.height;
-      const PS = 4;
-      const COLS = Math.floor(W / PS);
-      const ROWS = Math.floor(H / PS);
-      const C = { bg: '#071208', wall: '#1a3a2a', wall: '#2e6647', dot: '#5db870', power: '#f06a00', pac: '#f06a00', g1: '#e05050', g2: '#5090f0', scared: '#234d38', text: '#5db870', score: '#f06a00' };
-      const T = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1], [1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1], [1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1], [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], [1, 1, 1, 1, 0, 1, 1, 1, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1], [2, 2, 2, 1, 0, 1, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 1, 0, 1, 2, 2, 2, 2, 2], [1, 1, 1, 1, 0, 1, 0, 1, 1, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1], [2, 2, 2, 2, 0, 2, 0, 1, 1, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 1, 1, 0, 2, 0, 2, 2, 2, 2, 2, 2], [1, 1, 1, 1, 0, 1, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1], [2, 2, 2, 1, 0, 1, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 2], [1, 1, 1, 1, 0, 1, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1], [1, 3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 1], [1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1], [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
-      const MR = T.length, MC = T[0].length;
-      const SX = Math.floor(W / MC), SY = Math.floor(H / MR);
-      const OX = Math.floor((W - MC * SX) / 2), OY = Math.floor((H - MR * SY) / 2);
-      function mxToCanvas(col, row) { return [OX + col * SX, OY + row * SY]; }
-      let maze, dots, score, lives, dir, nextDir, px, py, pAnim, pMouth, ghosts, scared, scaredTimer, gameState, animFrame;
-      function initGame() { maze = T.map(r => [...r]); dots = 0; score = 0; lives = 3; for (let r = 0; r < MR; r++)for (let c = 0; c < MC; c++) { if (maze[r][c] === 0 || maze[r][c] === 3) dots++; } dir = { x: 0, y: 0 }; nextDir = { x: 1, y: 0 }; px = 1; py = 1; pAnim = 0; pMouth = 0; scared = false; scaredTimer = 0; ghosts = [{ x: 13, y: 11, dx: 1, dy: 0, col: C.g1 }, { x: 15, y: 11, dx: -1, dy: 0, col: C.g2 }]; gameState = 'attract'; }
-      const KEY_MAP = { 'ArrowUp': { x: 0, y: -1 }, 'ArrowDown': { x: 0, y: 1 }, 'ArrowLeft': { x: -1, y: 0 }, 'ArrowRight': { x: 1, y: 0 }, 'w': { x: 0, y: -1 }, 's': { x: 0, y: 1 }, 'a': { x: -1, y: 0 }, 'd': { x: 1, y: 0 } };
-      document.addEventListener('keydown', e => { const d = KEY_MAP[e.key]; if (d) { nextDir = d; if (gameState === 'attract' || gameState === 'dead' || gameState === 'win') startGame(); e.preventDefault(); } });
-      ['up', 'down', 'left', 'right'].forEach(name => { const btn = document.getElementById('btn-' + name); if (!btn) return; const dm = { up: { x: 0, y: -1 }, down: { x: 0, y: 1 }, left: { x: -1, y: 0 }, right: { x: 1, y: 0 } }; const fire = () => { nextDir = dm[name]; if (gameState === 'attract' || gameState === 'dead' || gameState === 'win') startGame(); }; btn.addEventListener('click', fire); btn.addEventListener('touchstart', e => { fire(); e.preventDefault(); }, { passive: false }); });
-      function startGame() { if (gameState === 'win' || gameState === 'dead') initGame(); gameState = 'playing'; }
-      function isWall(c, r) { if (c < 0) c = MC - 1; if (c >= MC) c = 0; if (r < 0 || r >= MR) return true; return maze[r][c] === 1; }
-      function wrapC(c) { return ((c % MC) + MC) % MC; }
-      let tick = 0;
-      function update() { if (gameState !== 'playing') return; tick++; if (tick % 5 !== 0) return; pAnim = (pAnim + 1) % 8; pMouth = pAnim < 4 ? pAnim / 4 : (8 - pAnim) / 4; const tc = wrapC(Math.round(px) + nextDir.x), tr = Math.round(py) + nextDir.y; if (!isWall(tc, tr)) { dir = nextDir; } const nc = wrapC(Math.round(px) + dir.x), nr = Math.round(py) + dir.y; if (!isWall(nc, nr)) { px = nc; py = nr; } const cr = Math.round(py), cc = wrapC(Math.round(px)); if (maze[cr][cc] === 0) { maze[cr][cc] = 2; score += 10; dots--; } if (maze[cr][cc] === 3) { maze[cr][cc] = 2; score += 50; dots--; scared = true; scaredTimer = 60; } if (scared) { scaredTimer--; if (scaredTimer <= 0) scared = false; } ghosts.forEach(g => { const dirs = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }]; const nc2 = wrapC(Math.round(g.x) + g.dx), nr2 = Math.round(g.y) + g.dy; if (!isWall(nc2, nr2) && Math.random() > 0.3) { g.x = nc2; g.y = nr2; } else { const shuffled = dirs.sort(() => Math.random() - 0.5); for (const d of shuffled) { const gc = wrapC(Math.round(g.x) + d.x), gr = Math.round(g.y) + d.y; if (!isWall(gc, gr)) { g.dx = d.x; g.dy = d.y; g.x = gc; g.y = gr; break; } } } if (Math.abs(g.x - px) <= 1 && Math.abs(g.y - py) <= 1) { if (scared) { score += 200; g.x = 13; g.y = 11; } else { lives--; px = 1; py = 1; dir = { x: 0, y: 0 }; nextDir = { x: 1, y: 0 }; if (lives <= 0) gameState = 'dead'; } } }); if (dots <= 0) gameState = 'win'; }
-      function drawMaze() { for (let r = 0; r < MR; r++) { for (let c = 0; c < MC; c++) { const [cx, cy] = mxToCanvas(c, r); const cell = maze[r][c]; if (cell === 1) { CTX.fillStyle = C.wall; CTX.fillRect(cx, cy, SX, SY); CTX.fillStyle = C.walll; CTX.fillRect(cx, cy, SX, 1); CTX.fillRect(cx, cy, 1, SY); } else if (cell === 0) { const dx = cx + Math.floor(SX / 2) - 1, dy = cy + Math.floor(SY / 2) - 1; CTX.fillStyle = C.dot; CTX.fillRect(dx, dy, 2, 2); } else if (cell === 3) { const blink = (tick % 16) < 8; if (blink) { const dx = cx + Math.floor(SX / 2) - 2, dy = cy + Math.floor(SY / 2) - 2; CTX.fillStyle = C.power; CTX.fillRect(dx, dy, 4, 4); } } } } }
-      function drawPacman() { const [cx, cy] = mxToCanvas(Math.round(px), Math.round(py)); const r2 = Math.floor(SX * 0.45); const cx2 = cx + Math.floor(SX / 2), cy2 = cy + Math.floor(SY / 2); const mouthAngle = pMouth * 0.7; const baseAngle = dir.x > 0 ? 0 : dir.x < 0 ? Math.PI : dir.y > 0 ? Math.PI * 0.5 : -Math.PI * 0.5; CTX.fillStyle = C.pac; CTX.beginPath(); CTX.moveTo(cx2, cy2); CTX.arc(cx2, cy2, r2, baseAngle + mouthAngle, baseAngle + Math.PI * 2 - mouthAngle); CTX.closePath(); CTX.fill(); const ex = cx2 + Math.cos(baseAngle - 0.5) * r2 * 0.5; const ey = cy2 + Math.sin(baseAngle - 0.5) * r2 * 0.5; CTX.fillStyle = '#071208'; CTX.fillRect(Math.round(ex) - 1, Math.round(ey) - 1, 2, 2); }
-      function drawGhosts() { ghosts.forEach(g => { const [cx, cy] = mxToCanvas(Math.round(g.x), Math.round(g.y)); const gx = cx + 1, gy = cy + 1, gw = SX - 2, gh = SY - 2; const col = scared ? (tick % 8 < 4 ? C.scared : '#4a7c59') : g.col; CTX.fillStyle = col; CTX.fillRect(gx, gy + Math.floor(gh * 0.35), gw, Math.ceil(gh * 0.65)); CTX.beginPath(); CTX.arc(gx + gw / 2, gy + Math.floor(gh * 0.35), gw / 2, Math.PI, 0); CTX.fill(); const wy = gy + gh; for (let i = 0; i < 3; i++) { CTX.fillStyle = C.bg; CTX.beginPath(); CTX.arc(gx + (i + 0.5) * (gw / 3), wy, gw / 6, 0, Math.PI); CTX.fill(); } CTX.fillStyle = col; if (!scared) { CTX.fillStyle = '#fff'; CTX.fillRect(gx + 2, gy + 3, 3, 3); CTX.fillRect(gx + gw - 5, gy + 3, 3, 3); CTX.fillStyle = '#00f'; CTX.fillRect(gx + 3, gy + 4, 1, 1); CTX.fillRect(gx + gw - 4, gy + 4, 1, 1); } }); }
-      function drawHUD() { CTX.fillStyle = C.score; CTX.font = 'bold 7px monospace'; CTX.fillText('SC:' + score, 2, 8); for (let i = 0; i < lives; i++) { const lx = W - 6 - i * 10, ly = 5; CTX.fillStyle = C.pac; CTX.beginPath(); CTX.moveTo(lx, ly); CTX.arc(lx, ly, 4, 0.3, Math.PI * 2 - 0.3); CTX.closePath(); CTX.fill(); } }
-      function drawOverlay(msg, sub) { CTX.fillStyle = 'rgba(7,18,8,0.72)'; CTX.fillRect(0, 0, W, H); CTX.fillStyle = C.pac; CTX.font = 'bold 14px monospace'; CTX.textAlign = 'center'; CTX.fillText(msg, W / 2 - 7, H / 2 - 7); if (sub) { CTX.fillStyle = C.text; CTX.font = '10px monospace'; CTX.fillText(sub, W / 2 - 7, H / 2 + 7); } CTX.textAlign = 'left'; }
-      function loop() { CTX.fillStyle = C.bg; CTX.fillRect(0, 0, W, H); update(); drawMaze(); if (gameState !== 'attract') drawPacman(); drawGhosts(); drawHUD(); if (gameState === 'attract') drawOverlay('DMG PAC', 'PRESS D-PAD'); if (gameState === 'dead') drawOverlay('GAME OVER', 'PRESS D-PAD'); if (gameState === 'win') drawOverlay('YOU WIN!', 'PRESS D-PAD'); animFrame = requestAnimationFrame(loop); }
-      initGame(); setTimeout(() => loop(), 300);
-    })();
-  </script>
+
+  <script src="scripts.js"></script>
 </body>
 
 </html>

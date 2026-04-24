@@ -43,7 +43,7 @@
   <div class="page-hero__inner">
     <div class="section-label">// COMMUNITY GUIDES</div>
     <h1>Build one<br><em>yourself.</em></h1>
-    <p class="page-hero__sub">Every device ships with a full step-by-step guide, BOM, and source files. Pick something, grab the files, and build it. Then make it better.</p>
+    <p class="page-hero__sub">Every guide provides a comprehensive BOM, Github repo, .step files and step-by-step instructions. Pick something, and make it better.</p>
   </div>
 </section>
 
@@ -83,7 +83,7 @@
           <div class="window-btns"><div class="window-btn window-btn--red"></div><div class="window-btn window-btn--yellow"></div><div class="window-btn window-btn--green"></div></div>
         </div>
         <div class="retro-window__body retro-window__body--flush">
-          <a href="guide-dmg40.html" class="guide-row guide-row--link">
+          <a href="guide-dmg40.html" class="guide-row">
             <div class="guide-row__number">02</div>
             <div>
               <div class="guide-row__meta">
@@ -237,12 +237,8 @@
   </ul>
   <div class="footer__copy">&copy; 2025 De Mattos Gabriel Labs</div>
 </footer>
-<script>
-  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}}),{threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-  document.querySelectorAll('.nav__link').forEach(a=>{
-    if(a.getAttribute('href')===window.location.pathname.split('/').pop())a.classList.add('active');
-  });
-</script>
+
+<script src="scripts.js"></script>
+
 </body>
 </html>
