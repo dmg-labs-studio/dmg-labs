@@ -475,22 +475,22 @@ Nozzle temp:    210 - 230 °C (PLA; check your filament specs)
                   </div>
                   <div class="guide-media-grid">
                     <div>
-                      <div class="img-placeholder img-placeholder--tall">
-                        <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
-                        <span>Pico Mounting<br>img/dmg40_wiring.jpg</span>
+                      <div>
+                        <div class="img-placeholder img-placeholder--tall">
+                          <img src="img/DMG40_BottomPlate_Mounting.jpg" alt="DMG40 - Mounting Bottom Plate" class="img--top"/>
+                        </div>
+                        <p class="guide-media__caption">How to mount the bottom plate. (Glue is optional)</p>
                       </div>
-                      <p class="guide-media__caption">Pico W mounted to bottom plate</p>
                     </div>
-                    <div>
-                      <div class="img-placeholder img-placeholder--tall">
-                        <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
-                        <span>LED Matrix mounted to the holding plate<br>img/dmg40_wiring_diagram.jpg</span>
+                      <div>
+                        <div class="img-placeholder img-placeholder--tall">
+                          <img src="img/DMG40_Mounted_Back.jpg" alt="Mounted and assembled back" class="img--top"/>
+                        </div>
+                        <p class="guide-media__caption">Mounted and assembled back holding plate.</p>
                       </div>
-                      <p class="guide-media__caption">LED Matrix mounted to the holding plate</p>
                     </div>
-                  </div>                    
-              </div>
-            </div>
+                  </div>
+                </div>                
 
           <!-- Step 03 -->
           <div class="step" id="step-03">
@@ -528,7 +528,7 @@ Nozzle temp:    210 - 230 °C (PLA; check your filament specs)
 Matrix DIN  →  Pico GP3  (SPI0 MOSI)
 Matrix CLK  →  Pico GP2  (SPI0 SCK)
 Matrix CS   →  Pico GP5  (chip select)
-Matrix VCC  →  Pico 3V3
+Matrix VCC  →  Pico 5V
 Matrix GND  →  Pico GND
 </code></pre>
                 </div>
@@ -538,22 +538,22 @@ Matrix GND  →  Pico GND
 
               <div class="guide-media-grid">
                 <div>
-                  <div class="img-placeholder img-placeholder--tall">
-                    <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
-                    <span>WIRING PHOTO<br>img/dmg40_wiring.jpg</span>
+                  <div>
+                    <div class="img-placeholder img-placeholder--tall">
+                      <img src="img/DMG40_Pinout.png" alt="DMG40 - Pico 2W and MAX7219 Pinout" class="img--top"/>
+                    </div>
+                    <p class="guide-media__caption">Pico 2W and MAX7219 Pinout.</p>
                   </div>
-                  <p class="guide-media__caption">Pico W with matrix wired.</p>
                 </div>
-                <div>
-                  <div class="img-placeholder img-placeholder--tall">
-                    <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.5"/></svg>
-                    <span>WIRING DIAGRAM<br>img/dmg40_wiring_diagram.jpg</span>
+                  <div>
+                    <div class="img-placeholder img-placeholder--tall">
+                      <img src="img/DMG40-Open-Back-PinOut.jpg" alt="DMG40 - Wired and mounted Pico" class="img--top"/>
+                    </div>
+                    <p class="guide-media__caption">Pico 2W mounted and wired.</p>
                   </div>
-                  <p class="guide-media__caption">Wiring diagram from the PDF.</p>
                 </div>
               </div>
             </div>
-          </div>
 
           <!-- Step 04 -->
           <div class="step" id="step-04">
@@ -847,8 +847,8 @@ Matrix GND  →  Pico GND
             <div class="step__body">
               <div class="step__title">Final wiring and cable routing</div>
               <div class="step__text">
-                <p>Route the USB-C cable through the back-  panel slot before closing the enclosure. The slot is sized for a right-angle USB-C connector, which makes for a much cleaner exit — it's listed as optional in the BOM, but strongly recommended.</p>
-                <p>Tuck the Dupont wires into the two cable-guide clips on the inside of the enclosure. Give each wire a gentle tug to confirm nothing is loose before sealing up.</p>
+                <p>Route the USB-C cable through the back-  panel slot before closing the enclosure. The slot is sized for a standard USB-cable. Make sure that it is a data and power USB cable to be able to adjust the code and firmware without opening the enclosure at any time.</p>
+                <p>Tuck the Dupont wires into the two cable-guide clips on the inside of the enclosure. Give each wire a gentle tug to confirm nothing is loose before sealing up. You are now set to plug the device in.</p>
               </div>
 
               <!-- Video insert -->
@@ -864,9 +864,9 @@ Matrix GND  →  Pico GND
                   </div>
                   <div class="img-carousel img-carousel--pine" id="routing-carousel">
                     <div class="img-carousel__track">
-                      <div class="img-carousel__slide img-carousel__slide--placeholder">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/><line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4"/></svg>
-                        <p>INTERIOR PHOTO<br>img/dmg40_interior.jpg</p>
+                      <div class="img-carousel__slide">
+                        <img src="img/DMG40_FinalAssembly.jpg" alt="DMG-40 Final Assembly" class="img--top"/>
+                        <div class="img-carousel__scanline"></div>
                       </div>
                       <div class="img-carousel__slide img-carousel__slide--video">
                         <video src="video/dmg40_routing.mp4" loop playsinline preload="none" poster="img/dmg40_render.jpg"></video>
@@ -887,19 +887,19 @@ Matrix GND  →  Pico GND
                     </div>
                   </div>
                 </div>
-                <p class="guide-media__caption">Interior cable routing and the clip positions.</p>
+                <p class="guide-media__caption">The final product.</p>
               </div>
             </div>
           </div>
 
           <!-- Step 08 -->
-          <div class="step" id="step-08">
+          <div class="step" id="step-08" style="margin-bottom: 1.56rem;">
             <div class="step__num">08</div>
             <div class="step__body">
               <div class="step__title">Close the enclosure</div>
               <div class="step__text">
-                <p>Align the back panel's four corner tabs with the slots in the main body. Press firmly until you hear a click from each corner — the friction-fit doesn't need force, just even pressure. If one corner won't seat, check for a wire caught in the gap.</p>
-                <p>Thread the four M2 × 6 screws into the back panel's recessed holes. They seat into self-tapping channels in the PLA — use a light hand on the final turns to avoid stripping.</p>
+                <p>Align the back panel's tabs with the slots in the main body. Press gently in. The friction-fit doesn't need force, just even pressure. If one corner won't seat, check for a wire caught in the gap.</p>
+                <p>Enjoy your new DMG-40!</p>
               </div>
             </div>
           </div>
@@ -910,13 +910,13 @@ Matrix GND  →  Pico GND
             <div class="step__body">
               <div class="step__title">First power-on</div>
               <div class="step__text">
-                <p>Plug into any USB-C 5&nbsp;V power source. The display should show a brief boot animation, then the <code>--:--</code> clock placeholder while it connects to Wi-Fi. Within 10–15 seconds you should see the real time followed by your first departure entry.</p>
+                <p>Plug into any USB-C 5&nbsp;V power source. The display should show a brief boot animation, while it connects to Wi-Fi. Within 10–15 seconds you should see your first departure entry.</p>
                 <p>If nothing lights up: confirm the matrix VCC is on the Pico's <code>VBUS</code> pin (not <code>3V3</code>) — the modules need 5&nbsp;V. If the clock shows but no departures appear, check your <code>stop_ids</code> and API provider in <code>config.json</code>.</p>
               </div>
 
               <div class="guide-callout guide-callout--warn">
                 <div class="guide-callout__label">// IMPORTANT — power supply</div>
-                The four LED matrix modules can draw up to 400&nbsp;mA combined at full brightness. Use a proper phone charger or USB hub with a dedicated power supply — powering via a laptop USB port may cause flickering at high brightness.
+                Use a proper phone charger or USB hub with a dedicated power supply — powering via a laptop USB port may cause flickering at high brightness.
               </div>
 
               <div class="guide-media">
@@ -925,42 +925,6 @@ Matrix GND  →  Pico GND
                   <span>FIRST BOOT PHOTO<br>img/dmg40_firstboot.jpg</span>
                 </div>
                 <p class="guide-media__caption">Live departures on first successful boot.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 10 -->
-          <div class="step" id="step-10">
-            <div class="step__num">10</div>
-            <div class="step__body">
-              <div class="step__title">Customising the display</div>
-              <div class="step__text">
-                <p>The display cycles between two modes: a scrolling departure ticker and a real-time clock. You can adjust the cycle timing and brightness in <code>config.json</code>:</p>
-                <div class="code-block">
-                <div class="code-block__header">
-                  <div class="code-block__header-left">
-                    <div class="code-block__dots">
-                      <div class="code-block__dot code-block__dot--r"></div>
-                      <div class="code-block__dot code-block__dot--y"></div>
-                      <div class="code-block__dot code-block__dot--g"></div>
-                    </div>
-                    <span class="code-block__filename">config.json</span>
-                  </div>
-                  <div class="code-block__header-right">
-                    <span class="code-block__lang">JSON</span>
-                    <button class="code-block__copy">COPY</button>
-                  </div>
-                </div>
-                <div class="code-block__body">
-<pre><code class="language-json">"brightness":      6,       // 0–15 (8 is a good indoor level)
-"ticker_speed":    40,      // ms per scroll step — lower = faster
-"clock_dwell":     8000,    // ms to show the clock between tickers
-"display_mode":    "both"   // "ticker", "clock", or "both"
-</code></pre>
-                </div>
-              </div>
-                <p>You can also add a second Wi-Fi network (useful if you travel with the device) by adding a <code>wifi_fallback</code> key with an SSID and password. The firmware tries the primary first and falls back automatically.</p>
-                <p>All changes take effect on the next reboot — power cycle or use Thonny's reset button. No reflashing needed.</p>
               </div>
             </div>
           </div>
