@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>DMG Labs — Guide 05: Nautilus Speaker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=DM+Mono:wght@300;400&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<style>
+  /* ── VIDEO SLIDE ── */
+  .img-carousel__slide--video {
+    background: #000;
+    position: relative;
+  }
+  .img-carousel__slide--video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .carousel-video-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: rgba(15, 31, 23, 0.62);
+    cursor: pointer;
+    z-index: 5;
+    transition: opacity 0.2s;
+  }
+  .carousel-video-play.hidden { opacity: 0; pointer-events: none; }
+  .carousel-video-play__icon {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 2.5px solid #f06a00;
+    background: rgba(240, 106, 0, 0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; color: #f06a00;
+    box-shadow: 0 0 0 6px rgba(240,106,0,0.1);
+    transition: background 0.15s, box-shadow 0.15s;
+  }
+  .carousel-video-play:hover .carousel-video-play__icon {
+    background: rgba(240,106,0,0.32);
+    box-shadow: 0 0 0 10px rgba(240,106,0,0.08);
+  }
+  .carousel-video-play__label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.38rem;
+    color: rgba(200,221,208,0.7);
+    letter-spacing: 0.12em;
+  }
+  .carousel-video-mute {
+    position: absolute;
+    bottom: 38px; right: 10px;
+    z-index: 10;
+    background: rgba(15,31,23,0.72);
+    border: 2px solid rgba(240,106,0,0.6);
+    color: #f06a00;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.45rem;
+    padding: 0.35rem 0.55rem;
+    border-radius: 4px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    line-height: 1;
+    display: none;
+  }
+  .carousel-video-mute.visible { display: block; }
+
+  /* ── PREFACE / THEORY SECTION ── */
+  .guide-preface {
+    background: #f7f4ef;
+    border-left: 3px solid #f06a00;
+    padding: 2.8rem 2.4rem 2.4rem;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  .guide-preface__eyebrow {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.14em;
+    color: #f06a00;
+    margin-bottom: 1rem;
+  }
+  .guide-preface__title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #0f1f17;
+    margin: 0 0 1.4rem;
+    line-height: 1.2;
+  }
+  .guide-preface__title em {
+    font-style: italic;
+    color: #f06a00;
+  }
+  .guide-preface__body p {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.96rem;
+    line-height: 1.75;
+    color: #2a3a31;
+    margin-bottom: 1rem;
+  }
+  .guide-preface__body p:last-child { margin-bottom: 0; }
+  .guide-preface__body strong { color: #0f1f17; }
+
+  .preface-sub {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    color: #6b8c78;
+    margin: 1.8rem 0 0.7rem;
+    display: block;
+  }
+
+  /* Golden ratio inline formula display */
+  .phi-formula {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #0f1f17;
+    color: #c8ddd0;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 3px;
+    margin: 0.2rem 0;
+    white-space: nowrap;
+  }
+  .phi-formula span { color: #f06a00; }
+
+  /* Volume calc table inside preface */
+  .calc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    margin: 1rem 0;
+  }
+  .calc-table th {
+    background: #0f1f17;
+    color: #c8ddd0;
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+  }
+  .calc-table td {
+    padding: 0.48rem 0.8rem;
+    border-bottom: 1px solid #dde8e2;
+    color: #2a3a31;
+    vertical-align: top;
+  }
+  .calc-table td:first-child { color: #0f1f17; font-weight: bold; }
+  .calc-table tr:last-child td { border-bottom: none; }
+  .calc-table .val { color: #f06a00; }
+
+  /* ── VIDEO LIGHTBOX ── */
+  #vlb {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(8, 18, 12, 0.96);
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    animation: vlb-in 0.22s ease;
+  }
+  #vlb.active { display: flex; }
+  @keyframes vlb-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  #vlb video {
+    max-width: min(92vw, 1200px);
+    max-height: 82vh;
+    border-radius: 4px;
+    box-shadow: 0 0 80px rgba(0,0,0,0.8);
+    background: #000;
+    display: block;
+  }
+  #vlb-close {
+    position: absolute;
+    top: 1.4rem; right: 1.6rem;
+    background: none;
+    border: 1.5px solid rgba(240,106,0,0.6);
+    color: #f06a00;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    padding: 0.4rem 0.7rem;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    border-radius: 3px;
+  }
+  #vlb-close:hover { background: rgba(240,106,0,0.12); }
+  #vlb-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.42rem;
+    color: rgba(200,221,208,0.45);
+    letter-spacing: 0.12em;
+  }
+  /* Zoom icon on video slides */
+  .video-zoom-hint {
+    position: absolute;
+    top: 10px; right: 10px;
+    z-index: 6;
+    background: rgba(15,31,23,0.72);
+    border: 1.5px solid rgba(240,106,0,0.5);
+    color: #f06a00;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.38rem;
+    padding: 0.28rem 0.48rem;
+    border-radius: 3px;
+    pointer-events: none;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .img-carousel__slide--video:hover .video-zoom-hint { opacity: 1; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+  <a href="index.html" class="nav__logo" aria-label="DMG Labs">
+    <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
+      <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#0f1f17">D</text>
+      <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#0f1f17">M</text>
+      <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00"/>
+      <circle cx="74" cy="16" r="2.8" fill="#f06a00"/>
+    </svg>
+  </a>
+  <ul class="nav__links">
+    <li><a href="devices.html" class="nav__link">Devices</a></li>
+    <li><a href="guides.html" class="nav__link">Guides</a></li>
+    <li><a href="studio.html" class="nav__link">Studio</a></li>
+  </ul>
+  <a href="guides.html" class="btn btn-nav-cta">&#9658; Start Building</a>
+</nav>
+
+
+<!-- ── HERO ── -->
+<section class="guide-hero">
+  <div class="guide-hero__inner">
+
+    <div>
+      <div class="guide-hero__breadcrumb">
+        <a href="guides.html">Guides</a>
+        <span class="guide-hero__breadcrumb-sep">/</span>
+        <span>05 — Nautilus Speaker</span>
+      </div>
+      <div class="guide-hero__eyebrow">// GUIDE 05 &middot; DMG-NAUTILUS SPEAKER</div>
+      <h1 class="guide-hero__title">Build the<br><em>Nautilus.</em></h1>
+      <p class="guide-hero__desc">A 3D-printed full-range speaker enclosure shaped after the logarithmic spiral of the nautilus shell — one of nature's closest approximations of the Golden Ratio. Two Tectonic BMR drivers, a Wondom amplifier, and a translucent nature-patterned cover that diffuses the light as beautifully as it lets the sound through.</p>
+
+      <div class="guide-skill-row">
+        <span class="skill-tag skill-tag--fdm">3D Printing</span>
+        <span class="skill-tag skill-tag--elec">Electronics</span>
+        <span class="skill-tag skill-tag--code">Acoustics</span>
+        <span class="skill-tag skill-tag--api">Assembly</span>
+      </div>
+
+      <div class="guide-hero__stats">
+        <div class="guide-stat-item">
+          <span class="guide-stat-item__label">Difficulty</span>
+          <span class="guide-stat-item__value guide-stat-item__value--sm">INTERMEDIATE</span>
+        </div>
+        <div class="guide-stat-item">
+          <span class="guide-stat-item__label">Steps</span>
+          <span class="guide-stat-item__value">5</span>
+        </div>
+        <div class="guide-stat-item">
+          <span class="guide-stat-item__label">Est. time</span>
+          <span class="guide-stat-item__value guide-stat-item__value--sm">~&nbsp;24&nbsp;hrs</span>
+        </div>
+        <div class="guide-stat-item">
+          <span class="guide-stat-item__label">Approx. cost</span>
+          <span class="guide-stat-item__value guide-stat-item__value--sm">~&nbsp;100&nbsp;€</span>
+        </div>
+      </div>
+
+      <div class="guide-hero__actions">
+        <a href="#downloads" class="btn btn-orange">&#9658; Get the Files</a>
+        <a href="#build" class="btn btn-ghost">Jump to Build</a>
+      </div>
+    </div>
+
+    <!-- Right: device image carousel -->
+    <div class="guide-hero__visual">
+      <div class="retro-window">
+        <div class="retro-window__titlebar">
+          <span class="retro-window__title">nautilus.visual</span>
+          <div class="window-btns">
+            <div class="window-btn window-btn--red"></div>
+            <div class="window-btn window-btn--yellow"></div>
+            <div class="window-btn window-btn--green"></div>
+          </div>
+        </div>
+        <div class="img-carousel img-carousel--pine" id="hero-carousel">
+          <div class="img-carousel__track">
+            <div class="img-carousel__slide">
+              <img src="img/DMG-Nautilus_FinalProduct_IsoView.jpg" alt="DMG-Nautilus — isometric view" class="img--top"/>
+              <div class="img-carousel__scanline"></div>
+            </div>
+            <div class="img-carousel__slide">
+              <img src="img/DMG-Nautilus_FinalProduct_FrontView.jpg" alt="DMG-Nautilus — front view" class="img--top"/>
+              <div class="img-carousel__scanline"></div>
+            </div>
+            <div class="img-carousel__slide">
+              <img src="img/DMG-Nautilus_FinalProduct_TopView2.jpg" alt="DMG-Nautilus — second isometric view" class="img--top"/>
+              <div class="img-carousel__scanline"></div>
+            </div>
+            <div class="img-carousel__slide">
+              <img src="img/DMG-Nautilus_Render2.jpg" alt="DMG-Nautilus — third isometric view" class="img--top"/>
+              <div class="img-carousel__scanline"></div>
+            </div>
+          </div>
+          <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+          <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+          <div class="img-carousel__counter">1 / 4</div>
+          <div class="img-carousel__dots">
+            <div class="img-carousel__dot"></div>
+            <div class="img-carousel__dot"></div>
+            <div class="img-carousel__dot"></div>
+            <div class="img-carousel__dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── DOWNLOAD BANNER ── -->
+<div class="download-banner" id="downloads">
+  <div class="download-banner__inner">
+    <div>
+      <div class="download-banner__label">// ALL FILES OPEN SOURCE</div>
+      <div class="download-banner__title">Download everything — STLs, CAD source, assembly diagrams.</div>
+      <div class="download-banner__files">
+        <span class="file-chip">nautilus_spiral.stl</span>
+        <span class="file-chip">nautilus_front.stl</span>
+        <span class="file-chip">nautilus_cover.stl</span>
+        <span class="file-chip">BOM</span>
+      </div>
+    </div>
+    <div class="download-banner__actions">
+      <a href="https://drive.google.com/drive/folders/18yCjKFj7OwCmUUsnV1byXlqnB6zT93lp?usp=drive_link" target="_blank" rel="noopener" class="btn btn-orange">&#9658; Open in Google Drive</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── GUIDE BODY ── -->
+<div class="guide-body">
+  <div class="guide-body__inner">
+
+    <!-- Sidebar TOC -->
+    <aside class="guide-toc">
+      <div class="guide-toc__heading">// IN THIS GUIDE</div>
+      <ul class="guide-toc__links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#design">Design &amp; Theory</a></li>
+        <li><a href="#bom">Bill of Materials</a></li>
+        <div class="guide-toc__divider"></div>
+        <li><a href="#build">Build Steps</a></li>
+        <li><a href="#step-01">01 — Designing the Nautilus</a></li>
+        <li><a href="#step-02">02 — Printing the enclosure</a></li>
+        <li><a href="#step-03">03 — Cabling &amp; drivers</a></li>
+        <li><a href="#step-04">04 — Final assembly</a></li>
+        <li><a href="#step-05">05 — Result &amp; sound</a></li>
+        <div class="guide-toc__divider"></div>
+        <li><a href="#backlog">Backlog</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main class="guide-content">
+
+      <!-- Overview -->
+      <section class="guide-section" id="overview">
+        <div class="guide-section__eyebrow">// OVERVIEW</div>
+        <h2 class="guide-section__title">What you're building</h2>
+        <div class="guide-section__body">
+          <p>The DMG-Nautilus is a full-range speaker system built inside a 3D-printed enclosure shaped after the logarithmic spiral of the nautilus shell. Each channel is a sealed, tapered tube — a shape that naturally terminates standing waves and loads the driver with a smoothly increasing air mass, a problem that otherwise requires complex acoustic engineering to solve.</p>
+          <p>Two Tectonic TEBM65C20F-8 BMR (Balanced Mode Radiator) drivers sit in a 3D-printed front baffle, backed by FDM-printed spiral enclosures packed with long-hair sheep wool. The assembly is held together with embedded magnets, so the cover removes without tools. A Wondom Jab2+ amplifier board handles both channels from a single power brick.</p>
+          <p>This guide covers the design rationale, print settings, acoustic treatment, wiring, and final assembly. No prior speaker-building experience required — but it helps to have built something with FDM before, since the spiral print is the most demanding part.</p>
+        </div>
+
+        <div class="guide-media-grid">
+          <div>
+            <div class="img-placeholder img-placeholder--tall">
+              <img src="img/DMG-Nautilus_FinalProduct_Shelf.jpg" alt="DMG-Nautilus on shelf" class="img--top"/>
+            </div>
+            <p class="guide-media__caption">The finished DMG-Nautilus on the shelf.</p>
+          </div>
+          <div>
+            <div class="img-placeholder img-placeholder--tall">
+              <img src="img/DMG-Nautilus_FinalProduct_TopView.jpg" alt="DMG-Nautilus — top view" class="img--top"/>
+            </div>
+            <p class="guide-media__caption">Top view of the assembled pair.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- DESIGN & THEORY PREFACE -->
+      <section class="guide-section" id="design">
+        <div class="guide-section__eyebrow">// DESIGN &amp; THEORY</div>
+        <h2 class="guide-section__title">Why the nautilus?</h2>
+
+        <div class="guide-preface">
+          <div class="guide-preface__eyebrow">// THE GOLDEN RATIO IN NATURE</div>
+          <div class="guide-preface__body">
+
+            <span class="preface-sub">// φ — THE RATIO</span>
+            <p>The Golden Ratio, <strong>φ ≈ 1.618</strong>, appears when a line is divided so that the ratio of the whole to the larger part equals the ratio of the larger part to the smaller. It turns up, unreasonably often, in the proportions of living things. The spiral arrangement of seeds in a sunflower head, the branching angles of trees, the curve of a ram's horn, the arrangement of florets on a romanesco — all of these emerge from growth processes governed by the same underlying relationship.</p>
+            <p>The mathematical object that encodes it is the <strong>logarithmic spiral</strong>: a curve that grows outward at a constant angle, so every successive turn is exactly φ times wider than the one before. Unlike an Archimedean spiral (where the spacing between turns is constant), the logarithmic spiral is self-similar — zoom in or out and it looks exactly the same.</p>
+            <div style="display:flex; gap:1rem; flex-wrap:wrap; margin:1rem 0;">
+              <div class="phi-formula">φ = <span>(1 + √5)</span> / 2 ≈ 1.61803…</div>
+              <div class="phi-formula">r(θ) = a · e<span>^(b·θ)</span></div>
+            </div>
+
+            <span class="preface-sub">// THE NAUTILUS SHELL</span>
+            <p>The chambered nautilus (<em>Nautilus pompilius</em>) is a frequently cited example of the golden spiral in nature — though the real story is slightly more precise than the popular version. The outer edge of the shell does not trace a perfect golden spiral; measured carefully, the growth ratio per quarter-turn is closer to <strong>1.33</strong> than to φ. But it is, unambiguously, a logarithmic spiral with a very low deviation from the golden form across its outer whorls. Close enough that for centuries it has served as the canonical illustration of the ratio — and, for our purposes, close enough that the geometry produces the acoustic properties we want.</p>
+            <p>What makes the nautilus structurally extraordinary is that the shell achieves exceptional stiffness and strength with minimal material. Each chamber is bounded by a curved wall (the septum) oriented to resist the pressure differential between adjacent gas-filled chambers. The same self-similar geometry that makes it look beautiful also makes it an unusually efficient pressure vessel.</p>
+
+            <span class="preface-sub">// WHY IT WORKS AS A SPEAKER ENCLOSURE</span>
+            <p>A speaker driver is, in simple terms, a piston moving air. The enclosure behind the cone must do two things: prevent the rear wave from cancelling the front wave, and control the compliance (springiness) of the air load on the driver's rear. A sealed box does both — the trapped air acts as a restoring spring. The problem with a simple box is that its flat, parallel walls support standing waves at predictable frequencies. A mode at, say, 400 Hz will reinforce output at that frequency and create a dip at its cancellation point, audible as coloration.</p>
+            <p>A tapered tube — widening from the driver outward — kills standing waves because there is no single parallel reflection path. The wavefront is continuously diffracted, and the gradually increasing cross-section loads the driver with a smoothly changing acoustic impedance rather than a step function. Combine that with a curved geometry and the result is a nearly non-resonant rear enclosure. This is the principle behind the original Bowers &amp; Wilkins Nautilus loudspeaker (1993) — the shape here is directly inspired by it, scaled and adapted for FDM printing and BMR full-range drivers.</p>
+
+            <span class="preface-sub">// PORTED VS. SEALED — AND WHY THIS DESIGN IS SEALED</span>
+            <p>A ported (bass-reflex) enclosure uses a tuned vent to extend low-frequency response. The port resonates at a specific frequency, reinforcing bass output at the Helmholtz resonance of the vent/cabinet system. It sounds appealing on paper. In practice, for a small, high-aspect-ratio enclosure like a printed spiral, achieving a correctly tuned port is extremely sensitive to manufacturing tolerances — the vent length and diameter need to be precise to within millimetres to hit the target frequency, and any misalignment in the print changes the tuning. The sealed geometry of the nautilus spiral, combined with sheep-wool damping, gives predictable, well-controlled low-frequency roll-off with much higher tolerance for print variation.</p>
+
+            <span class="preface-sub">// VOLUME AND RESONANT FREQUENCY</span>
+            <p>For the Tectonic TEBM65C20F-8 BMR driver (Vas ≈ 1.6 L, Qts ≈ 0.67, Fs ≈ 100 Hz), the ideal sealed-box volume and the resulting system resonance can be estimated with the standard closed-box equations:</p>
+
+            <table class="calc-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Formula / Value</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Target Qtc</td>
+                  <td class="val">0.707</td>
+                  <td>Butterworth — maximally flat in-band response</td>
+                </tr>
+                <tr>
+                  <td>Vb (box volume)</td>
+                  <td class="val">≈ 0.5 – 0.8 L per driver</td>
+                  <td>Vb = Vas · (Qts / Qtc)² − 1</td>
+                </tr>
+                <tr>
+                  <td>System Fc</td>
+                  <td class="val">≈ 130 – 160 Hz</td>
+                  <td>Fc = Fs · √(Vas / Vb + 1)</td>
+                </tr>
+                <tr>
+                  <td>Roll-off slope</td>
+                  <td class="val">−12 dB / octave</td>
+                  <td>Second-order high-pass behaviour below Fc</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>The printed spiral holds approximately <strong>0.65 L</strong> of effective internal volume per channel after accounting for wall thickness, wool packing, and the driver's own displacement. That lands squarely in the target window for a Qtc of 0.707. More wool reduces the effective resonant frequency slightly (by increasing the apparent volume) and adds broadband damping — the wool should fill roughly 60–70% of the interior volume, not be packed solid.</p>
+
+            <span class="preface-sub">// STIFFNESS, MASS, AND RESONANCE</span>
+            <p>Every physical body has resonant frequencies at which it vibrates freely — the same principle as a tuning fork. For a speaker enclosure, panels that resonate in the audio band add colouration: the enclosure walls start to radiate their own sound, layered on top of the driver's output.</p>
+            <p>The resonant frequency of a panel scales as <strong>f ∝ √(stiffness / mass)</strong>. Increase stiffness (more walls, denser infill) and resonances move up in frequency. Increase mass (more material) and they move down. The goal is to push them out of the most audible mid-bass region — ideally above 3–4 kHz, where the driver's output is already rolling off and the ear is less sensitive to colouration.</p>
+            <p>Four perimeter walls and 20% gyroid infill achieve a good balance for PLA: the gyroid pattern distributes stress evenly in all directions (unlike grid or honeycomb, which have preferential stiffness axes), and the resulting panel stiffness is high enough to push primary resonances well above 1 kHz. The curved geometry of the spiral further distributes bending stress, so there are fewer large flat panels prone to fundamental resonance.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- BOM -->
+      <section class="guide-section" id="bom">
+        <div class="guide-section__eyebrow">// BILL OF MATERIALS</div>
+        <h2 class="guide-section__title">What you'll need</h2>
+        <div class="guide-section__body">
+          <p>Total cost sits at roughly 90–110&nbsp;€ depending on where you source the drivers and amp board. The hardware (screws, inserts, magnets) is widely available on Amazon or AliExpress.</p>
+        </div>
+
+        <div class="retro-window">
+          <div class="retro-window__titlebar retro-window--green">
+            <span class="retro-window__title">BOM.csv</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="retro-window__body retro-window__body--flush">
+            <table class="bom-table">
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Spec / Notes</th>
+                  <th class="bom-table__th--center">Qty</th>
+                  <th>Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Tectonic TEBM65C20F-8 BMR</td>
+                  <td>3.5" full-range BMR driver, 8&nbsp;Ω, 15&nbsp;W RMS. The Balanced Mode Radiator design gives wide, flat dispersion without a tweeter.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 2</span></td>
+                  <td><a href="https://www.soundimports.eu/de/tectonic-elements-tebm65c20f-8.html" target="_blank" rel="noopener" class="bom-link">Tectonic ↗</a></td>
+                </tr>
+                <tr>
+                  <td>Sure Electronics Wondom Jab2+</td>
+                  <td>2 × 50&nbsp;W Class-D amplifier board. Include the functional cable set for clean power and signal connections.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 1</span></td>
+                  <td><a href="https://www.soundimports.eu/de/sure-electronics-aa-ja32175.html" target="_blank" rel="noopener" class="bom-link">Wondom ↗</a></td>
+                </tr>
+                <tr>
+                  <td>M2.5 Flathead Screws + Heat Inserts</td>
+                  <td>For fixing the nautilus spiral to the front enclosure.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 8</span></td>
+                  <td><span class="bom-optional">STANDARD HARDWARE</span></td>
+                </tr>
+                <tr>
+                  <td>M3 Inbus Screws + Heat Inserts</td>
+                  <td>For fixing the BMR drivers to the front baffle.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 12</span></td>
+                  <td><span class="bom-optional">STANDARD HARDWARE</span></td>
+                </tr>
+                <tr>
+                  <td>10&nbsp;mm Neodymium Magnets</td>
+                  <td>For tool-free cover assembly. One pack (~20 pcs.) covers both speakers.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">× 20</span></td>
+                  <td><span class="bom-optional">AMAZON / ALIEXPRESS</span></td>
+                </tr>
+                <tr>
+                  <td>Long-hair Sheep Wool</td>
+                  <td>Acoustic damping inside the spiral chamber. Long-hair (not carded or felted) works significantly better than synthetic alternatives.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">~100 g</span></td>
+                  <td><a href="https://www.amazon.de/dp/B0BKPZX2PW?ref=ppx_yo2ov_dt_b_fed_asin_title" target="_blank" rel="noopener" class="bom-link">Amazon ↗</a></td>
+                </tr>
+                <tr>
+                  <td>Play-Doh / Modelling Putty</td>
+                  <td>For sealing cable pass-through holes in the enclosure. Stays pliable, re-sealable, and acoustically inert.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">small amount</span></td>
+                  <td><span class="bom-optional">YOU LIKELY HAVE THIS</span></td>
+                </tr>
+                <tr>
+                  <td>Super Glue (CA)</td>
+                  <td>For permanently fixing magnet pockets, etc. if needed.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">small amount</span></td>
+                  <td><span class="bom-optional">YOU LIKELY HAVE THIS</span></td>
+                </tr>
+                <tr>
+                  <td>Power Connector</td>
+                  <td>19 - 24 V DC and 3.0 A Rating.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">1</span></td>
+                  <td><a href="https://www.amazon.de/dp/B0DS5HGSDC?ref=ppx_yo2ov_dt_b_fed_asin_title" target="_blank" rel="noopener" class="bom-link">Amazon ↗</a></td>
+                </tr>
+                <tr>
+                  <td>Gold Plated Cable Connectors</td>
+                  <td>Make sure to have a larger size (e.g., ~6mm and a smaller size ~3mm). The larger one connects to the + latch, the smaller one to the - latch of the drivers.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">1</span></td>
+                  <td><a href="https://www.amazon.de/Flachsteckh%C3%BClsen-Flachstecker-Flachsteckverbinder-Kabelstecker-Lautsprecher/dp/B0CFQGKJ81/ref=sr_1_8?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=2JAZXVUQTEVX8&dib=eyJ2IjoiMSJ9.iUfNkwCDabYgpdpYnpybFuDIJwig65MxtCFOdSbRbZ82BuCD1IxhQV2v8SRseKAcqRXdc3-28Oh02bvBFE8V4vMjmNCRxkp6SeUmvK_HV-7OHhDvLSiERg3TH7L4OxY6Ab_sxrtuuHtQ4zycm1MBeqGAdSwbpIFjPq-qaKRi0FmEhLC4QWpLaaTj0hPryO4QI7oWqSNxZ3dSkLbI0Bbfrek_zFwZY-uMdaKXo-CbnuZibd0J-p-cB-W0bMkVt1cFQ-f5wgoiGyqvKvBQ1j2QoS9mV7XfgGCno2bDjCsTsnQ.WEjvlIButqlTJ7xwi9UZASFmEBKfCLp_jfBSVfO41XU&dib_tag=se&keywords=kabelschuhe+gold&qid=1778004201&sprefix=kabelschuhe+gol%2Caps%2C121&sr=8-8" target="_blank" rel="noopener" class="bom-link">Amazon ↗</a></td>
+                </tr>
+                <tr>
+                  <td>PLA Filament Nautilus - Color of Choice</td>
+                  <td>For spiral enclosures.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">~2 kg</span></td>
+                  <td><span class="bom-optional">ANY BRAND; Great experience with Sunlu dual-color.</span></td>
+                </tr>
+                <tr>
+                  <td>PLA Filament Front - Beige</td>
+                  <td>For front baffle. Standard PLA.</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">~2 kg</span></td>
+                  <td><span class="bom-optional">ANY BRAND; Great experience with Elegoo PLA+ Beige.</span></td>
+                </tr>
+                <tr>
+                  <td>PLA Filament — Translucent</td>
+                  <td>For the patterned cover. Milky/natural translucent gives the best light diffusion for the nature-inspired pattern. Clear transparent is <strong>not</strong> recommended (see Step 02).</td>
+                  <td class="bom-table__qty-cell"><span class="bom-qty">~800 g</span></td>
+                  <td><span class="bom-optional">ANY BRAND</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="guide-callout guide-callout--tip">
+          <div class="guide-callout__label">// TIP — sourcing the Wondom amp</div>
+          Order the Jab2+ with the <strong>functional cable set</strong> — it includes the JST connector for power input and the screw-terminal breakout for speaker outputs. Sourcing those connectors separately is tedious and easy to get wrong.
+        </div>
+      </section>
+
+
+      <!-- Build steps -->
+      <section class="guide-section" id="build">
+        <div class="guide-section__eyebrow">// BUILD STEPS</div>
+        <h2 class="guide-section__title">Step by step</h2>
+        <div class="guide-section__body">
+          <p>Work through these in order. The print steps (01 and 02) take the longest wall-clock time and can run in parallel on two printers. Steps 03 and 04 are a few hours of hands-on work.</p>
+        </div>
+
+        <div class="step-list">
+
+          <!-- Step 01 -->
+          <div class="step" id="step-01">
+            <div class="step__num">01</div>
+            <div class="step__body">
+              <div class="step__title">Designing the Nautilus</div>
+              <div class="step__text">
+                <p>The enclosure geometry is a direct translation of the nautilus logarithmic spiral into a 3D-printable tapered tube. The inner bore starts narrow at the sealed rear terminus and widens continuously to the driver aperture at the front, matching the approximate cross-sectional growth ratio of the shell. Each turn of the spiral increases the effective tube diameter by a factor of approximately 1.33 — close to φ, and enough to kill any useful standing-wave path.</p>
+                <p>The design was modelled in CAD with the following constraints: minimum wall thickness of 6&nbsp;mm for the speaker volume to ensure sufficient stiffness; magnet pockets sized for 10&nbsp;mm neodymium discs;and an overall external diameter that keeps the two spirals side-by-side without exceeding a standard 256&nbsp;mm print bed.</p>
+                <p>The STL files are in the Google Drive folder. If you want to adapt the design — different driver diameter, different growth ratio — feel free to contact me.</p>
+              </div>
+
+              <div class="guide-media-grid">
+                <div>
+                  <div class="img-placeholder img-placeholder--tall">
+                    <img src="img/nautilus_cad_spiral.jpg" alt="Nautilus CAD model — spiral section view" class="img--top"/>
+                  </div>
+                  <p class="guide-media__caption">Section view showing the tapered inner bore of the spiral.</p>
+                </div>
+                <div>
+                  <div class="img-placeholder img-placeholder--tall">
+                    <img src="img/nautilus_cad_assembly.jpg" alt="Nautilus CAD assembly view" class="img--top"/>
+                  </div>
+                  <p class="guide-media__caption">Full assembly — spiral, front baffle, and cover.</p>
+                </div>
+              </div>
+
+              <div class="guide-callout guide-callout--tip">
+                <div class="guide-callout__label">// ACOUSTIC NOTE — volume &amp; tuning</div>
+                The internal volume of the printed spiral is approximately <strong>0.65 L</strong> per channel. With the TEBM65C20F-8's parameters (Vas ≈ 1.6 L, Qts ≈ 0.67), this gives a system Qtc of ~0.72 — a well-controlled sealed alignment with no porting required. See the Design &amp; Theory section above for the full calculation.
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 02 -->
+          <div class="step" id="step-02">
+            <div class="step__num">02</div>
+            <div class="step__body">
+              <div class="step__title">Printing the enclosure</div>
+              <div class="step__text">
+                <p>There are three distinct prints: the spiral enclosures (one per channel), the front baffle (one per channel), and the decorative covers. Print the spirals and fronts first — they are structurally critical and benefit from the more conservative settings below. Print the covers last, as the translucent filament requires some fine-tuning.</p>
+              </div>
+
+              <div class="guide-callout guide-callout--tip">
+                <div class="guide-callout__label">// PRINTING THE SPIRAL ENCLOSURES</div>
+                <p style="margin:0 0 0.8rem">Orient the spiral with the back end on the base. This avoids the overhanging inner bore from needing support. Supports are only needed for the very bottom part of each nautilus.</p>
+              </div>
+
+              <div class="code-block">
+                <div class="code-block__header">
+                  <div class="code-block__header-left">
+                    <div class="code-block__dots">
+                      <div class="code-block__dot code-block__dot--r"></div>
+                      <div class="code-block__dot code-block__dot--y"></div>
+                      <div class="code-block__dot code-block__dot--g"></div>
+                    </div>
+                    <span class="code-block__filename">slicer_settings_spiral.txt</span>
+                  </div>
+                  <div class="code-block__header-right">
+                    <span class="code-block__lang">settings</span>
+                    <button class="code-block__copy">COPY</button>
+                  </div>
+                </div>
+                <div class="code-block__body">
+                  <pre><code class="language-none">Material:       PLA
+Layer height:   0.2 mm
+Walls:          4 perimeters  ← critical for acoustic stiffness
+Infill:         20%  (gyroid — distributes stress isotropically)
+Bed temp:       55 °C
+Nozzle temp:    210 – 230 °C (depending on filament)
+Speed (PLA):    240 mm/s (use your standard settings)
+Supports:       only for magnet pocket undercuts
+Estimated time: ~1 day per spiral (BambuLab P1S)
+</code></pre>
+                </div>
+              </div>
+
+              <div class="step__text" style="margin-top:1.5rem;">
+                <p><strong>Why gyroid infill?</strong> Standard grid or honeycomb infill has preferential stiffness axes — it is stiffer in one direction than another. Gyroid infill is a triply-periodic minimal surface: its stiffness is nearly identical in all directions. For a body that will transmit acoustic vibration, this eliminates the directional resonance peaks that grid infill introduces.</p>
+                <p><strong>The relationship between wall count, infill, and resonant frequency:</strong> adding a fourth perimeter wall roughly doubles the bending stiffness of the outer shell compared to two walls. Going to 30% infill gives diminishing acoustic returns while adding significant print time and weight.</p>
+              </div>
+
+              <div class="retro-window">
+                <div class="retro-window__titlebar">
+                  <span class="retro-window__title">spiral-print.visual</span>
+                  <div class="window-btns">
+                    <div class="window-btn window-btn--red"></div>
+                    <div class="window-btn window-btn--yellow"></div>
+                    <div class="window-btn window-btn--green"></div>
+                  </div>
+                </div>
+                <div class="img-carousel" id="carousel-spiral">
+                  <div class="img-carousel__track">
+                    <div class="img-carousel__slide">
+                      <img src="img/DMG-Nautilus_PrintBed.jpg" alt="Nautilus spiral on the print bed" class="img--top"/>
+                      <div class="img-carousel__scanline"></div>
+                    </div>
+                    <div class="img-carousel__slide img-carousel__slide--video">
+                      <video src="video/DMG-Nautilus_Nautilus_3DPrint.mp4" loop playsinline preload="none" poster="img/DMG-Nautilus_PrintBed.jpg"></video>
+                      <div class="img-carousel__scanline"></div>
+                      <div class="carousel-video-play" aria-label="Play video">
+                        <div class="carousel-video-play__icon">&#9654;</div>
+                        <span class="carousel-video-play__label">PLAY VIDEO</span>
+                      </div>
+                      <span class="video-zoom-hint">&#9654; OPEN FULL</span>
+                      <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                    </div>
+                  </div>
+                  <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+                  <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+                  <div class="img-carousel__counter">1 / 2</div>
+                  <div class="img-carousel__dots">
+                    <div class="img-carousel__dot"></div>
+                    <div class="img-carousel__dot"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="guide-media__caption">Spiral on the print bed, aperture-side down. Click the video to open full-screen.</p>
+
+              <div class="guide-callout" style="margin-top:1.5rem;">
+                <div class="guide-callout__label">// PRINTING THE FRONT BAFFLE</div>
+                <p style="margin:0 0 0.8rem">The front can be printed flat. I used the same wall/infill settings as the spiral, but you can probably lower the infill to 15% with out issues. The driver openings are sized for the TEBM65C20F-8.</p>
+                <div class="retro-window" style="margin-top:0.8rem;">
+                  <div class="retro-window__titlebar">
+                    <span class="retro-window__title">front-print.visual</span>
+                    <div class="window-btns">
+                      <div class="window-btn window-btn--red"></div>
+                      <div class="window-btn window-btn--yellow"></div>
+                      <div class="window-btn window-btn--green"></div>
+                    </div>
+                  </div>
+                  <div class="img-carousel" id="carousel-frontprint">
+                    <div class="img-carousel__track">
+                      <div class="img-carousel__slide img-carousel__slide--video">
+                        <video src="video/DMG-Nautilus_Front_3DPrint.mp4" loop playsinline preload="none" poster="video/DMG-Nautilus_Front_3DPrint.mp4"></video>
+                        <div class="img-carousel__scanline"></div>
+                        <div class="carousel-video-play" aria-label="Play video">
+                          <div class="carousel-video-play__icon">&#9654;</div>
+                          <span class="carousel-video-play__label">PLAY VIDEO</span>
+                        </div>
+                        <span class="video-zoom-hint">&#9654; OPEN FULL</span>
+                        <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                      </div>
+                    </div>
+                    <div class="img-carousel__counter">1 / 1</div>
+                    <div class="img-carousel__dots">
+                      <div class="img-carousel__dot"></div>
+                    </div>
+                  </div>
+                </div>
+                <p class="guide-media__caption" style="margin-top:0.4rem;">Time-lapse of the front baffle print with visible filament jam. Click to open full-screen.</p>
+              </div>
+
+              <!-- Filament jam recovery -->
+              <div class="guide-callout guide-callout--warn" style="margin-top:1.2rem;">
+                <div class="guide-callout__label">// RECOVERING FROM A FILAMENT JAM MID-PRINT</div>
+                <p style="margin:0 0 0.8rem">The front enclosure print hit a filament jam partway through — a situation more common on long, geometrically complex prints where the extruder grinds against a partial clog. Scrapping the print and starting over is the obvious response, but not always the right one: if the jam happened after the first dozen or so layers, the already-printed base is perfectly usable and restarting wastes hours of print time.</p>
+                <p style="margin:0 0 0.8rem">The fix is a <strong>layer-offset restart</strong>: clear the jam, then edit the GCode to resume from the layer where the print failed rather than layer zero. Most slicers either don't expose this directly or require a workaround:</p>
+                <div class="code-block" style="margin:0.8rem 0;">
+                  <div class="code-block__header">
+                    <div class="code-block__header-left">
+                      <div class="code-block__dots">
+                        <div class="code-block__dot code-block__dot--r"></div>
+                        <div class="code-block__dot code-block__dot--y"></div>
+                        <div class="code-block__dot code-block__dot--g"></div>
+                      </div>
+                      <span class="code-block__filename">resume_from_layer.gcode</span>
+                    </div>
+                    <div class="code-block__header-right">
+                      <span class="code-block__lang">gcode</span>
+                      <button class="code-block__copy">COPY</button>
+                    </div>
+                  </div>
+                  <div class="code-block__body">
+                    <pre><code class="language-none">
+; 1. Note the Z height at the point of failure (read from printer display or
+;    measure with a caliper inside the chamber. Make sure to measure at multiple points an orthogonal to the bed).
+;    Example: Z = 60.40 mm
+
+; 2. Open the original .gcode file in a text editor.
+;    Search for the first occurrence of your target Z height and add the layer thickness (60.4 + 0.2 mm = 60.6 mm):
+    ;--- LAST LAYER + LAYER THICKNESS || DELETE EVERYTHING ABOVE FROM THE ORIGINAL ---
+    ; CHANGE_LAYER
+    ; Z_HEIGHT: 60.6
+    ; LAYER_HEIGHT: 0.199997
+    ; WIPE_START
+
+; 3. Delete all lines ABOVE that layer change (including start GCode).
+;    Replace with this minimal start sequence:
+
+;===== RECOVERY START =====
+M104 S220 ; Heat Nozzle
+M140 S55  ; Heat Bed
+G90       ; Absolute positioning
+M83       ; Relative extrusion
+G1 Z75 F600 ; Move to safe height
+M106 S255 ; Part Fan 100%
+M106 P2 S178 ; Aux Fan 70%
+M109 S220 ; Wait for Nozzle
+M190 S55  ; Wait for Bed
+T0        ; Select Filament (T0 = Slot 1)
+
+;--- THE SMOOTH TRANSITION ---
+G1 X109.012 Y228.666 F12000 ; Move ABOVE the start point while still at Z75
+G1 Z60.6 F600               ; ADJUST THIS TO YOUR TARGET Z HEIGT!!!
+G92 E0                      ; Reset extruder distance
+;--- END RECOVERY || RESUME PRINTING (ORIGINAL CODE) FROM LAST_LAYER + 2 ---
+
+</code></pre>
+                  </div>
+                </div>
+                <p style="margin:0 0 0.8rem">Key points: 
+                  <ol>
+                    <li>Note the Z height of the print (measure with caliper or manually move printer head)</li>
+                    <li><strong>Never home Z</strong> on a partial print — the probe or nozzle will crash into the already-printed geometry.</li>
+                    <li><strong>Keep your bed heated</strong>. Otherwise the print will release and you can't save it.</li>
+                    <li>Extrude and discard filament before resuming the print. The filament inside the nozzle gets burnt during a jam.</li>
+                    <li>Keep your finger on the Power button when resuming. Watch the printer. The printer does something you don't like: stop it.</li>
+                    <li>Ensure that the set Z target height is the measured height of the print + layer thickness, to avoid crashing into the existing print or creating a large material overflow.</li>
+                  </ol>
+                </p>
+                <p style="margin:0">On BambuLab printers, the <strong>Print Recovery</strong> mode often fails for filament jams, because there is still filament in the nozzle, so the printer just prints in the air, without actually extruding material.</p>
+              </div>
+
+              <div class="guide-callout guide-callout--warn" style="margin-top:1.2rem;">
+                <div class="guide-callout__label">// PRINTING THE COVERS — WHAT FAILED FIRST</div>
+                <p style="margin:0 0 0.8rem">The first attempt was a solid, fully transparent cover in clear PETG. This failed pretty badly. First, the print was very milky even with careful settings. Second, the transparent PETG material was pretty difficult to print for the highly curved surfaces.</p>
+                <p style="margin:0">The fix: switch to <strong>milky/natural translucent PLA</strong> and add a nature-inspired repeating surface pattern (leaf venation geometry) to the outer face. Using the translucent PLA of Sunlu worked great for this.</p>
+              </div>
+
+              <div class="retro-window" style="margin-top:1.5rem;">
+                <div class="retro-window__titlebar">
+                  <span class="retro-window__title">cover.visual</span>
+                  <div class="window-btns">
+                    <div class="window-btn window-btn--red"></div>
+                    <div class="window-btn window-btn--yellow"></div>
+                    <div class="window-btn window-btn--green"></div>
+                  </div>
+                </div>
+                <div class="img-carousel" id="carousel-cover">
+                  <div class="img-carousel__track">
+                    <div class="img-carousel__slide">
+                      <img src="img/DMG-Nautilus_BackCover_Pattern.jpg" alt="Final milky translucent cover with nature pattern" class="img--top"/>
+                      <div class="img-carousel__scanline"></div>
+                    </div>
+                  </div>
+                  <div class="img-carousel__counter">1 / 1</div>
+                  <div class="img-carousel__dots">
+                    <div class="img-carousel__dot"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="guide-media__caption">The final nature-patterned cover in milky translucent PLA.</p>
+            </div>
+          </div>
+
+
+          <!-- Step 03 -->
+          <div class="step" id="step-03">
+            <div class="step__num">03</div>
+            <div class="step__body">
+              <div class="step__title">Cabling and assembling the drivers</div>
+              <div class="step__text">
+                <p>Before inserting the drivers, fill the spiral cavity with sheep wool. Feed wool loosely in from the apertures; I paused the print twice in between to fill the main spiral cavities (s. figure below) — the wool should sit loosely, not be compressed or packed solid. Over-packing raises the effective spring rate of the enclosure and adds unnecessary mass; under-packing leaves standing-wave energy undamped.</p>
+              </div>
+
+              <div class="guide-callout guide-callout--tip">
+                <div class="guide-callout__label">// WHY LONG-HAIR SHEEP WOOL?</div>
+                Long-hair (unprocessed, uncombed) wool has a higher fibre aspect ratio than carded or felted wool, creating a more open, tangled structure. Sound waves lose energy by viscous interaction with the fibres; the longer, more randomly oriented fibres of long-hair wool are significantly more effective at this than the uniform, compressed structure of felt. Synthetic alternatives (polyester wadding, foam) work but measure 2–4&nbsp;dB worse in mid-bass damping at the volumes used here.
+              </div>
+
+              <div class="step__text" style="margin-top:1.5rem;">
+                <p>Drive the M3 heat inserts into the front baffle's driver mounting bosses using a soldering iron at ~200&nbsp;°C. Hold the iron orthogonal to the surface and press steadily — pull back the moment the insert seats flush. Let the bosses cool for two minutes before applying any load.</p>
+                <p>Pull the cables connecting to the JAB2+ through the opening holes on the back of the front parts. Now, attach the golden connectors to the cables. The TEBM65C20F-8 uses ±2&nbsp;mm Faston-style push-on terminals — crimp connectors are cleaner than solder here. No insert the drivers into the respective recesses.</p>
+                <p>Seal the cable pass-through hole with Play-Doh putty after routing the wires. Press a small amount around the cable, smooth flush with the back face of the baffle. This is a critical step — any unsealed opening between the front baffle and the spiral cavity creates an acoustic leak that degrades bass response.</p>
+                <p>I added some sheep wool to the circular bead on the back, where the nautilus opening attaches to. This helps with good insulation, while still being pliable.</p>
+              
+              </div>
+
+              <div class="guide-media-grid">
+                <div>
+                  <div class="img-placeholder img-placeholder--tall">
+                    <img src="img/DMG-Nautilus_SheepWool.jpg" alt="Long-hair sheep wool for acoustic damping" class="img--top"/>
+                  </div>
+                  <p class="guide-media__caption">Long-hair sheep wool before packing.</p>
+                </div>
+                <div>
+                  <div class="img-placeholder img-placeholder--tall">
+                    <img src="img/DMG-Nautilus_Nautilus-Wool-Filling.jpg" alt="Wool packed into the spiral cavity" class="img--top"/>
+                  </div>
+                  <p class="guide-media__caption">Wool loosely filling the spiral cavity.</p>
+                </div>
+              </div>
+
+              <div class="retro-window" style="margin-top:1.5rem;">
+                <div class="retro-window__titlebar">
+                  <span class="retro-window__title">heat-insert.visual</span>
+                  <div class="window-btns">
+                    <div class="window-btn window-btn--red"></div>
+                    <div class="window-btn window-btn--yellow"></div>
+                    <div class="window-btn window-btn--green"></div>
+                  </div>
+                </div>
+                <div class="img-carousel" id="carousel-heatinsert">
+                  <div class="img-carousel__track">
+                    <div class="img-carousel__slide">
+                      <img src="img/DMG-Nautilus_Heat-Insert_Prep.jpg" alt="Heat insert preparation — soldering iron and inserts" class="img--top"/>
+                      <div class="img-carousel__scanline"></div>
+                    </div>
+                    <div class="img-carousel__slide img-carousel__slide--video">
+                      <video src="video/DMG-Nautilus_HeatInsert_VideoTut.mp4" loop playsinline preload="none" poster="img/DMG-Nautilus_Heat-Insert_Prep.jpg"></video>
+                      <div class="img-carousel__scanline"></div>
+                      <div class="carousel-video-play" aria-label="Play video">
+                        <div class="carousel-video-play__icon">&#9654;</div>
+                        <span class="carousel-video-play__label">PLAY VIDEO</span>
+                      </div>
+                      <span class="video-zoom-hint">&#9654; OPEN FULL</span>
+                      <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                    </div>
+                  </div>
+                  <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+                  <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+                  <div class="img-carousel__counter">1 / 2</div>
+                  <div class="img-carousel__dots">
+                    <div class="img-carousel__dot"></div>
+                    <div class="img-carousel__dot"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="guide-media__caption">Heat insert setup and technique — video tutorial included.</p>
+
+              <div class="retro-window" style="margin-top:1.5rem;">
+                <div class="retro-window__titlebar">
+                  <span class="retro-window__title">driver-assembly.visual</span>
+                  <div class="window-btns">
+                    <div class="window-btn window-btn--red"></div>
+                    <div class="window-btn window-btn--yellow"></div>
+                    <div class="window-btn window-btn--green"></div>
+                  </div>
+                </div>
+                <div class="img-carousel" id="carousel-driver">
+                  <div class="img-carousel__track">
+                    <div class="img-carousel__slide">
+                      <img src="img/DMG-Nautilus_Tectonic-Cabling.jpg" alt="Tectonic BMR driver cabling" class="img--top"/>
+                      <div class="img-carousel__scanline"></div>
+                    </div>
+                    <div class="img-carousel__slide img-carousel__slide--video">
+                      <video src="video/DMG-Nautilus_Tectonic_AssemblyVideo.mp4" loop playsinline preload="none" poster="img/DMG-Nautilus_Tectonic-Cabling.jpg"></video>
+                      <div class="img-carousel__scanline"></div>
+                      <div class="carousel-video-play" aria-label="Play video">
+                        <div class="carousel-video-play__icon">&#9654;</div>
+                        <span class="carousel-video-play__label">PLAY VIDEO</span>
+                      </div>
+                      <span class="video-zoom-hint">&#9654; OPEN FULL</span>
+                      <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                    </div>
+                  </div>
+                  <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+                  <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+                  <div class="img-carousel__counter">1 / 2</div>
+                  <div class="img-carousel__dots">
+                    <div class="img-carousel__dot"></div>
+                    <div class="img-carousel__dot"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="guide-media__caption">Tectonic BMR driver cabling and mounting.</p>
+
+              <div class="code-block" style="margin-top:1.5rem;">
+                <div class="code-block__header">
+                  <div class="code-block__header-left">
+                    <div class="code-block__dots">
+                      <div class="code-block__dot code-block__dot--r"></div>
+                      <div class="code-block__dot code-block__dot--y"></div>
+                      <div class="code-block__dot code-block__dot--g"></div>
+                    </div>
+                    <span class="code-block__filename">wiring.txt</span>
+                  </div>
+                  <div class="code-block__header-right">
+                    <span class="code-block__lang">pinout</span>
+                    <button class="code-block__copy">COPY</button>
+                  </div>
+                </div>
+                <div class="code-block__body">
+                  <pre><code class="language-none">Wondom Jab2+  →  Drivers
+─────────────────────────────
+CH1 + / −     →  Left driver  + / −
+CH2 + / −     →  Right driver + / −
+
+Power input:  12 – 24 V DC  (19 V laptop supply works well)
+Signal input: 3.5 mm stereo jack or Bluetooth</code></pre>
+                </div>
+              </div>
+
+              <div class="guide-callout guide-callout--warn" style="margin-top:1.5rem;">
+                <div class="guide-callout__label">// IMPORTANT — driver polarity</div>
+                Keep both drivers wired in the same polarity (+ to + and − to −). Reversed polarity on one channel causes the two drivers to push and pull in opposite phase, cancelling bass output in the crossover region. Confirm polarity with a 1.5&nbsp;V AA battery before closing the enclosure: a brief + contact should make the cone move forward (away from the magnet). The Tectonic drivers to not have the + and - marks. However, the - latch is significantly thinner than the + latch, so you can use that as a good reference.
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Step 04 -->
+          <div class="step" id="step-04">
+            <div class="step__num">04</div>
+            <div class="step__body">
+              <div class="step__title">Assembling the final product</div>
+              <div class="step__text">
+                <p>Drive the M2.5 flathead heat inserts into the spiral's front-face bosses, then screw each spiral to the back face of the front baffle using the M3 flathead screws. Snug — not overtorqued. The heat-insert-to-PLA interface is the structural weak point here; excess torque will spin the insert rather than clamp the joint.</p>
+                <p>Press the neodymium magnets into their pockets in both the cover and the baffle face. The pocket geometry ensures correct polarity orientation — but check that the cover attracts rather than repels before pressing all magnets home. A drop of super glue per magnet pocket is optional but recommended if the fit is slightly loose.</p>
+              </div>
+
+              <div class="step__text" style="margin-top:1.5rem;">
+                <p>Connect the driver lead wires to the Wondom Jab2+ screw terminals and mount the amp board in its designated recess on the rear of the assembly. Route the power and signal cables through the rear exit, then snap the cover into place — the magnets should engage with a satisfying click from about 5&nbsp;mm out.</p>
+              </div>
+
+              <div class="retro-window" style="margin-top:1.2rem;">
+                <div class="retro-window__titlebar">
+                  <span class="retro-window__title">assembly.visual</span>
+                  <div class="window-btns">
+                    <div class="window-btn window-btn--red"></div>
+                    <div class="window-btn window-btn--yellow"></div>
+                    <div class="window-btn window-btn--green"></div>
+                  </div>
+                </div>
+                <div class="img-carousel" id="carousel-assembly">
+                  <div class="img-carousel__track">
+                    <div class="img-carousel__slide">
+                      <img src="img/DMG-Nautilus_JAB2+_Wiring.jpg" alt="Wondom Jab2+ amplifier board wiring" class="img--top"/>
+                      <div class="img-carousel__scanline"></div>
+                    </div>
+                    <div class="img-carousel__slide img-carousel__slide--video">
+                      <video src="video/DMG-Nautilus_FrontAssembly.mp4" loop playsinline preload="none" poster="img/DMG-Nautilus_JAB2+_Wiring.jpg"></video>
+                      <div class="img-carousel__scanline"></div>
+                      <div class="carousel-video-play" aria-label="Play video">
+                        <div class="carousel-video-play__icon">&#9654;</div>
+                        <span class="carousel-video-play__label">PLAY VIDEO</span>
+                      </div>
+                      <span class="video-zoom-hint">&#9654; OPEN FULL</span>
+                      <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
+                    </div>
+                  </div>
+                  <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+                  <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+                  <div class="img-carousel__counter">1 / 2</div>
+                  <div class="img-carousel__dots">
+                    <div class="img-carousel__dot"></div>
+                    <div class="img-carousel__dot"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="guide-media__caption">Jab2+ wiring detail. Click the video to watch the full front assembly sequence.</p>
+            </div>
+          </div>
+
+
+          <!-- Step 05 -->
+          <div class="step" id="step-05">
+            <div class="step__num">05</div>
+            <div class="step__body">
+              <div class="step__title">Final product, appearance, and sound</div>
+              <div class="step__text">
+                <p>Power up with a 19&nbsp;V supply and connect any line-level source. The Wondom Jab2+ needs a few seconds to come out of soft-start. You will hear a relay click — that is the amp's speaker-protection relay engaging, not a fault.</p>
+                <p>The TEBM65C20F-8 BMR drivers need a break-in period of around 10–15 hours at moderate listening level before the surround loosens to its final compliance. Fresh off the printer and with new drivers, bass sounds slightly tight and the top end slightly bright. Both improve significantly over the first few hours.</p>
+                <p>The finished speakers are more revealing than their size suggests — the BMR's wide, flat dispersion means the stereo image remains stable well off-axis, and the sealed spiral enclosure gives a clean, articulate bass character that ports rarely match at this enclosure volume. They are not subwoofer replacements, but for a near-field desktop or shelf speaker the combination of the Nautilus enclosure geometry and the BMR driver is genuinely impressive.</p>
+              </div>
+
+              <div class="retro-window">
+                <div class="retro-window__titlebar">
+                  <span class="retro-window__title">result.visual</span>
+                  <div class="window-btns">
+                    <div class="window-btn window-btn--red"></div>
+                    <div class="window-btn window-btn--yellow"></div>
+                    <div class="window-btn window-btn--green"></div>
+                  </div>
+                </div>
+                <div class="img-carousel img-carousel--pine" id="carousel-result">
+                  <div class="img-carousel__track">
+                    <div class="img-carousel__slide">
+                      <img src="img/DMG-Nautilus_FinalProduct_TopView2.jpg" alt="DMG-Nautilus finished — top view" class="img--top"/>
+                      <div class="img-carousel__scanline"></div>
+                    </div>
+                    <div class="img-carousel__slide">
+                      <img src="img/DMG-Nautilus_FinalProduct-Inverted.jpg" alt="DMG-Nautilus finished — inverted view showing underside" class="img--top"/>
+                      <div class="img-carousel__scanline"></div>
+                    </div>
+                  </div>
+                  <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+                  <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+                  <div class="img-carousel__counter">1 / 2</div>
+                  <div class="img-carousel__dots">
+                    <div class="img-carousel__dot"></div>
+                    <div class="img-carousel__dot"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="guide-media__caption">The finished DMG-Nautilus.</p>
+            </div>
+          </div>
+
+        </div><!-- end step-list -->
+      </section>
+
+
+      <!-- Backlog -->
+      <section class="guide-section" id="backlog">
+        <div class="guide-section__eyebrow">// IMPROVE</div>
+        <h2 class="guide-section__title">Backlog</h2>
+
+        <div class="retro-window">
+          <div class="retro-window__titlebar retro-window--green">
+            <span class="retro-window__title">backlog.txt</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="retro-window__body retro-window__body--flush">
+            <table class="bom-table bom-table--flush">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Notes &amp; ideas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Subwoofer integration</td>
+                  <td>The sealed spiral rolls off below ~140 Hz. A small sealed sub crossed over at 100 Hz would fill the gap. A low-pass filter module for the Wondom board would make this straightforward.</td>
+                </tr>
+                <tr>
+                  <td>Integrated DSP / EQ</td>
+                  <td>Adding a MiniDSP 2×4 in the signal chain would allow a mild bass-shelf correction to compensate for the sealed rolloff, and any room-mode correction at the listening position.</td>
+                </tr>
+                <tr>
+                  <td>Cover pattern variants</td>
+                  <td>The leaf-venation pattern is the current default. A Voronoi or coral-growth version of the same geometry would look striking in amber or white translucent PLA.</td>
+                </tr>
+                <tr>
+                  <td>Wall-mount bracket</td>
+                  <td>The spiral's rear geometry makes a clean wall-mount bracket tricky. A printed saddle bracket with a VESA-compatible hole pattern would make these usable as bookshelf satellite speakers.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="guide-callout">
+          <div class="guide-callout__label">// BUILT ONE?</div>
+          If you improved any of the above, added a driver variant, or found a better cover pattern — open a PR on GitHub or get in touch directly. Happy to hear from you.
+        </div>
+        <button class="contact-me-btn" onclick="openContact('Re: Nautilus Speaker (DMG-Nautilus)')">Contact me!</button>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+
+<!-- ── CTA ── -->
+<section class="cta-section reveal">
+  <div class="cta-section__eyebrow">// ALL FILES OPEN</div>
+  <h2 class="cta-section__title">Built one? <em>Show us.</em></h2>
+  <p class="cta-section__sub">Tag your build, open a PR with any improvements, or just send a photo. The best versions of these devices come from the community.</p>
+  <div class="cta-section__actions">
+    <a href="devices.html" class="btn btn-orange">&#9658; See All Devices</a>
+    <a href="guides.html" class="btn btn-ghost-light">Back to Guides</a>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <a href="index.html" aria-label="DMG Labs home">
+    <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
+      <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#c8ddd0">D</text>
+      <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700" fill="#c8ddd0">M</text>
+      <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00"/>
+      <circle cx="74" cy="16" r="2.8" fill="#f06a00"/>
+    </svg>
+  </a>
+  <ul class="footer__links">
+    <li><a href="devices.html" class="footer__link">Devices</a></li>
+    <li><a href="guides.html" class="footer__link">Guides</a></li>
+    <li><a href="studio.html" class="footer__link">Studio</a></li>
+  </ul>
+  <div class="footer__copy">&copy; 2025 De Mattos Gabriel Labs</div>
+</footer>
+
+
+<!-- ── LIGHTBOX ── -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Image zoom">
+  <button id="lb-close" aria-label="Close">&#10005; CLOSE</button>
+  <button id="lb-prev" aria-label="Previous image">&#9664;</button>
+  <img id="lb-img" src="" alt="" />
+  <button id="lb-next" aria-label="Next image">&#9654;</button>
+  <span id="lb-counter"></span>
+  <span id="lb-esc">CLICK BACKDROP OR PRESS ESC TO CLOSE</span>
+</div>
+
+<!-- ── CONTACT MODAL ── -->
+<div id="contact-modal" role="dialog" aria-modal="true" aria-label="Contact form">
+  <div class="contact-modal-box">
+    <div class="contact-modal-titlebar">
+      <span class="contact-modal-title">// GET IN TOUCH</span>
+      <button class="contact-modal-close" id="contact-close" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="contact-modal-body">
+      <label for="contact-subject">Re:</label>
+      <input type="text" id="contact-subject" name="subject" autocomplete="off" />
+      <label for="contact-message">Message:</label>
+      <textarea id="contact-message" name="message" placeholder="Write your message here..."></textarea>
+      <label for="contact-email">Email:</label>
+      <input type="email" id="contact-email" name="email" placeholder="your@email.com" autocomplete="email" />
+      <div class="contact-modal-actions">
+        <button class="contact-send-btn" id="contact-send">&#9658; Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── VIDEO LIGHTBOX ── -->
+<div id="vlb" role="dialog" aria-modal="true" aria-label="Video player">
+  <button id="vlb-close" aria-label="Close video">&#10005; CLOSE</button>
+  <video id="vlb-video" controls playsinline></video>
+  <span id="vlb-label">CLICK BACKDROP OR PRESS ESC TO CLOSE</span>
+</div>
+
+<script src="scripts.js"></script>
+<script>
+// ── VIDEO LIGHTBOX ──
+(function() {
+  const vlb     = document.getElementById('vlb');
+  const vlbVid  = document.getElementById('vlb-video');
+  const vlbClose= document.getElementById('vlb-close');
+
+  function openVlb(src) {
+    vlbVid.src = src;
+    vlb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    vlbVid.play().catch(() => {});
+  }
+
+  function closeVlb() {
+    vlb.classList.remove('active');
+    vlbVid.pause();
+    vlbVid.src = '';
+    document.body.style.overflow = '';
+  }
+
+  vlbClose.addEventListener('click', closeVlb);
+  vlb.addEventListener('click', function(e) {
+    if (e.target === vlb || e.target === document.getElementById('vlb-label')) closeVlb();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeVlb();
+  });
+
+  // Wire up all video slides — clicking the play overlay opens lightbox
+  document.querySelectorAll('.img-carousel__slide--video').forEach(slide => {
+    const videoEl  = slide.querySelector('video');
+    const playBtn  = slide.querySelector('.carousel-video-play');
+    if (!videoEl || !playBtn) return;
+    playBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openVlb(videoEl.src || videoEl.getAttribute('src'));
+    });
+  });
+})();
+</script>
+</html>
