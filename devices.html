@@ -78,6 +78,12 @@
       display: none;
     }
     .carousel-video-mute.visible { display: block; }
+    .img-carousel__slide .img--top,
+    .img-placeholder .img--top { object-position: center center; }
+
+    .img-carousel__track,
+    .img-carousel__slide { height: 360px; object-position: center center;}
+
   </style>
 </head>
 
@@ -188,9 +194,9 @@
   <section class="devices-hero">
     <div class="devices-hero__inner">
       <div class="devices-hero__eyebrow">// THE DEVICES</div>
-      <h1 class="devices-hero__title">Collection<br><em>Everything works. As a prototype.</em></h1>
-      <p class="devices-hero__sub">Each one started as a frustration with what was available, and ended as something
-        I or my wife or our friends would actually want to have and use. Files and guides are open for all of them (once I had the time to actually write the guides).</p>
+      <h1 class="devices-hero__title">Collection<br><em>Designed and built with dedication.</em></h1>
+      <p class="devices-hero__sub">Each one started with a simple idea, and ended as something
+        I or my wife or our friends would actually want to have and use. Files and guides are open for all of them (once I had the time to actually write the guides). If your interested in any of the devices or files, feel free to contact me.</p>
     </div>
   </section>
 
@@ -206,7 +212,6 @@
           </div>
           <div class="device-model-label">DMG-40</div>
           <h2 class="device-heading">Transit Clock</h2>
-
           <div class="retro-window device-window-wrap">
             <div class="retro-window__titlebar">
               <span class="retro-window__title">dmg-40.visual</span>
@@ -298,7 +303,7 @@
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Connectivity</td>
-                  <td class="spec-table-light__val">Wi-Fi via Pico W Microcontroller</td>
+                  <td class="spec-table-light__val">Wi-Fi via Pico 2W Microcontroller</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Data</td>
@@ -311,7 +316,7 @@
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Enclosure</td>
-                  <td class="spec-table-light__val">FDM-printed, inspired by Braun DN40 design language<br>Custom color
+                  <td class="spec-table-light__val">3D-printed, inspired by Braun DN40 design language<br>Custom color
                     schemes available on request</td>
                 </tr>
                 <tr>
@@ -320,7 +325,7 @@
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Status</td>
-                  <td class="spec-table-light__val">Prototype — software and hardware fully functional</td>
+                  <td class="spec-table-light__val">Fully Operational</td>
                 </tr>
               </table>
             </div>
@@ -407,10 +412,11 @@
         </div>
 
         <div class="device-col-info">
-          <p class="description-paragraph">A docking station for iPhone that doubles as a passive acoustic amplifier.
-            The phone inserts horizontally and activates clock, calendar, or picture-frame mode automatically. Below, a
-            purely mechanical trumpet-horn carved from hardwood increases audio volume without any electronics — the
-            same principle as a gramophone horn, scaled for a phone speaker.</p>
+          <p class="description-paragraph">Sometimes things can be simple. A docking station for iPhone, inspired by the Braun Phase-1.
+            Charges your phone, while amplifying any audio output by up to +8 dB — the
+            same principle as a gramophone horn, scaled for a phone speaker.
+            The phone inserts horizontally and activates clock, calendar, or picture-frame mode automatically.  
+          </p>
           <button class="contact-me-btn" onclick="openContact('Re: Acoustic iPhone Dock (DMG-Ph(I))')">Contact
             me!</button>
 
@@ -435,7 +441,7 @@
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Amplification</td>
-                  <td class="spec-table-light__val">Passive acoustic horn, hardwood (walnut or oak)</td>
+                  <td class="spec-table-light__val">Passive acoustic horn</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Horn geometry</td>
@@ -443,16 +449,15 @@
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Enclosure</td>
-                  <td class="spec-table-light__val">FDM body + CNC-routed or turned wood horn</td>
+                  <td class="spec-table-light__val">3D-Printed Body, reminiscent of the Braun Phase-I</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Compatible</td>
-                  <td class="spec-table-light__val">iPhone 12 and later (MagSafe ring)</td>
+                  <td class="spec-table-light__val">iPhone 12 - iPhone 17 Pro (MagSafe) </br>Not compatible with MAX versions</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Status</td>
-                  <td class="spec-table-light__val">Prototype — mechanical horn v1 complete, dock electronics in
-                    progress</td>
+                  <td class="spec-table-light__val">Fully Operational</td>
                 </tr>
               </table>
             </div>
@@ -488,26 +493,16 @@
             <div class="img-carousel" id="carousel-lu1" style="background:#0f1f17;">
               <div class="img-carousel__track">
                 <div class="img-carousel__slide">
+                  <img src="img/DMG-LU1_CAD-Capture.png" alt="DMG LU1 — render" style="object-position:center 20%;" />
+                  <div class="img-carousel__scanline"></div>
+                </div>
+                <div class="img-carousel__slide">
                   <img src="img/lu1_real.jpg" alt="DMG LU1 — real prototype" style="object-position:center 20%;" />
                   <div class="img-carousel__scanline"></div>
                 </div>
-                <div class="img-carousel__slide img-carousel__slide--placeholder">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                    <rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5"
-                      stroke-dasharray="4 3" />
-                    <line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
-                    <line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
-                  </svg>
-                  <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
-                </div>
-                <div class="img-carousel__slide img-carousel__slide--placeholder">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                    <rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5"
-                      stroke-dasharray="4 3" />
-                    <line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
-                    <line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
-                  </svg>
-                  <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
+                <div class="img-carousel__slide">
+                  <img src="img/lu1_real2.jpg" alt="DMG LU1 — real prototype" style="object-position:center 20%;" />
+                  <div class="img-carousel__scanline"></div>
                 </div>
                 <div class="img-carousel__slide img-carousel__slide--video">
                   <video src="video/dmg_lu1_demo.mp4" loop playsinline preload="none"
@@ -539,10 +534,12 @@
         </div>
 
         <div class="device-col-info">
-          <p class="description-paragraph">A handheld music player that brings ownership and haptics back to digital
-            listening. Stream from Spotify via API, or play local files from SD card. Physical cassettes contain RFID
-            chips that link directly to playlists — drop one in and the music starts. The 2.13&#8221; e-Ink screen is
-            always readable in any light, and the Raspberry Pi Zero 2W provides full Bluetooth audio output.</p>
+          <p class="description-paragraph">Remember when you proudly spent hours to create and perfect playlists, to burn them on a CD? That feeling when you finally handed over a masterful assortment of all-time-hits, with some funky design, drawn with colorful sharpies onto the CDs?
+          </br></br><strong>The DMG-LU1 let's you feel exactly that. </strong>
+          </br>Physical cassettes with fully customizable designs contain RFID chips that link directly to your playlists — drop one in and the music starts. 
+          Stream from Spotify via API, or play local files from SD card. Digitize your old CDs and Vinyls, save them to your Drive and the device automatically pulls the relevant data from the respective source. 
+          Perfect for sharing with friends and creating a little "LU1" cassette collection. The 2.13&#8221; e-Ink screen is
+            always readable in any light, while channeling a long-forgotten retro vibe.</p>
           <button class="contact-me-btn" onclick="openContact('Re: Handheld Music Player (DMG-LU1)')">Contact
             me</button>
 
@@ -563,7 +560,7 @@
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Display</td>
-                  <td class="spec-table-light__val">2.13&#8221; e-Ink, 250×122 px, bistable (no power when static)</td>
+                  <td class="spec-table-light__val">2.13&#8221; e-Ink, bistable (no power when static)</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Audio out</td>
@@ -571,7 +568,7 @@
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Playback</td>
-                  <td class="spec-table-light__val">Spotify Connect API + local FLAC/MP3 from microSD</td>
+                  <td class="spec-table-light__val">Spotify Connect API or local microSD</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">RFID</td>
@@ -579,15 +576,15 @@
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Battery</td>
-                  <td class="spec-table-light__val">2000 mAh LiPo, USB-C charging, ~8 hr playback</td>
+                  <td class="spec-table-light__val">2000 mAh LiPo, micro-USB charging, ~4 hr playback</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Enclosure</td>
-                  <td class="spec-table-light__val">FDM-printed, Niemeyer-curved edges, replaceable face panels</td>
+                  <td class="spec-table-light__val">3D-printed, fully customizable color combinations</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Status</td>
-                  <td class="spec-table-light__val">Prototype — hardware assembled, firmware in development</td>
+                  <td class="spec-table-light__val">Fully operational</td>
                 </tr>
               </table>
             </div>
@@ -623,43 +620,28 @@
             <div class="img-carousel" id="carousel-nautilus" style="background:#1a1a14;">
               <div class="img-carousel__track">
                 <div class="img-carousel__slide">
-                  <img src="img/nautilus_render.jpg" alt="DMG Nautilus — main render" style="object-position:center;" />
+                  <img src="img/DMG-Nautilus_FinalProduct_Shelf.jpg" alt="DMG Nautilus in Shelf" style="object-position:center;" />
                   <div class="img-carousel__scanline"></div>
                 </div>
                 <div class="img-carousel__slide">
-                  <img src="img/nautilus_real.jpg" alt="DMG Nautilus — real prototype on antique cabinet"
+                  <img src="img/DMG-Nautilus_FinalProduct_TopView2.jpg" alt="DMG Nautilus — top view"
                     style="object-position:center top;" />
                   <div class="img-carousel__scanline"></div>
                 </div>
+
                 <div class="img-carousel__slide">
-                  <img src="img/nautilus_front.jpg" alt="DMG Nautilus — front render" style="object-position:center;" />
+                  <img src="img/DMG-Nautilus_FinalProduct_IsoView3.jpg" alt="DMG Nautilus — Iso View" style="object-position:center;" />
                   <div class="img-carousel__scanline"></div>
                 </div>
-                <div class="img-carousel__slide img-carousel__slide--placeholder">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                    <rect x="1" y="1" width="38" height="38" rx="4" stroke="#f06a00" stroke-width="1.5"
-                      stroke-dasharray="4 3" />
-                    <line x1="1" y1="1" x2="39" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
-                    <line x1="39" y1="1" x2="1" y2="39" stroke="#f06a00" stroke-width="1" opacity="0.4" />
-                  </svg>
-                  <p>DROP IMAGE HERE<br>img/your-photo.jpg</p>
-                </div>
-                <div class="img-carousel__slide img-carousel__slide--video">
-                  <video src="video/dmg_nautilus_demo.mp4" loop playsinline preload="none"
-                    poster="img/nautilus_render.jpg"></video>
+                <div class="img-carousel__slide">
+                  <img src="img/DMG-Nautilus_Render_NewTop.png" alt="DMG Nautilus — main render" style="object-position:center;" />
                   <div class="img-carousel__scanline"></div>
-                  <div class="carousel-video-play" aria-label="Play video">
-                    <div class="carousel-video-play__icon">&#9654;</div>
-                    <span class="carousel-video-play__label">PLAY VIDEO</span>
-                  </div>
-                  <button class="carousel-video-mute" aria-label="Toggle mute">&#128264; MUTE</button>
                 </div>
               </div>
               <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
               <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
-              <div class="img-carousel__counter">1 / 5</div>
+              <div class="img-carousel__counter">1 / 4</div>
               <div class="img-carousel__dots">
-                <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
                 <div class="img-carousel__dot"></div>
@@ -670,15 +652,14 @@
 
           <div class="device-badge-row">
             <span class="badge badge-prototype">PROTOTYPE</span>
-            <a href="#" class="btn btn-primary btn-view-guide">&#9658; View Guide</a>
+            <a href="guide-nautilus.html" class="btn btn-primary btn-view-guide">&#9658; View Guide</a>
           </div>
         </div>
 
         <div class="device-col-info">
-          <p class="description-paragraph">A high-fidelity soundbar designed around two Tectonic TEBM46C20N-4B
-            bending-wave drivers — a technology that produces a remarkably uniform frequency response across a wide
-            listening area. The two speaker enclosures follow the golden ratio nautilus spiral geometry to optimise
-            internal volume and minimise standing waves. The soundbar also serves as a docking station for the DMG-LU1.
+          <p class="description-paragraph">A high-fidelity soundbar serving as a docking station for the DMG-LU1. 
+            The two speaker enclosures follow the golden ratio of the Nautilus spiral to optimize
+            sound quality and minimize standing waves. The Wondom 2x50W bluetooth amp in combination with two Tectonic bending-wave drivers create an impressively full sound stage - no matter where you stand around the system.
           </p>
           <button class="contact-me-btn" onclick="openContact('Re: Nautilus Soundbar (DMG-Nautilus)')">Contact
             me!</button>
@@ -696,36 +677,143 @@
               <table class="spec-table-light">
                 <tr>
                   <td class="spec-table-light__key">Drivers</td>
-                  <td class="spec-table-light__val">2 × Tectonic TEBM46C20N-4B Balanced Mode Radiator</td>
+                  <td class="spec-table-light__val">2 × Tectonic TEBM46C20N-8B Balanced Mode Radiator</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Amplifier</td>
-                  <td class="spec-table-light__val">2 × 50W Class-D (TPA3116), 100W total</td>
+                  <td class="spec-table-light__val">2 × 50W Wondom JAB2+ (Stereo)</td>
                 </tr>
                 <tr>
-                  <td class="spec-table-light__key">Frequency response</td>
+                  <td class="spec-table-light__key">Target Frequency Response</td>
                   <td class="spec-table-light__val">100 Hz – 20 kHz (&#177;3 dB)</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Enclosures</td>
-                  <td class="spec-table-light__val">Dual nautilus-spiral geometry, golden ratio proportions, FDM + resin
+                  <td class="spec-table-light__val">Dual nautilus-inspired geometry following the golden ratio for excellent sound quality
                   </td>
-                </tr>
-                <tr>
-                  <td class="spec-table-light__key">LU1 Dock</td>
-                  <td class="spec-table-light__val">Integrated pogo-pin dock, charges and streams via Bluetooth</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Connectivity</td>
                   <td class="spec-table-light__val">Bluetooth 5.0, optical in, 3.5 mm aux</td>
                 </tr>
                 <tr>
+                  <td class="spec-table-light__key">Status</td>
+                  <td class="spec-table-light__val">Fully Operational
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DMG-BELUGA SOUNDBAR ── -->
+  <section id="beluga" class="device-section">
+    <div class="section-inner">
+      <div class="reveal device-layout">
+
+        <div class="device-col-visual">
+          <div class="device-tag-row">
+            <span class="tag tag-audio">Audio</span>
+          </div>
+          <div class="device-model-label">DMG-Beluga</div>
+          <h2 class="device-heading">Beluga Subwoofer</h2>
+
+          <div class="retro-window device-window-wrap">
+            <div class="retro-window__titlebar">
+              <span class="retro-window__title">dmg-beluga.visual</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="img-carousel" id="carousel-beluga" style="background:#1a1a14;">
+              <div class="img-carousel__track">
+                <div class="img-carousel__slide">
+                  <img src="img/DMG-Beluga_CAD-Capture.png" alt="DMG Nautilus in Shelf" style="object-position:center;" />
+                  <div class="img-carousel__scanline"></div>
+                </div>
+                <div class="img-carousel__slide">
+                  <img src="img/DMG-Beluga_Product-In-Shelf_Far.jpg" alt="DMG-Beluga on shelf — wide shot"
+                    class="img--top" />
+                  <div class="img-carousel__scanline"></div>
+                </div>
+                <div class="img-carousel__slide">
+                  <img src="img/DMG-Beluga_FinalProduct_Table-Side_Far.jpg" alt="DMG-Beluga — side view wide"
+                    class="img--top"/>
+                  <div class="img-carousel__scanline"></div>
+                </div>
+              </div>
+              <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+              <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+              <div class="img-carousel__counter">1 / 3</div>
+              <div class="img-carousel__dots">
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+                <div class="img-carousel__dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="device-badge-row">
+            <span class="badge badge-prototype">PROTOTYPE</span>
+            <a href="/guide-beluga.html" class="btn btn-primary btn-view-guide">&#9658; View Guide</a>
+          </div>
+        </div>
+
+        <div class="device-col-info">
+          <p class="description-paragraph">
+            Matching subwoofer to the DMG-Nautilus. Inspired by the idiosyncratic form of the Beluga whale - one of natures most skilled exploiters of sound waves with its sonar-producing organ. 
+          The delicately ornamented back-panel abstracts the cold ocean water of the Beluga's habitat and incorporates design elements from the Nautilus-covers, while elegantly housing the Amp and cabling. 
+            </br>A dual-opposed set-up of the woofers minimizes any mechanical movements of and unwanted sounds from the enclosure while creating a warm, well perceivable bass output.
+        </br>Connected via bluetooth to the DMG-Nautilus, it creates a unique 2.1 sound system with crystal-clear mids and highs and a warm, present bass from the Beluga.
+          </p>
+          <button class="contact-me-btn" onclick="openContact('Re: Beluga Subwoofer (DMG-Beluga)')">Contact
+            me!</button>
+
+          <div class="retro-window">
+            <div class="retro-window__titlebar retro-window--green">
+              <span class="retro-window__title">specs.txt</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="retro-window__body">
+              <table class="spec-table-light">
+                <tr>
+                  <td class="spec-table-light__key">Drivers</td>
+                  <td class="spec-table-light__val">2 × Dayton 115-4</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Amplifier</td>
+                  <td class="spec-table-light__val">Bridged 1x100W Wondom JAB2+ Mono</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Target Frequency Range</td>
+                  <td class="spec-table-light__val">< 120 Hz</td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Tuning Frequency (Helmholtz Resonator)</td>
+                  <td class="spec-table-light__val">~ 58 Hz</td>
+                </tr>
+                <tr>
                   <td class="spec-table-light__key">Enclosure</td>
-                  <td class="spec-table-light__val">FDM structural shell, wood veneer panels</td>
+                  <td class="spec-table-light__val">3D-Printed Ported Vent Enclosure with Dual-Color Filament
+                  </td>
+                </tr>
+                <tr>
+                  <td class="spec-table-light__key">Connectivity</td>
+                  <td class="spec-table-light__val">Bluetooth 5.0, optical in, 3.5 mm aux <br/>2.1 Concert Mode with the DMG-Nautilus</td>
                 </tr>
                 <tr>
                   <td class="spec-table-light__key">Status</td>
-                  <td class="spec-table-light__val">Prototype — enclosure design complete, amplifier board in progress
+                  <td class="spec-table-light__val">Fully Operational
                   </td>
                 </tr>
               </table>
@@ -742,7 +830,7 @@
   <section class="cta-section reveal">
     <div class="cta-section__eyebrow">// ALL FILES OPEN</div>
     <h2 class="cta-section__title">Want to build one? <em>Start here.</em></h2>
-    <p class="cta-section__sub">Every device has a corresponding guide with full BOM, source files, and step-by-step
+    <p class="cta-section__sub">Every device will have a corresponding guide with full BOM, source files, and step-by-step
       build notes.</p>
     <div class="cta-section__actions">
       <a href="guides.html" class="btn btn-orange">&#9658; Go to Guides</a>
@@ -768,7 +856,7 @@
       <li><a href="guides.html" class="footer__link">Guides</a></li>
       <li><a href="studio.html" class="footer__link">Studio</a></li>
     </ul>
-    <div class="footer__copy">&copy; 2025 De Mattos Gabriel Labs</div>
+    <div class="footer__copy">&copy; 2026 DMG-Labs</div>
   </footer>
 
 

@@ -699,6 +699,17 @@ h1 em, h2 em, h3 em {
   color:          var(--color-orange-dk);
   background:     var(--color-orange-dim);
 }
+.guide-card__status {
+  font-family:    var(--font-pixel);
+  font-size:      0.38rem;
+  letter-spacing: 0.1em;
+  padding:        0.22rem 0.55rem;
+  border-radius:  var(--radius-sm);
+  border:         1.5px solid var(--color-orange);
+  color:          var(--color-orange-dk);
+  background:     var(--color-orange-dim);
+}
+
 .guide-card__category {
   font-family:    var(--font-mono);
   font-size:      0.58rem;

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>DMG Labs — Hardware, but fun</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <style>
+    .img-carousel__slide .img--top,
+    .img-placeholder .img--top { object-position: center center; }
+
+    /* Widen left text column to reduce gap to Pac-Man game */
+    .hero {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    /* Let hero text fill the full left column width */
+    .hero__desc { max-width: none; }
+
+    /* Align hero text left edge with section-inner content below.
+       section-inner is max-width:1240px centred with 3.5rem side padding,
+       so its left content edge = (100vw - 1240px) / 2 + 3.5rem          */
+    .hero__left {
+      padding-top:    3.5rem;
+      padding-bottom: 3.5rem;
+      padding-right:  3rem;
+      padding-left:   max(3.5rem, calc((100vw - 1240px) / 2 + 3.5rem));
+    }
+
+    /* Remove the enormous bottom padding that pushes Pac-Man up */
+    .hero__right {
+      padding: 2rem 3rem 2rem 1rem;
+    }
+
+    /* Reduce section top/bottom spacing */
+    .section-inner {
+      padding-top:    var(--space-10);
+      padding-bottom: var(--space-10);
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav__logo" aria-label="DMG Labs">
+      <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
+        <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#0f1f17">D</text>
+        <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#0f1f17">M</text>
+        <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00" />
+        <circle cx="74" cy="16" r="2.8" fill="#f06a00" />
+      </svg>
+    </a>
+    <ul class="nav__links">
+      <li><a href="devices.html" class="nav__link">Devices</a></li>
+      <li><a href="guides.html" class="nav__link">Guides</a></li>
+      <li><a href="studio.html" class="nav__link">Studio</a></li>
+    </ul>
+    <a href="guides.html" class="btn-nav-cta">&#9658; Start Building</a>
+  </nav>
+
+  <div class="ticker-wrap">
+    <div class="ticker-track"><span class="ticker-item">FDM / 3D Printing</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Audiophile Electronics</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Open Hardware</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Nuremberg — Munich</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Rio de Janeiro</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Paris</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Community Builds</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Retro-Futurist Design</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">FDM / 3D Printing</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Audiophile Electronics</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Open Hardware</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Nuremberg — Munich</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Rio de Janeiro</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Paris</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-pixel">[ DMG LABS ]</span><span class="ticker-pac"><svg width="14" height="14"
+          viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Community Builds</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span><span class="ticker-item">Retro-Futurist Design</span><span class="ticker-pac"><svg width="14"
+          height="14" viewBox="0 0 14 10">
+          <path d="M7,5 L12,1.5 A6,6 0 1,0 12,8.5 Z" fill="#f06a00" />
+          <circle cx="13.5" cy="5" r="1.3" fill="#f06a00" />
+        </svg></span></div>
+  </div>
+
+  <section class="hero">
+    <div class="hero__grid-bg"></div>
+    <div class="hero__blob"></div>
+    <div class="hero__left">
+      <div class="hero__eyebrow">
+        <span class="badge badge-orange">BORED ENGINEER &amp;</span>
+        <span class="badge badge-green">v2.0</span>
+      </div>
+      <h1 class="hero__title">Hardware &#8212;<br><em>but fun.</em></h1>
+      <p class="tagline" style="margin-bottom:1.4rem">Retro-futuristic designs, handcrafted devices -
+        designed to be not boring.</p>
+      <p class="hero__desc">I'm an engineer who missed a creative and technical outlet — so I bought a 3D printer and
+        some Raspberry Pis. The result are devices that are reminiscent of a time that cherished craftsmanship, joy in
+        color, timelessness in design and lack of enshitification. The aim is to create things that are beautiful and
+        intriguing by themselves while striving for a clear functionality (like radios and vinyl players were once
+        elegant pieces of furniture). Recurring tropes are nature-inspired shapes and my passion for music (although by
+        no means an audiophile yet). Everything carries a personal story. Super happy if you share anything
+        you see here or just reach out!</p>
+      <div class="hero__actions">
+        <a href="devices.html" class="btn btn-primary">&#9658; See the Devices</a>
+        <a href="guides.html" class="btn btn-ghost">Build Something</a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat-item"><span class="stat-label">Devices</span><span class="stat-value">04</span></div>
+        <div class="stat-item"><span class="stat-label">Guides</span><span class="stat-value">04+</span></div>
+        <div class="stat-item"><span class="stat-label">Open Source</span><span class="stat-value">100%</span></div>
+      </div>
+      <div class="hero__quicklinks">
+        <a href="devices.html" class="hero__quicklink">
+          <span class="hero__quicklink-icon">&#128295;</span>
+          <div><span class="hero__quicklink-label">// EXPLORE</span><span class="hero__quicklink-name">Devices</span>
+          </div>
+        </a>
+        <a href="guides.html" class="hero__quicklink">
+          <span class="hero__quicklink-icon">&#128218;</span>
+          <div><span class="hero__quicklink-label">// BUILD</span><span class="hero__quicklink-name">Guides</span></div>
+        </a>
+        <a href="studio.html" class="hero__quicklink">
+          <span class="hero__quicklink-icon">&#127807;</span>
+          <div><span class="hero__quicklink-label">// ABOUT</span><span class="hero__quicklink-name">Studio</span></div>
+        </a>
+      </div>
+      <div class="hero__provenance">
+        <div><strong>Nuremberg / Munich</strong>Werkstatt</div>
+        <div><strong>Rio de Janeiro</strong>Alegria</div>
+        <div><strong>Paris</strong>Pain au Chocolat / Fromage</div>
+      </div>
+    </div>
+    <div class="hero__right">
+
+      <div id="dmg-device"
+        style="width:400px;background:var(--color-forest);padding:1.8rem 1.8rem 1.4rem;position:relative;border-radius:12px;border:3px solid var(--color-ink);box-shadow:6px 6px 0 var(--color-ink);touch-action:none">
+        <div
+          style="position:absolute;top:-3px;left:20px;right:20px;height:3px;background:var(--color-orange);border-radius:2px">
+        </div>
+        <div
+          style="position:absolute;bottom:14px;right:12px;width:8px;height:8px;background:var(--color-orange);border-radius:50%;border:2px solid var(--color-orange-dk);box-shadow:-14px 0 0 var(--color-orange-dk)">
+        </div>
+        <div
+          style="width:100%;position:relative;border-radius:6px;border:3px solid var(--color-ink);margin-bottom:1.2rem;overflow:hidden;box-shadow:inset 0 0 20px rgba(0,0,0,0.6)">
+          <canvas id="pacman-canvas" width="250" height="188"
+            style="display:block;background:#071208;width:100%;image-rendering:pixelated"></canvas>
+          <div
+            style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.15) 3px,rgba(0,0,0,0.15) 4px);pointer-events:none;z-index:2">
+          </div>
+          <div
+            style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.45) 100%);pointer-events:none;z-index:3;border-radius:3px">
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem">
+          <div style="display:flex;gap:0.7rem">
+            <div
+              style="width:22px;height:22px;border-radius:50%;background:linear-gradient(145deg,#2a4030,#1a2a20);border:2px solid rgba(93,184,112,0.4);position:relative;box-shadow:2px 2px 0 var(--color-ink)">
+              <div
+                style="position:absolute;top:3px;left:50%;transform:translateX(-50%);width:2px;height:7px;background:var(--color-orange);border-radius:1px">
+              </div>
+            </div>
+            <div
+              style="width:22px;height:22px;border-radius:50%;background:linear-gradient(145deg,#2a4030,#1a2a20);border:2px solid rgba(93,184,112,0.4);position:relative;box-shadow:2px 2px 0 var(--color-ink)">
+              <div
+                style="position:absolute;top:3px;left:50%;transform:translateX(-50%);width:2px;height:7px;background:var(--color-orange);border-radius:1px">
+              </div>
+            </div>
+          </div>
+          <div style="position:relative;width:52px;height:52px">
+            <button id="btn-up"
+              style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:16px;height:16px;background:#2a4030;border:2px solid var(--color-ink);border-radius:3px;cursor:pointer;transition:background 0.08s,transform 0.08s;display:flex;align-items:center;justify-content:center"
+              onmousedown="this.style.background='var(--color-orange)';this.style.transform='translateX(-50%) scale(0.88)'"
+              onmouseup="this.style.background='#2a4030';this.style.transform='translateX(-50%)'"
+              onmouseleave="this.style.background='#2a4030';this.style.transform='translateX(-50%)'"
+              ontouchstart="this.style.background='var(--color-orange)'" ontouchend="this.style.background='#2a4030'"
+              aria-label="Up"><svg width="8" height="6" viewBox="0 0 8 6">
+                <path d="M4 0L8 6H0Z" fill="rgba(93,184,112,0.6)" />
+              </svg></button>
+            <button id="btn-down"
+              style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:16px;height:16px;background:#2a4030;border:2px solid var(--color-ink);border-radius:3px;cursor:pointer;transition:background 0.08s,transform 0.08s;display:flex;align-items:center;justify-content:center"
+              onmousedown="this.style.background='var(--color-orange)';this.style.transform='translateX(-50%) scale(0.88)'"
+              onmouseup="this.style.background='#2a4030';this.style.transform='translateX(-50%)'"
+              onmouseleave="this.style.background='#2a4030';this.style.transform='translateX(-50%)'"
+              ontouchstart="this.style.background='var(--color-orange)'" ontouchend="this.style.background='#2a4030'"
+              aria-label="Down"><svg width="8" height="6" viewBox="0 0 8 6">
+                <path d="M4 6L0 0H8Z" fill="rgba(93,184,112,0.6)" />
+              </svg></button>
+            <button id="btn-left"
+              style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:16px;height:16px;background:#2a4030;border:2px solid var(--color-ink);border-radius:3px;cursor:pointer;transition:background 0.08s,transform 0.08s;display:flex;align-items:center;justify-content:center"
+              onmousedown="this.style.background='var(--color-orange)';this.style.transform='translateY(-50%) scale(0.88)'"
+              onmouseup="this.style.background='#2a4030';this.style.transform='translateY(-50%)'"
+              onmouseleave="this.style.background='#2a4030';this.style.transform='translateY(-50%)'"
+              ontouchstart="this.style.background='var(--color-orange)'" ontouchend="this.style.background='#2a4030'"
+              aria-label="Left"><svg width="6" height="8" viewBox="0 0 6 8">
+                <path d="M0 4L6 0V8Z" fill="rgba(93,184,112,0.6)" />
+              </svg></button>
+            <button id="btn-right"
+              style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:16px;height:16px;background:#2a4030;border:2px solid var(--color-ink);border-radius:3px;cursor:pointer;transition:background 0.08s,transform 0.08s;display:flex;align-items:center;justify-content:center"
+              onmousedown="this.style.background='var(--color-orange)';this.style.transform='translateY(-50%) scale(0.88)'"
+              onmouseup="this.style.background='#2a4030';this.style.transform='translateY(-50%)'"
+              onmouseleave="this.style.background='#2a4030';this.style.transform='translateY(-50%)'"
+              ontouchstart="this.style.background='var(--color-orange)'" ontouchend="this.style.background='#2a4030'"
+              aria-label="Right"><svg width="6" height="8" viewBox="0 0 6 8">
+                <path d="M6 4L0 0V8Z" fill="rgba(93,184,112,0.6)" />
+              </svg></button>
+            <div
+              style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:12px;height:12px;background:var(--color-orange-dk);border:2px solid var(--color-ink);border-radius:2px">
+            </div>
+          </div>
+          <div style="display:flex;gap:3px">
+            <div style="width:2px;height:24px;background:rgba(93,184,112,0.15);border-radius:1px"></div>
+            <div style="width:2px;height:24px;background:rgba(93,184,112,0.15);border-radius:1px"></div>
+            <div style="width:2px;height:24px;background:rgba(93,184,112,0.15);border-radius:1px"></div>
+          </div>
+        </div>
+        <div class="text-pixel text-faint" style="text-align:center;margin-top:0.9rem">DMG LABS /// HANDCRAFTED</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="background:var(--color-cream)">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">// DEVICES</div>
+          <h2 class="section-title">What we build</h2>
+        </div>
+        <a href="devices.html" class="btn btn-ghost">View all &#8594;</a>
+      </div>
+      <div class="product-grid">
+  <!-- ── DMG-40 ── -->
+
+        <a href="devices.html#dmg-40" class="product-card reveal reveal--d1">
+          <div class="product-card__header">
+            <span class="product-card__filename">DMG-40.device</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="tag tag-elec" style="margin-bottom:0.78rem">Electronics</span>
+            <div class="product-card__visual product-card__visual--model" style="background:#071208">
+              <div class="img-placeholder img-placeholder--tall">
+                <img src="img/DMG-DN40_Rendering_Classic_EU-Urban_Metro.png" alt="DMG-40 Transit Clock — European Urban Render" class="img--top"/>
+              </div>            
+            </div>
+            <div class="product-card__model">Transit Clock</div>
+            <h3 class="product-card__name">DMG-40</h3>
+            <p class="product-card__desc">The ultimate hommage to urban lifestyle. LED matrix departure board for real-time time, train & metro information. Design inspired
+              by the legendary Braun DN40 clock.</p>
+            <div class="product-card__footer"><span class="product-card__status">Prototype</span><span
+                class="product-card__arrow">&#8599;</span></div>
+          </div>
+        </a>
+  <!-- ── DMG-Ph1 ── -->
+
+        <a href="devices.html#dmg-ph1" class="product-card reveal reveal--d2">
+          <div class="product-card__header">
+            <span class="product-card__filename">DMG-Ph(I).device</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="tag tag-hybrid" style="margin-bottom:0.78rem">Hybrid</span>
+            <div class="product-card__visual" style="background:rgba(74,124,89,0.06);">
+                <div class="img-placeholder img-placeholder--tall">
+                <img src="img/dmg_phi.jpg" alt="DMG-40 Transit Clock — European Urban Render" class="img--top"/>
+              </div>  
+            </div>
+            <div class="product-card__model">Acoustic iPhone Dock</div>
+            <h3 class="product-card__name">Ph(I) </h3>
+            <p class="product-card__desc">Elegant iPhone MagSafe dock with mechanical amplifier. No electronics —
+              pure acoustic volume.</p>
+            <div class="product-card__footer"><span class="product-card__status">Prototype</span><span
+                class="product-card__arrow">&#8599;</span></div>
+          </div>
+        </a>
+  <!-- ── DMG-LU1 ── -->
+
+        <a href="devices.html#lu1" class="product-card reveal reveal--d3">
+          <div class="product-card__header">
+            <span class="product-card__filename">DMG-LU1.device</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="tag tag-elec" style="margin-bottom:0.78rem">Electronics</span>
+            <div class="product-card__visual" style="background:rgba(74,124,89,0.06);">
+                <div class="img-placeholder img-placeholder--tall">
+                <img src="img/DMG-LU1_CAD-Capture.png" alt="DMG-40 Transit Clock — European Urban Render" class="img--top"/>
+              </div>  
+            </div>
+            <div class="product-card__model">Retro Music Player</div>
+            <h3 class="product-card__name">LU1</h3>
+            <p class="product-card__desc">Make your music fun again. Design your own RFID cassettes and link them to your home-made playlists. Share them.
+              e-Ink display, playback from Spotify + local disk.</p>
+            <div class="product-card__footer"><span class="product-card__status">Prototype</span><span
+                class="product-card__arrow">&#8599;</span></div>
+          </div>
+        </a>
+  <!-- ── DMG-NAUTILUS SOUNDBAR ── -->
+        <a href="devices.html#nautilus" class="product-card reveal reveal--d4">
+          <div class="product-card__header">
+            <span class="product-card__filename">DMG-Nautilus.device</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="tag tag-audio">Audio</span>
+            <div class="product-card__visual" style="background:rgba(74,124,89,0.06);">
+                <div class="img-placeholder img-placeholder--tall">
+                <img src="img/DMG-Nautilus_FinalProduct_IsoView3.jpg" alt="DMG-Nautilus - Iso View" class="img--top"/>
+              </div>  
+            </div>
+            <div class="product-card__model">Soundbar & LU1-Dock</div>
+            <h3 class="product-card__name">Nautilus</h3>
+            <p class="product-card__desc">A soundbar and dock for the LU1 player. Nature-inspired design with two
+              golden-ratio nautilus sound bodies. Uses bending-wave-modulation speakers by Tectonic. Seemingly great to
+              have clean, homogeneous sound quality across space.</p>
+            <div class="product-card__footer"><span class="product-card__status">Prototype</span><span
+                class="product-card__arrow">&#8599;</span></div>
+          </div>
+        </a>
+  <!-- ── DMG-BELUGA ── -->
+        <a href="devices.html#beluga" class="product-card reveal reveal--d4">
+          <div class="product-card__header">
+            <span class="product-card__filename">DMG-Beluga.device</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="tag tag-audio">Audio</span>
+            <div class="product-card__visual" style="background:rgba(74,124,89,0.06);">
+                <div class="img-placeholder img-placeholder--tall">
+                <img src="img/DMG-Beluga_FinalProduct_Table-Front_Near-2.jpg" alt="DMG-Beluga Subwoofer" class="img--top"/>
+              </div>  
+            </div>
+            <div class="product-card__model">Subwoofer</div>
+            <h3 class="product-card__name">Beluga</h3>
+            <p class="product-card__desc">A subwoofer complementing the DMG-Nautilus, with opposed speakers for minimal mechanical interference, creating a unique 2.1 audio system via Bluetooth connection. Design inspired by the Beluga whale's idiosyncratic body shape.</p>
+            <div class="product-card__footer"><span class="product-card__status">Prototype</span><span
+                class="product-card__arrow">&#8599;</span></div>
+          </div>
+        </a>
+
+        <a href="devices.html#storage" class="product-card reveal reveal--d4">
+          <div class="product-card__header">
+            <span class="product-card__filename">DMG-GZ.storage</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="tag tag-audio">Storage</span>
+            <div class="product-card__visual" style="background:rgba(0,0,0,0.2)"><svg width="240" height="110"
+                viewBox="0 0 240 110" fill="none">
+                <rect x="15" y="38" width="210" height="36" rx="7" fill="#1a3a2a" stroke="#0f1f17" stroke-width="1.5" />
+                <rect x="90" y="43" width="60" height="26" rx="4" fill="#0f1f17" stroke="#4a7c59" stroke-width="1" />
+                <rect x="94" y="47" width="52" height="18" rx="2" fill="#071208" /><text x="97" y="59"
+                  font-family="Press Start 2P,monospace" font-size="4" fill="#5db870" opacity="0.6">LU1 DOCK</text>
+                <g transform="translate(17,38)">
+                  <path
+                    d="M34,18 Q32,9 23,6 Q11,3 7,13 Q2,22 9,29 Q16,36 26,31 Q33,27 31,19 Q29,12 21,12 Q15,12 13,17 Q11,22 16,25 Q20,27 22,22"
+                    stroke="#4a7c59" stroke-width="1.4" fill="none" />
+                  <circle cx="22" cy="18" r="2.5" fill="#f06a00" opacity="0.7" />
+                  <path d="M34,18 Q31,11 24,8 Q16,5 10,11" stroke="#5db870" stroke-width="0.6" fill="none"
+                    opacity="0.4" />
+                </g>
+                <g transform="translate(189,38) scale(-1,1)">
+                  <path
+                    d="M34,18 Q32,9 23,6 Q11,3 7,13 Q2,22 9,29 Q16,36 26,31 Q33,27 31,19 Q29,12 21,12 Q15,12 13,17 Q11,22 16,25 Q20,27 22,22"
+                    stroke="#4a7c59" stroke-width="1.4" fill="none" />
+                  <circle cx="22" cy="18" r="2.5" fill="#f06a00" opacity="0.7" />
+                </g>
+                <circle cx="57" cy="56" r="12" stroke="#2e6647" stroke-width="1.2" fill="none" />
+                <circle cx="57" cy="56" r="6" stroke="#4a7c59" stroke-width="0.8" fill="none" />
+                <circle cx="57" cy="56" r="2" fill="#f06a00" opacity="0.5" />
+                <circle cx="183" cy="56" r="12" stroke="#2e6647" stroke-width="1.2" fill="none" />
+                <circle cx="183" cy="56" r="6" stroke="#4a7c59" stroke-width="0.8" fill="none" />
+                <circle cx="183" cy="56" r="2" fill="#f06a00" opacity="0.5" /><text x="18" y="88"
+                  font-family="Press Start 2P,monospace" font-size="4" fill="#f06a00" opacity="0.75">2x50W</text><text
+                  x="170" y="88" font-family="Press Start 2P,monospace" font-size="4" fill="#5db870"
+                  opacity="0.65">BWX</text>
+                <rect x="117" y="76" width="6" height="6" rx="1" fill="#f06a00" opacity="0.4" />
+                <rect x="125" y="76" width="6" height="6" rx="1" fill="#5db870" opacity="0.3" />
+              </svg></div>
+            <div class="product-card__model">DMG-GZ</div>
+            <h3 class="product-card__name">Storage Box</h3>
+            <p class="product-card__desc">A storage box with sportscar-inspired Winggull mechanism, with Chinese
+              design-elements as a hommage to the wonderful city and manufacturing hub of Guangzhou.</p>
+            <div class="product-card__footer"><span class="product-card__status">Product</span><span
+                class="product-card__arrow">&#8599;</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="band reveal">
+    <p class="band__pull">Built with a lot of love and passion.<br><em>Motivated by the desire to do something that
+        matters.</em></p>
+    <p class="band__body">DMG Labs is a family "studio". The initials are ours: De Mattos Gabriel. My wife&#8217;s roots
+      are in Rio de Janeiro (now my most beloved city), mine in Nuremberg (also not bad). Somewhere between the two
+      cities we found a way of making things that feels like both: disciplined in structure, sympathetic in spirit.</p>
+  </div>
+
+  <section class="cta-section reveal">
+    <div class="cta-section__eyebrow">// OPEN SOURCE &#183; COMMUNITY &#183; HARDWARE</div>
+    <h2 class="cta-section__title">I hope any of this inspires others. Feel free to <em>rebuild</em>, and share back.
+    </h2>
+    <p class="cta-section__sub">Files, schematics, build notes &#8212; all open (once published). The best thing you can
+      do with your work is hand it to someone who&#8217;ll make it better.</p>
+    <div class="cta-section__actions">
+      <a href="guides.html" class="btn btn-orange">&#9658; Download the Files</a>
+      <a href="studio.html" class="btn btn-ghost-light">Follow the Studio</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <a href="index.html" aria-label="DMG Labs home">
+      <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
+        <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#c8ddd0">D</text>
+        <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#c8ddd0">M</text>
+        <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00" />
+        <circle cx="74" cy="16" r="2.8" fill="#f06a00" />
+      </svg>
+    </a>
+    <ul class="footer__links">
+      <li><a href="devices.html" class="footer__link">Devices</a></li>
+      <li><a href="guides.html" class="footer__link">Guides</a></li>
+      <li><a href="studio.html" class="footer__link">Studio</a></li>
+    </ul>
+    <div class="footer__copy">&copy; 2025 De Mattos Gabriel Labs</div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+
+</html>

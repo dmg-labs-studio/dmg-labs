@@ -77,9 +77,10 @@
   .guide-preface {
     background: #f7f4ef;
     border-left: 3px solid #f06a00;
-    padding: 2.8rem 2.4rem 2.4rem;
+    padding: 2.8rem 0 2.4rem 1.6rem;
     margin-bottom: 3rem;
     position: relative;
+    overflow-x: hidden;
   }
   .guide-preface__eyebrow {
     font-family: 'Press Start 2P', monospace;
@@ -132,16 +133,22 @@
     border-radius: 3px;
     margin: 0.2rem 0;
     white-space: nowrap;
+    max-width: 100%;
+    overflow-x: auto;
   }
   .phi-formula span { color: #f06a00; }
 
   /* Volume calc table inside preface */
+  .calc-table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
   .calc-table {
     width: 100%;
     border-collapse: collapse;
     font-family: 'DM Mono', monospace;
     font-size: 0.78rem;
-    margin: 1rem 0;
+    min-width: 480px;
   }
   .calc-table th {
     background: #0f1f17;
@@ -160,6 +167,14 @@
   .calc-table td:first-child { color: #0f1f17; font-weight: bold; }
   .calc-table tr:last-child td { border-bottom: none; }
   .calc-table .val { color: #f06a00; }
+
+  /* ── GRID OVERFLOW FIX ── */
+  /* Grid children can overflow their track without this */
+  .step__body { min-width: 0; }
+  .guide-callout { overflow-x: hidden; }
+  .code-block { overflow-x: hidden; max-width: 100%; }
+  .code-block__body { overflow-x: auto; }
+  .code-block__body pre { overflow-x: auto; white-space: pre; }
 
   /* ── VIDEO LIGHTBOX ── */
   #vlb {
@@ -225,7 +240,14 @@
     opacity: 0;
     transition: opacity 0.2s;
   }
-  .img-carousel__slide--video:hover .video-zoom-hint { opacity: 1; }
+    .img-carousel__slide--video:hover .video-zoom-hint {
+      opacity: 1;
+    }
+    .img-carousel__slide .img--top,
+    .img-placeholder .img--top { object-position: center center; }
+
+    #carousel-result .img-carousel__track,
+    #carousel-result .img-carousel__slide { height: 480px; }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
@@ -401,8 +423,8 @@
         <h2 class="guide-section__title">What you're building</h2>
         <div class="guide-section__body">
           <p>The DMG-Nautilus is a full-range speaker system built inside a 3D-printed enclosure shaped after the logarithmic spiral of the nautilus shell. Each channel is a sealed, tapered tube — a shape that naturally terminates standing waves and loads the driver with a smoothly increasing air mass, a problem that otherwise requires complex acoustic engineering to solve.</p>
-          <p>Two Tectonic TEBM65C20F-8 BMR (Balanced Mode Radiator) drivers sit in a 3D-printed front baffle, backed by FDM-printed spiral enclosures packed with long-hair sheep wool. The assembly is held together with embedded magnets, so the cover removes without tools. A Wondom Jab2+ amplifier board handles both channels from a single power brick.</p>
-          <p>This guide covers the design rationale, print settings, acoustic treatment, wiring, and final assembly. No prior speaker-building experience required — but it helps to have built something with FDM before, since the spiral print is the most demanding part.</p>
+          <p>Two Tectonic TEBM65C20F-8 BMR (Balanced Mode Radiator) drivers sit in a 3D-printed front baffle, backed by 3D-printed spiral enclosures packed with long-hair sheep wool. The assembly is held together with embedded magnets, so the cover removes without tools. A Wondom Jab2+ amplifier board handles both channels from a single power brick.</p>
+          <p>This guide covers the design rationale, print settings, acoustic treatment, wiring, and final assembly. No prior speaker-building experience required — but it helps to have built something with 3D-printing before, since the spiral print is the most demanding part.</p>
         </div>
 
         <div class="guide-media-grid">
@@ -445,7 +467,7 @@
 
             <span class="preface-sub">// WHY IT WORKS AS A SPEAKER ENCLOSURE</span>
             <p>A speaker driver is, in simple terms, a piston moving air. The enclosure behind the cone must do two things: prevent the rear wave from cancelling the front wave, and control the compliance (springiness) of the air load on the driver's rear. A sealed box does both — the trapped air acts as a restoring spring. The problem with a simple box is that its flat, parallel walls support standing waves at predictable frequencies. A mode at, say, 400 Hz will reinforce output at that frequency and create a dip at its cancellation point, audible as coloration.</p>
-            <p>A tapered tube — widening from the driver outward — kills standing waves because there is no single parallel reflection path. The wavefront is continuously diffracted, and the gradually increasing cross-section loads the driver with a smoothly changing acoustic impedance rather than a step function. Combine that with a curved geometry and the result is a nearly non-resonant rear enclosure. This is the principle behind the original Bowers &amp; Wilkins Nautilus loudspeaker (1993) — the shape here is directly inspired by it, scaled and adapted for FDM printing and BMR full-range drivers.</p>
+            <p>A tapered tube — widening from the driver outward — kills standing waves because there is no single parallel reflection path. The wavefront is continuously diffracted, and the gradually increasing cross-section loads the driver with a smoothly changing acoustic impedance rather than a step function. Combine that with a curved geometry and the result is a nearly non-resonant rear enclosure. This is the principle behind the original <a href="https://www.auditorium.de/lautsprecher/lautsprecher/standlautsprecher/bowers-wilkins-nautilus-standlautsprecher-schwarz?affiliateCode=googleShopping-de&campaignCode=PMaxDE-A&gad_campaignid=17200695577&gad_source=1&gbraid=0AAAAAD8qWXy6Ax4dE-urQIx3W5fxWXRr1&gclid=CjwKCAjwzevPBhBaEiwAplAxvm0298GpvaMmc8vlT8NPqK1uiQbLsK_Q37wuq1UHgsPEaH_Sg37V-RoCQ7gQAvD_BwE&utm_campaign=PMaxDE-A" target="_blank" rel="noopener" class="bom-link">Bowers &amp; Wilkins Nautilus loudspeaker (1993) ↗</a> — the shape here is directly inspired by it, scaled and adapted for 3D-printing and BMR full-range drivers.</p>
 
             <span class="preface-sub">// PORTED VS. SEALED — AND WHY THIS DESIGN IS SEALED</span>
             <p>A ported (bass-reflex) enclosure uses a tuned vent to extend low-frequency response. The port resonates at a specific frequency, reinforcing bass output at the Helmholtz resonance of the vent/cabinet system. It sounds appealing on paper. In practice, for a small, high-aspect-ratio enclosure like a printed spiral, achieving a correctly tuned port is extremely sensitive to manufacturing tolerances — the vent length and diameter need to be precise to within millimetres to hit the target frequency, and any misalignment in the print changes the tuning. The sealed geometry of the nautilus spiral, combined with sheep-wool damping, gives predictable, well-controlled low-frequency roll-off with much higher tolerance for print variation.</p>
@@ -453,6 +475,7 @@
             <span class="preface-sub">// VOLUME AND RESONANT FREQUENCY</span>
             <p>For the Tectonic TEBM65C20F-8 BMR driver (Vas ≈ 1.6 L, Qts ≈ 0.67, Fs ≈ 100 Hz), the ideal sealed-box volume and the resulting system resonance can be estimated with the standard closed-box equations:</p>
 
+            <div class="calc-table-wrap">
             <table class="calc-table">
               <thead>
                 <tr>
@@ -484,6 +507,7 @@
                 </tr>
               </tbody>
             </table>
+            </div>
 
             <p>The printed spiral holds approximately <strong>0.65 L</strong> of effective internal volume per channel after accounting for wall thickness, wool packing, and the driver's own displacement. That lands squarely in the target window for a Qtc of 0.707. More wool reduces the effective resonant frequency slightly (by increasing the apparent volume) and adds broadband damping — the wool should fill roughly 60–70% of the interior volume, not be packed solid.</p>
 
@@ -721,7 +745,7 @@ Estimated time: ~1 day per spiral (BambuLab P1S)
                       <div class="img-carousel__scanline"></div>
                     </div>
                     <div class="img-carousel__slide img-carousel__slide--video">
-                      <video src="video/DMG-Nautilus_Nautilus_3DPrint.mp4" loop playsinline preload="none" poster="img/DMG-Nautilus_PrintBed.jpg"></video>
+                      <video src="video/DMG-Nautilus_Nautilus_3DPrint.mp4" loop playsinline preload="metadata"></video>
                       <div class="img-carousel__scanline"></div>
                       <div class="carousel-video-play" aria-label="Play video">
                         <div class="carousel-video-play__icon">&#9654;</div>
@@ -757,7 +781,7 @@ Estimated time: ~1 day per spiral (BambuLab P1S)
                   <div class="img-carousel" id="carousel-frontprint">
                     <div class="img-carousel__track">
                       <div class="img-carousel__slide img-carousel__slide--video">
-                        <video src="video/DMG-Nautilus_Front_3DPrint.mp4" loop playsinline preload="none" poster="video/DMG-Nautilus_Front_3DPrint.mp4"></video>
+                        <video src="video/DMG-Nautilus_Front_3DPrint.mp4" loop playsinline preload="metadata"></video>
                         <div class="img-carousel__scanline"></div>
                         <div class="carousel-video-play" aria-label="Play video">
                           <div class="carousel-video-play__icon">&#9654;</div>
@@ -779,7 +803,7 @@ Estimated time: ~1 day per spiral (BambuLab P1S)
               <!-- Filament jam recovery -->
               <div class="guide-callout guide-callout--warn" style="margin-top:1.2rem;">
                 <div class="guide-callout__label">// RECOVERING FROM A FILAMENT JAM MID-PRINT</div>
-                <p style="margin:0 0 0.8rem">The front enclosure print hit a filament jam partway through — a situation more common on long, geometrically complex prints where the extruder grinds against a partial clog. Scrapping the print and starting over is the obvious response, but not always the right one: if the jam happened after the first dozen or so layers, the already-printed base is perfectly usable and restarting wastes hours of print time.</p>
+                <p style="margin:0 0 0.8rem">The front enclosure print hit a filament jam partway through — a situation that happens to everyone at some point. The filament on the roll gets tangled up and blocks the extruder. The printer keeps printer, as material is still in the extruder (starting to degrade). Scrapping the print and starting over is the obvious response, but not always the right one: if the jam happened after the first dozen or so layers, the already-printed base is perfectly usable and restarting wastes hours of print time.</p>
                 <p style="margin:0 0 0.8rem">The fix is a <strong>layer-offset restart</strong>: clear the jam, then edit the GCode to resume from the layer where the print failed rather than layer zero. Most slicers either don't expose this directly or require a workaround:</p>
                 <div class="code-block" style="margin:0.8rem 0;">
                   <div class="code-block__header">
@@ -933,7 +957,7 @@ G92 E0                      ; Reset extruder distance
                       <div class="img-carousel__scanline"></div>
                     </div>
                     <div class="img-carousel__slide img-carousel__slide--video">
-                      <video src="video/DMG-Nautilus_HeatInsert_VideoTut.mp4" loop playsinline preload="none" poster="img/DMG-Nautilus_Heat-Insert_Prep.jpg"></video>
+                      <video src="video/DMG-Nautilus_HeatInsert_VideoTut.mp4" loop playsinline preload="metadata"></video>
                       <div class="img-carousel__scanline"></div>
                       <div class="carousel-video-play" aria-label="Play video">
                         <div class="carousel-video-play__icon">&#9654;</div>
@@ -970,7 +994,7 @@ G92 E0                      ; Reset extruder distance
                       <div class="img-carousel__scanline"></div>
                     </div>
                     <div class="img-carousel__slide img-carousel__slide--video">
-                      <video src="video/DMG-Nautilus_Tectonic_AssemblyVideo.mp4" loop playsinline preload="none" poster="img/DMG-Nautilus_Tectonic-Cabling.jpg"></video>
+                      <video src="video/DMG-Nautilus_Tectonic_AssemblyVideo.mp4" loop playsinline preload="metadata"></video>
                       <div class="img-carousel__scanline"></div>
                       <div class="carousel-video-play" aria-label="Play video">
                         <div class="carousel-video-play__icon">&#9654;</div>

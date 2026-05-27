@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>DMG Labs — Guide 05: Beluga Subwoofer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=DM+Mono:wght@300;400&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <style>
+    /* ── VIDEO SLIDE ── */
+    .img-carousel__slide--video {
+      background: #000;
+      position: relative;
+    }
+
+    .img-carousel__slide--video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-video-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: rgba(15, 31, 23, 0.62);
+      cursor: pointer;
+      z-index: 5;
+      transition: opacity 0.2s;
+    }
+
+    .carousel-video-play.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .carousel-video-play__icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2.5px solid #f06a00;
+      background: rgba(240, 106, 0, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #f06a00;
+      box-shadow: 0 0 0 6px rgba(240, 106, 0, 0.1);
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+
+    .carousel-video-play:hover .carousel-video-play__icon {
+      background: rgba(240, 106, 0, 0.32);
+      box-shadow: 0 0 0 10px rgba(240, 106, 0, 0.08);
+    }
+
+    .carousel-video-play__label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.38rem;
+      color: rgba(200, 221, 208, 0.7);
+      letter-spacing: 0.12em;
+    }
+
+    .carousel-video-mute {
+      position: absolute;
+      bottom: 38px;
+      right: 10px;
+      z-index: 10;
+      background: rgba(15, 31, 23, 0.72);
+      border: 2px solid rgba(240, 106, 0, 0.6);
+      color: #f06a00;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.45rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 4px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      line-height: 1;
+      display: none;
+    }
+
+    .carousel-video-mute.visible {
+      display: block;
+    }
+
+    /* ── GRID OVERFLOW FIX ── */
+    .step__body {
+      min-width: 0;
+    }
+
+    .guide-callout {
+      overflow-x: hidden;
+    }
+
+    .code-block {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    .code-block__body {
+      overflow-x: auto;
+    }
+
+    .code-block__body pre {
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* ── PREFACE / THEORY SECTION ── */
+    .guide-preface {
+      background: #f7f4ef;
+      border-left: 3px solid #f06a00;
+      padding: 2.8rem 0 2.4rem 1.6rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .guide-preface__eyebrow {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.14em;
+      color: #f06a00;
+      margin-bottom: 1rem;
+    }
+
+    .guide-preface__body p {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.96rem;
+      line-height: 1.75;
+      color: #2a3a31;
+      margin-bottom: 1rem;
+    }
+
+    .guide-preface__body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .guide-preface__body strong {
+      color: #0f1f17;
+    }
+
+    .preface-sub {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.12em;
+      color: #6b8c78;
+      margin: 1.8rem 0 0.7rem;
+      display: block;
+    }
+
+    /* Inline formula pills */
+    .phi-formula {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #0f1f17;
+      color: #c8ddd0;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 3px;
+      margin: 0.2rem 0;
+      white-space: nowrap;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .phi-formula span {
+      color: #f06a00;
+    }
+
+    /* Calc table */
+    .calc-table-wrap {
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .calc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      min-width: 420px;
+    }
+
+    .calc-table th {
+      background: #0f1f17;
+      color: #c8ddd0;
+      padding: 0.5rem 0.8rem;
+      text-align: left;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+    }
+
+    .calc-table td {
+      padding: 0.48rem 0.8rem;
+      border-bottom: 1px solid #dde8e2;
+      color: #2a3a31;
+      vertical-align: top;
+    }
+
+    .calc-table td:first-child {
+      color: #0f1f17;
+      font-weight: bold;
+    }
+
+    .calc-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .calc-table .val {
+      color: #f06a00;
+    }
+
+    /* ── VIDEO LIGHTBOX ── */
+    #vlb {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(8, 18, 12, 0.96);
+      backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+      animation: vlb-in 0.22s ease;
+    }
+
+    #vlb.active {
+      display: flex;
+    }
+
+    @keyframes vlb-in {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    #vlb video {
+      max-width: min(92vw, 1200px);
+      max-height: 82vh;
+      border-radius: 4px;
+      box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
+      background: #000;
+      display: block;
+    }
+
+    #vlb-close {
+      position: absolute;
+      top: 1.4rem;
+      right: 1.6rem;
+      background: none;
+      border: 1.5px solid rgba(240, 106, 0, 0.6);
+      color: #f06a00;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      padding: 0.4rem 0.7rem;
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      border-radius: 3px;
+    }
+
+    #vlb-close:hover {
+      background: rgba(240, 106, 0, 0.12);
+    }
+
+    #vlb-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.42rem;
+      color: rgba(200, 221, 208, 0.45);
+      letter-spacing: 0.12em;
+    }
+
+    .video-zoom-hint {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 6;
+      background: rgba(15, 31, 23, 0.72);
+      border: 1.5px solid rgba(240, 106, 0, 0.5);
+      color: #f06a00;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.38rem;
+      padding: 0.28rem 0.48rem;
+      border-radius: 3px;
+      pointer-events: none;
+      letter-spacing: 0.08em;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .img-carousel__slide--video:hover .video-zoom-hint {
+      opacity: 1;
+    }
+    .img-carousel__slide .img--top,
+    .img-placeholder .img--top { object-position: center center; }
+
+    #carousel-result .img-carousel__track,
+    #carousel-result .img-carousel__slide { height: 480px; }
+
+    #hero-carousel .img-carousel__track,
+    #hero-carousel .img-carousel__slide { height: 480px; }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ── NAV ── -->
+  <nav class="nav">
+    <a href="index.html" class="nav__logo" aria-label="DMG Labs">
+      <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
+        <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#0f1f17">D</text>
+        <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#0f1f17">M</text>
+        <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00" />
+        <circle cx="74" cy="16" r="2.8" fill="#f06a00" />
+      </svg>
+    </a>
+    <ul class="nav__links">
+      <li><a href="devices.html" class="nav__link">Devices</a></li>
+      <li><a href="guides.html" class="nav__link">Guides</a></li>
+      <li><a href="studio.html" class="nav__link">Studio</a></li>
+    </ul>
+    <a href="guides.html" class="btn btn-nav-cta">&#9658; Start Building</a>
+  </nav>
+
+
+  <!-- ── HERO ── -->
+  <section class="guide-hero">
+    <div class="guide-hero__inner">
+
+      <div>
+        <div class="guide-hero__breadcrumb">
+          <a href="guides.html">Guides</a>
+          <span class="guide-hero__breadcrumb-sep">/</span>
+          <span>05 — Beluga Subwoofer</span>
+        </div>
+        <div class="guide-hero__eyebrow">// GUIDE 05 &middot; DMG-BELUGA SUBWOOFER</div>
+        <h1 class="guide-hero__title">Build the<br><em>Beluga.</em></h1>
+        <p class="guide-hero__desc">A 3D-printed subwoofer enclosure shaped after the rounded profile of a beluga whale
+          — an 8.8&nbsp;L Helmholtz resonator tuned to 48&nbsp;Hz, loaded by two opposing Dayton TCP115-4 woofers wired
+          in series. Pairs with the DMG-Nautilus via Bluetooth in TWS concert mode to form a complete 2.1 desktop system.</p>
+
+        <div class="guide-skill-row">
+          <span class="skill-tag skill-tag--fdm">3D Printing</span>
+          <span class="skill-tag skill-tag--elec">Electronics</span>
+          <span class="skill-tag skill-tag--code">Acoustics</span>
+          <span class="skill-tag skill-tag--api">Assembly</span>
+        </div>
+
+        <div class="guide-hero__stats">
+          <div class="guide-stat-item">
+            <span class="guide-stat-item__label">Difficulty</span>
+            <span class="guide-stat-item__value guide-stat-item__value--sm">INTERMEDIATE</span>
+          </div>
+          <div class="guide-stat-item">
+            <span class="guide-stat-item__label">Steps</span>
+            <span class="guide-stat-item__value">5</span>
+          </div>
+          <div class="guide-stat-item">
+            <span class="guide-stat-item__label">Est. time</span>
+            <span class="guide-stat-item__value guide-stat-item__value--sm">~&nbsp;12&nbsp;hrs</span>
+          </div>
+          <div class="guide-stat-item">
+            <span class="guide-stat-item__label">Approx. cost</span>
+            <span class="guide-stat-item__value guide-stat-item__value--sm">~&nbsp;100&nbsp;€</span>
+          </div>
+        </div>
+
+        <div class="guide-hero__actions">
+          <a href="#downloads" class="btn btn-orange">&#9658; Get the Files</a>
+          <a href="#build" class="btn btn-ghost">Jump to Build</a>
+        </div>
+      </div>
+
+      <!-- Right: device image carousel -->
+      <div class="guide-hero__visual">
+        <div class="retro-window">
+          <div class="retro-window__titlebar">
+            <span class="retro-window__title">beluga.visual</span>
+            <div class="window-btns">
+              <div class="window-btn window-btn--red"></div>
+              <div class="window-btn window-btn--yellow"></div>
+              <div class="window-btn window-btn--green"></div>
+            </div>
+          </div>
+          <div class="img-carousel img-carousel--pine" id="hero-carousel">
+            <div class="img-carousel__track">
+              <div class="img-carousel__slide">
+                <img src="img/DMG-Beluga_FinalProduct_Table-Side.jpg" alt="DMG-Beluga — side view" class="img--top" />
+                <div class="img-carousel__scanline"></div>
+              </div>
+              <div class="img-carousel__slide">
+                <img src="img/DMG-Beluga_Drawing.png" alt="DMG-Beluga — Drawing" class="img--top" />
+                <div class="img-carousel__scanline"></div>
+              </div>
+              <div class="img-carousel__slide">
+                <img src="img/DMG-Beluga_FinalProduct_Table-Front_Near-2.jpg" alt="DMG-Beluga — front close-up" class="img--top" />
+                <div class="img-carousel__scanline"></div>
+              </div>
+              <div class="img-carousel__slide">
+                <img src="img/DMG-Beluga_CAD-Capture.png" alt="DMG-Beluga — CAD render" class="img--top" />
+                <div class="img-carousel__scanline"></div>
+              </div>
+            </div>
+            <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+            <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+            <div class="img-carousel__counter">1 / 4</div>
+            <div class="img-carousel__dots">
+              <div class="img-carousel__dot"></div>
+              <div class="img-carousel__dot"></div>
+              <div class="img-carousel__dot"></div>
+              <div class="img-carousel__dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ── DOWNLOAD BANNER ── -->
+  <div class="download-banner" id="downloads">
+    <div class="download-banner__inner">
+      <div>
+        <div class="download-banner__label">// ALL FILES OPEN SOURCE</div>
+        <div class="download-banner__title">Download everything.</div>
+        <div class="download-banner__files">
+          <span class="file-chip">DMG-Beluga.step</span>
+          <span class="file-chip">BOM</span>
+        </div>
+      </div>
+      <div class="download-banner__actions">
+        <a href="https://drive.google.com/drive/folders/1gsnP8yRcNL3zzjsoSlWduw5gtbMWySne?usp=drive_link" class="btn btn-orange">&#9658; Open in Google Drive</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── GUIDE BODY ── -->
+  <div class="guide-body">
+    <div class="guide-body__inner">
+
+      <!-- Sidebar TOC -->
+      <aside class="guide-toc">
+        <div class="guide-toc__heading">// IN THIS GUIDE</div>
+        <ul class="guide-toc__links">
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#design">Design &amp; Theory</a></li>
+          <li><a href="#bom">Bill of Materials</a></li>
+          <div class="guide-toc__divider"></div>
+          <li><a href="#build">Build Steps</a></li>
+          <li><a href="#step-01">01 — Designing the Beluga</a></li>
+          <li><a href="#step-02">02 — Printing the enclosure</a></li>
+          <li><a href="#step-03">03 — Wiring &amp; drivers</a></li>
+          <li><a href="#step-04">04 — Back cover &amp; amp</a></li>
+        <li><a href="#step-05">05 — Final result &amp; sound</a></li>
+          <div class="guide-toc__divider"></div>
+          <li><a href="#troubleshooting">Troubleshooting</a></li>
+          <li><a href="#backlog">Backlog</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main content -->
+      <main class="guide-content">
+
+        <!-- Overview -->
+        <section class="guide-section" id="overview">
+          <div class="guide-section__eyebrow">// OVERVIEW</div>
+          <h2 class="guide-section__title">What you're building</h2>
+          <div class="guide-section__body">
+            <p>The DMG-Beluga is a compact, 3D-printed subwoofer that completes the Nautilus desktop system. Its
+              enclosure takes the profile of a beluga whale — a smooth, rounded body that sits naturally on a desk and
+              visually matches the organic geometry of the Nautilus speakers. Inside, two Dayton TCP115-4 woofers face
+              each other on opposite sides of the enclosure in a dual-opposed arrangement, wired in series, driven by a
+              Wondom JAB2+ running in mono-bridged mode at 100&nbsp;W.</p>
+            <p>The enclosure is a Helmholtz resonator with a tuning frequency of approximately 48&nbsp;Hz — well-matched
+              to the Nautilus's sealed roll-off around 140&nbsp;Hz. The port geometry is defined by an 8.8&nbsp;L
+              internal volume, a 50&nbsp;cm centerline path length through the port tube, and a 35&nbsp;cm² opening
+              area. A brass rotary dimmer provides a physical volume control on the body. Both the Beluga and the
+              Nautilus connect independently to the source over Bluetooth.</p>
+            <p>The enclosure is printed in dual-color PLA — a Sunlu dual-filament with a gradient color shift that gives
+              the body a visually unique finish without any painting or post-processing. Total print time is dominated
+              by the body: plan on 10–14&nbsp;hrs depending on your printer speed.</p>
+          </div>
+        </section>
+
+
+        <!-- DESIGN & THEORY PREFACE -->
+        <section class="guide-section" id="design">
+          <div class="guide-section__eyebrow">// DESIGN &amp; THEORY</div>
+          <h2 class="guide-section__title">Why the beluga?</h2>
+
+          <div class="guide-preface">
+            <div class="guide-preface__eyebrow">// SHAPE, PHYSICS, AND THE WHALE</div>
+            <div class="guide-preface__body">
+
+              <span class="preface-sub">// THE BELUGA AS AN ENCLOSURE SHAPE</span>
+              <p>The beluga whale (<em>Delphinapterus leucas</em>) is one of the few cetaceans with a genuinely rounded,
+                bulbous head — the melon — shaped by internal acoustic fat deposits used for bio-sonar. The beluga's profile is dominated by smooth, convex curves with no flat
+                surfaces or abrupt angles. This makes it an apt shape for a speaker enclosure: the curved body exhibits no flat parallel
+                panels, which are the primary source of panel resonance in loudspeaker cabinets. Every surface is in a state of continuous curvature, distributing bending stress and pushing
+                panel resonances well above the subwoofer's operating range.</p>
+
+              <span class="preface-sub">// DUAL-OPPOSED DRIVER ARCHITECTURE</span>
+              <p>In a conventional single-driver subwoofer, every bass transient produces a reactive force on the
+                enclosure - Newton's third law applied to a speaker cone. The driver pushes air forward; the cabinet is
+                pushed backward by an equal force. At low frequencies this is not subtle: a powerful woofer in a
+                lightweight enclosure will visibly rock the box with every bass hit. That rocking couples into the desk
+                surface, re-radiating as structural vibration, and degrading the overall sound-quality of the bass.</p>
+              <p>The dual-opposed architecture eliminates this. Two drivers are mounted on directly opposite faces of
+                the enclosure, pointing in opposite directions, and wired so that when one cone moves outward
+                (compressing the air on its outside face) the other also moves outward (expanding the air on its outside
+                face). The internal volume sees both drivers simultaneously - they load the same air mass, moving in
+                acoustic unison. But the external reactive forces they generate are equal, opposite, and collinear: they
+                cancel each other exactly. The enclosure experiences no net translational force. It sits still
+                regardless of bass level.</p>
+              <p><strong>Wiring in series:</strong> the two drivers are connected in series, giving a combined impedance
+                of 2 × 4&nbsp;Ω = <strong>8&nbsp;Ω</strong>. The JAB2+ bridged mono output is rated into 4&nbsp;Ω
+                minimum. Parallel wiring would give 2&nbsp;Ω, below the amp's rated minimum and likely to cause thermal protection trips.</p>
+
+              <span class="preface-sub">// HELMHOLTZ RESONATOR PRINCIPLE</span>
+              <p>A sealed box is the simplest subwoofer alignment: trap air, let the driver compress it. But sealed alignments waste efficiency — the trapped air acts as an
+                extra spring stiffening the driver, raising its resonant frequency and requiring more power.</p>
+              <p>A <strong>Helmholtz resonator</strong> — the acoustic equivalent of blowing across the mouth of a
+                bottle — uses a tuned port to recover this efficiency. The port is a mass of air (the air plug in the
+                tube) connected to the compliance of the enclosure volume. Together they form a second-order resonant
+                system that reinforces bass output near the port tuning frequency <em>F<sub>b</sub></em>, while the
+                driver's back pressure is partially offloaded to the port.
+              <p>The tuning frequency is set by the port geometry according to:</p>
+
+              <div style="display:flex; gap:1rem; flex-wrap:wrap; margin:1rem 0 0.5rem;">
+                <div class="phi-formula">F<sub style="color:#c8ddd0">b</sub> = (c / 2π) · <span>√( S / V · L<sub
+                      style="color:#c8ddd0">eff</sub> )</span></div>
+              </div>
+              <p style="font-size:0.85rem; color:#5a7a68; font-family:'DM Mono',monospace; margin:0.2rem 0 1rem;">c =
+                speed of sound (343 m/s) &nbsp;|&nbsp; S = port area &nbsp;|&nbsp; V = net box volume &nbsp;|&nbsp;
+                L<sub>eff</sub> = effective port length (physical + end correction)</p>
+
+              <span class="preface-sub">// BELUGA PORT CALCULATION</span>
+              <p>The Beluga enclosure was tuned to cross
+                over smoothly with the Nautilus's sealed roll-off. The target was <strong>F<sub>b</sub> ≈
+                  48&nbsp;Hz</strong>, which sits just below the Nautilus's −3&nbsp;dB point and provides a flat
+                combined response from approximately 45&nbsp;Hz to 20&nbsp;kHz when the systems are level-matched.</p>
+
+              <div class="calc-table-wrap">
+                <table class="calc-table">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Value</th>
+                      <th>Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Net box volume V</td>
+                      <td class="val">8.8 L</td>
+                      <td>Internal volume after driver displacement and port tube volume</td>
+                    </tr>
+                    <tr>
+                      <td>Port opening area S</td>
+                      <td class="val">35 cm²</td>
+                      <td>Circular port, ø&nbsp;≈ 67&nbsp;mm; sized to keep port air velocity below ~17 m/s at max
+                        excursion</td>
+                    </tr>
+                    <tr>
+                      <td>Centerline path L</td>
+                      <td class="val">50 cm</td>
+                      <td>Physical tube length; port is routed internally to maximize length within the enclosure
+                        footprint</td>
+                    </tr>
+                    <tr>
+                      <td>End correction ΔL</td>
+                      <td class="val">≈ 3.3 cm</td>
+                      <td>0.85 · r for an unflanged end; r = radius of port opening</td>
+                    </tr>
+                    <tr>
+                      <td>Effective length L<sub>eff</sub></td>
+                      <td class="val">53.3 cm</td>
+                      <td>L + ΔL</td>
+                    </tr>
+                    <tr>
+                      <td>Tuning frequency F<sub>b</sub></td>
+                      <td class="val">≈ 48 Hz</td>
+                      <td>Calculated; confirmed by impedance measurement on finished box</td>
+                    </tr>
+                    <tr>
+                      <td>Driver F<sub>s</sub> (TCP115-4)</td>
+                      <td class="val">40 Hz</td>
+                      <td>Free-air resonance per datasheet; F<sub>b</sub> > F<sub>s</sub> preferred for ported alignment
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>−3&nbsp;dB point</td>
+                      <td class="val">≈ 42 Hz</td>
+                      <td>Estimated from simulation; measured in-room will vary</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <span class="preface-sub">// MATCHING THE NAUTILUS</span>
+              <p>The Beluga's 48&nbsp;Hz tuning and the Nautilus's ~140&nbsp;Hz sealed roll-off leave a gap in between
+                that is bridged by the natural overlap of the two systems' output. No active crossover is used — the
+                Beluga's JAB2+ has its own Bluetooth receiver, and its internal DSP applies a low-pass filter that can
+                be configured from the Wondom app. Setting the Beluga's low-pass to approximately 120&nbsp;Hz and its
+                level to blend with the Nautilus at the listening position gives a smooth transition. The rotary dimmer
+                on the Beluga's body allows real-time level trimming without touching any software.</p>
+              <p>Both systems are connected via Bluetooth, with the Nautilus acting as the Master and the Beluga as the Slave, with a smooth cross-over around 120 Hz.
+                The Nautilus handles the frequencies above, the Beluga handles the frequencies below. The bluetooth connection 
+                maintains sub-10&nbsp;ms latency between the two links — imperceptible for a subwoofer at low
+                frequencies.</p>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- BOM -->
+        <section class="guide-section" id="bom">
+          <div class="guide-section__eyebrow">// BILL OF MATERIALS</div>
+          <h2 class="guide-section__title">What you'll need</h2>
+          <div class="guide-section__body">
+            <p>Total cost sits at roughly 90–110&nbsp;€ depending on where you source the drivers. The JAB2+ and power
+              supply are the bulk of the cost; the printed enclosure is around 15–20&nbsp;€ in filament.</p>
+          </div>
+
+          <div class="retro-window">
+            <div class="retro-window__titlebar retro-window--green">
+              <span class="retro-window__title">BOM.csv</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="retro-window__body retro-window__body--flush">
+              <table class="bom-table">
+                <thead>
+                  <tr>
+                    <th>Component</th>
+                    <th>Spec / Notes</th>
+                    <th class="bom-table__th--center">Qty</th>
+                    <th>Cost</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dayton TCP115-4</td>
+                    <td>4&nbsp;Ω, 4" woofer.</td>
+                    <td class="bom-table__qty-cell"><span class="bom-qty">× 2</span></td>
+                    <td><span class="bom-optional">~35 € ea.</span></td>
+                  </tr>
+                  <tr>
+                    <td>Wondom JAB2+ (mono-bridge)</td>
+                    <td>Class-D amplifier, configured for bridged mono output at 100&nbsp;W into 8&nbsp;Ω. Includes
+                      Bluetooth 5.0 receiver and onboard MiuMax DSP with low-pass filter. Include the functional cable set.
+                    </td>
+                    <td class="bom-table__qty-cell"><span class="bom-qty">× 1</span></td>
+                    <td><span class="bom-optional">~50 €</span></td>
+                  </tr>
+                  <tr>
+                    <td>JAB2+ Functional Cable Set</td>
+                    <td>JST connectors and screw-terminal breakout for clean power and speaker connections. Avoids
+                      having to source connectors separately.</td>
+                    <td class="bom-table__qty-cell"><span class="bom-qty">× 1</span></td>
+                    <td><span class="bom-optional">5–10 €</span></td>
+                  </tr>
+                  <tr>
+                    <td>24&nbsp;V DC Power Supply with Connector</td>
+                    <td>Minimum 5&nbsp;A (120&nbsp;W) supply. The JAB2+ bridged at 100&nbsp;W draws up to 4.5&nbsp;A at
+                      full output. Use a brick-style supply with a barrel connector matching the JAB2+ input.</td>
+                    <td class="bom-table__qty-cell"><span class="bom-qty">× 1</span></td>
+                    <td><span class="bom-optional">~18 €</span></td>
+                  </tr>
+                  <tr>
+                    <td>Brass Rotary Dimmer</td>
+                    <td>Wired in series with the signal path as an analog volume pot for the Beluga. Brass body matches
+                      the finish of the Nautilus hardware. Connected to the volume rotary switch from the JAB2+ functional cable set.</td>
+                    <td class="bom-table__qty-cell"><span class="bom-qty">× 1</span></td>
+                    <td><span class="bom-optional">~5 €</span></td>
+                  </tr>
+                  <tr>
+                    <td>Gold-plated Cable Connectors</td>
+                    <td>For speaker output connections between amp board and drivers. Makes the driver connections serviceable without soldering.</td>
+                    <td class="bom-table__qty-cell"><span class="bom-qty">× 4</span></td>
+                    <td><span class="bom-optional">~2 €</span></td>
+                  </tr>
+                  <tr>
+                    <td>PLA Filament — Dual-color</td>
+                    <td>Sunlu dual-color PLA gives a gradient finish without painting. Any dual-filament PLA with a
+                      smooth color shift works. Approximately 800&nbsp;g for the full enclosure (3 main body parts).</td>
+                    <td class="bom-table__qty-cell"><span class="bom-qty">1 kg</span></td>
+                    <td><span class="bom-optional">15–20 €</span></td>
+                  </tr>
+                  <tr>
+                    <td>PLA Filament — Transparent</td>
+                    <td>Any transparent or whitish filament for the back-cover housing the amplifier and the front shield. Approx. 200 g.</td>
+                    <td class="bom-table__qty-cell"><span class="bom-qty">1 kg</span></td>
+                    <td><span class="bom-optional">15–20 €</span></td>
+                  </tr>
+                  <tr>
+                    <td>Play-Doh Putty</td>
+                    <td>For sealing cable pass-throughs between driver plates and enclosure body. Acoustically inert,
+                      reworkable.</td>
+                    <td class="bom-table__qty-cell"><span class="bom-qty">small amount</span></td>
+                    <td><span class="bom-optional">~2 €</span></td>
+                  </tr>
+                  <tr>
+                    <td>2-Component Epoxy Glue</td>
+                    <td>For bonding the three main body components and back-cover housing. Front shield is permanently bonded to main body with epoxy as well to minimize vibrations.</td>
+                    <td class="bom-table__qty-cell"><span class="bom-qty">small amount</span></td>
+                    <td><span class="bom-optional">3–5 €</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="guide-callout guide-callout--tip">
+            <div class="guide-callout__label">// TIP — bridge mode configuration</div>
+            Before wiring the drivers, configure the board for
+            <strong>mono</strong>. The bridge must be OPEN for mono.
+            Wiring drivers to the bridged output terminals before configuring the mode will apply the wrong signal to
+            each driver and may sound correct but at half the rated power.
+          </div>
+        </section>
+
+
+        <!-- Build steps -->
+        <section class="guide-section" id="build">
+          <div class="guide-section__eyebrow">// BUILD STEPS</div>
+          <h2 class="guide-section__title">Step by step</h2>
+          <div class="guide-section__body">
+            <p>The Beluga is a shorter build than the Nautilus — the main constraint is print time for the body, which
+              can run overnight. Steps 03 and 04 are a few hours of hands-on work. Have the epoxy, putty, and a caliper
+              ready before starting the assembly steps.</p>
+          </div>
+
+          <div class="step-list">
+
+            <!-- Step 01 -->
+            <div class="step" id="step-01">
+              <div class="step__num">01</div>
+              <div class="step__body">
+                <div class="step__title">Designing the Beluga</div>
+                <div class="step__text">
+                  <p>The enclosure body is modelled from the profile of a beluga whale in lateral view — a smooth convex
+                    hull with no flat external surfaces. The widest cross-section sits roughly one-third of the way from
+                    the front (the "head"), matching the beluga's anatomical proportions and, usefully, placing the
+                    driver apertures at the point of maximum wall curvature where the shell is most structurally rigid.
+                  </p>
+                  <p>The internal cavity was sized iteratively in CAD to reach 8.8&nbsp;L net volume after subtracting
+                    the two driver displacement volumes, the port tube volume, and the amp board recess. The port tube
+                    runs internally as a curved channel following the enclosure's inner wall, maximizing tube length
+                    within the enclosure footprint without external protrusion. The port opening exits through the rear
+                    of the body.</p>
+                  <p>The driver plates — the flat sections in which the woofers mount — are the only flat surfaces on
+                    the enclosure. They are printed as separate parts and bonded to the body with epoxy, which both
+                    seals the joint acoustically and allows the driver plates to be replaced independently if a driver
+                    needs service. Each plate has a machined-tolerance recess for the TCP115-4's mounting flange.</p>
+                </div>
+
+                <div class="guide-callout guide-callout--tip">
+                  <div class="guide-callout__label">// ACOUSTIC NOTE — why 48 Hz tuning</div>
+                  The Dayton TCP115-4 has an F<sub>s</sub> of ~40&nbsp;Hz. Ported alignments work best when
+                  F<sub>b</sub> is set slightly above F<sub>s</sub> — here 48&nbsp;Hz. Tuning lower would require a
+                  longer port (more volume, harder to print) and would approach the driver's excursion limit below the
+                  tuning frequency where the port provides no back-pressure. 48&nbsp;Hz also pairs naturally with the
+                  Nautilus's ~140&nbsp;Hz roll-off, leaving a 3–4 octave overlap region for the subwoofer to fill.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 02 -->
+            <div class="step" id="step-02">
+              <div class="step__num">02</div>
+              <div class="step__body">
+                <div class="step__title">Printing the enclosure</div>
+                <div class="step__text">
+                  <p>There are three separate prints: the body, the two driver plates (one per side), and the port tube.
+                    Print them in the order listed — the body takes the longest and can run overnight, while the plates
+                    and port tube print in 2–3 hours combined.</p>
+                </div>
+
+                <div class="guide-callout guide-callout--tip">
+                  <div class="guide-callout__label">// PRINTING THE BODY</div>
+                  <p style="margin:0 0 0.8rem">Orient the body with the flat bottom face down — no supports required in
+                    this orientation. The dual-color filament produces the gradient automatically as the print height
+                    increases; no manual filament swap is needed. Load the dual-color spool before starting and let it
+                    run unattended.</p>
+                  <p style="margin:0">The body has no flat top surface — it terminates in a rounded crown. The slicer
+                    will produce a closing sequence of decreasing-diameter circles. Slow the top layers to 40&nbsp;mm/s
+                    to get a clean closure without gaps.</p>
+                </div>
+
+                <div class="code-block">
+                  <div class="code-block__header">
+                    <div class="code-block__header-left">
+                      <div class="code-block__dots">
+                        <div class="code-block__dot code-block__dot--r"></div>
+                        <div class="code-block__dot code-block__dot--y"></div>
+                        <div class="code-block__dot code-block__dot--g"></div>
+                      </div>
+                      <span class="code-block__filename">slicer_settings_body.txt</span>
+                    </div>
+                    <div class="code-block__header-right">
+                      <span class="code-block__lang">settings</span>
+                      <button class="code-block__copy">COPY</button>
+                    </div>
+                  </div>
+                  <div class="code-block__body">
+                    <pre><code class="language-none">Material:          Sunlu dual-color PLA (or any dual-filament PLA)
+Layer height:      0.2 mm
+Walls:             4 – 6 perimeters
+Infill:            20 % gyroid
+Top/bottom layers: 5
+Bed temp:          55 °C
+Nozzle temp:       210 – 220 °C
+Top-layer speed:   40 mm/s (slow for crown closure)
+Supports:          none required
+Estimated time:    ~10 – 14 hrs (BambuLab P1S)</code></pre>
+                  </div>
+                </div>
+
+                <div class="guide-callout" style="margin-top:1.5rem;">
+                  <div class="guide-callout__label">// PRINTING THE DRIVER PLATES</div>
+                  <p style="margin:0 0 0.8rem">Print both driver plates flat, with the driver-facing side down. Use 6
+                    perimeter walls on the plates — they carry the full clamping load of the driver mounting screws and
+                    the acoustic pressure seal. The driver recess is sized for the TCP115-4's flange; verify the
+                    diameter with a caliper after printing before bonding to the body.</p>
+                  <p style="margin:0">Use the same dual-color PLA as the body if you want the plates to blend in, or
+                    switch to a contrasting solid PLA for a two-tone finish.</p>
+                </div>
+
+                <div class="guide-callout" style="margin-top:1.2rem;">
+                  <div class="guide-callout__label">// PRINTING THE PORT TUBE</div>
+                  <p style="margin:0">The port tube is a curved channel that installs inside the body through the driver
+                    aperture before the driver plate is bonded. Print it in a neutral-colored PLA (it won't be visible
+                    in the finished enclosure). Check the tube's outer diameter against the body's port socket before
+                    printing the full tube — run a short test print of the first 20&nbsp;mm and dry-fit it first. The
+                    tube needs to be airtight: seal any print seam lines with thin epoxy before installation.</p>
+                </div>
+
+                <div class="retro-window" style="margin-top:1.5rem;">
+                  <div class="retro-window__titlebar">
+                    <span class="retro-window__title">heat-inserts.visual</span>
+                    <div class="window-btns">
+                      <div class="window-btn window-btn--red"></div>
+                      <div class="window-btn window-btn--yellow"></div>
+                      <div class="window-btn window-btn--green"></div>
+                    </div>
+                  </div>
+                  <div class="img-carousel" id="carousel-heatinserts">
+                    <div class="img-carousel__track">
+                      <div class="img-carousel__slide img-carousel__slide--video">
+                        <video preload="metadata" playsinline muted>
+                          <source src="video/DMG-Beluga_HeatInserts_Assembly.mov" type="video/mp4" />
+                        </video>
+                        <div class="img-carousel__scanline"></div>
+                        <div class="carousel-video-play" aria-label="Play video">
+                          <div class="carousel-video-play__icon">&#9654;</div>
+                          <span class="carousel-video-play__label">PLAY VIDEO</span>
+                        </div>
+                        <span class="video-zoom-hint">&#9654; OPEN FULL</span>
+                      </div>
+                    </div>
+                    <div class="img-carousel__counter">1 / 1</div>
+                    <div class="img-carousel__dots"><div class="img-carousel__dot"></div></div>
+                  </div>
+                </div>
+                <p class="guide-media__caption">Heat insert installation — technique and iron temperature.</p>
+              </div>
+            </div>
+
+            <!-- Step 03 -->
+            <div class="step" id="step-03">
+              <div class="step__num">03</div>
+              <div class="step__body">
+                <div class="step__title">Wiring and assembling the drivers</div>
+
+                <div class="step__text">
+                  <p>Start by inspecting both TCP115-4 units side by side. Check that the surrounds, cones and terminal connectors are undamaged, and confirm both are the same batch — matching serial numbers on the label improve the vibration-cancellation accuracy of the dual-opposed pair.</p>
+                </div>
+
+                <div>
+                  <div class="retro-window" style="margin-top:0;">
+                    <div class="retro-window__titlebar">
+                      <span class="retro-window__title">dayton-unboxing.visual</span>
+                      <div class="window-btns">
+                        <div class="window-btn window-btn--red"></div>
+                        <div class="window-btn window-btn--yellow"></div>
+                        <div class="window-btn window-btn--green"></div>
+                      </div>
+                    </div>
+                    <div class="img-carousel" id="carousel-unboxing">
+                      <div class="img-carousel__track">
+                        <div class="img-carousel__slide img-carousel__slide--video">
+                          <video preload="metadata" playsinline muted>
+                          <source src="video/DMG-Beluga_Dayton-Unboxing.mp4" type="video/mp4" />
+                        </video>
+                          <div class="img-carousel__scanline"></div>
+                          <div class="carousel-video-play" aria-label="Play video">
+                            <div class="carousel-video-play__icon">&#9654;</div>
+                            <span class="carousel-video-play__label">PLAY VIDEO</span>
+                          </div>
+                          <span class="video-zoom-hint">&#9654; OPEN FULL</span>
+                        </div>
+                      </div>
+                      <div class="img-carousel__counter">1 / 1</div>
+                      <div class="img-carousel__dots"><div class="img-carousel__dot"></div></div>
+                    </div>
+                  </div>
+                  <p class="guide-media__caption">Unboxing and inspection — look for matching batch codes on the label.</p>
+                </div>
+
+                <div class="step__text" style="margin-top:1.8rem;">
+                  <p>Before mounting either driver, loosely pack the enclosure body with sheep wool through the open aperture. Work it into the curved interior in sections, aiming for roughly 60–70% fill — the wool should sit freely, not be compressed. Over-packing stiffens the air spring and raises the effective tuning frequency; under-packing leaves standing-wave energy undamped.</p>
+                </div>
+
+                <div class="img-placeholder img-placeholder--tall" style="margin-top:1rem;">
+                  <img src="img/DMG-Beluga_Wool-Filling_MainBody.jpg" alt="Sheep wool packed loosely into the main body cavity" class="img--top" />
+                </div>
+                <p class="guide-media__caption">Wool loosely filling the cavity — visible through the open driver aperture.</p>
+
+                <div class="step__text" style="margin-top:1.8rem;">
+                  <p>Screw each TCP115-4 into its driver plate using the supplied hardware. Snug the screws evenly in a cross pattern — overtightening in sequence will distort the mounting flange and compromise the acoustic seal between driver and plate.</p>
+                </div>
+
+                <div class="retro-window" style="margin-top:1rem;">
+                  <div class="retro-window__titlebar">
+                    <span class="retro-window__title">dayton-screw.visual</span>
+                    <div class="window-btns">
+                      <div class="window-btn window-btn--red"></div>
+                      <div class="window-btn window-btn--yellow"></div>
+                      <div class="window-btn window-btn--green"></div>
+                    </div>
+                  </div>
+                  <div class="img-carousel" id="carousel-dayton-screw">
+                    <div class="img-carousel__track">
+                      <div class="img-carousel__slide img-carousel__slide--video">
+                        <video preload="metadata" playsinline muted>
+                          <source src="video/DMG-Beluga_Assembly_Dayton_Screw.mp4" type="video/mp4" />
+                        </video>
+                        <div class="img-carousel__scanline"></div>
+                        <div class="carousel-video-play" aria-label="Play video">
+                          <div class="carousel-video-play__icon">&#9654;</div>
+                          <span class="carousel-video-play__label">PLAY VIDEO</span>
+                        </div>
+                        <span class="video-zoom-hint">&#9654; OPEN FULL</span>
+                      </div>
+                    </div>
+                    <div class="img-carousel__counter">1 / 1</div>
+                    <div class="img-carousel__dots"><div class="img-carousel__dot"></div></div>
+                  </div>
+                </div>
+                <p class="guide-media__caption">Screwing the Dayton into the driver plate — cross-pattern tightening.</p>
+
+                <div class="guide-media-grid" style="margin-top:1rem;">
+                  <div>
+                    <div class="img-placeholder img-placeholder--tall">
+                      <img src="img/DMG-Beluga_Golden-Cable-Connector.jpg" alt="Gold-plated cable connector being crimped onto lead wire" class="img--top" />
+                    </div>
+                    <p class="guide-media__caption">Gold connector crimped and ready. Use needle-nose pliers for a tight mechanical connection before crimping.</p>
+                  </div>
+                  <div>
+                    <div class="img-placeholder img-placeholder--tall">
+                      <img src="img/DMG-Beluga_Dayton-Series-Wiring.jpg" alt="Dayton TCP115-4 pair on bench — series wiring laid out" class="img--top" />
+                    </div>
+                    <p class="guide-media__caption">Both drivers on the bench before installation. Lay the series wiring out in front of you before reaching inside the enclosure.</p>
+                  </div>
+                </div>
+
+                <div class="step__text" style="margin-top:1.8rem;">
+                  <p>Route the lead wires through the cable pass-through hole in each driver plate, then bond the plates to the body with slow-cure 2-component epoxy. Press firmly and tape across the joint until cured. Once both plates are bonded, the drivers face each other through the enclosed cavity — this is the dual-opposed configuration.</p>
+                </div>
+
+                <div class="guide-callout guide-callout--warn" style="margin-top:1.2rem;">
+                  <div class="guide-callout__label">// DUAL-OPPOSED POLARITY — CRITICAL</div>
+                  <p style="margin:0 0 0.8rem">Both cones must move outward simultaneously and inward simultaneously. Because the drivers face opposite directions, their electrical connections must be <strong>reversed relative to each other</strong>. The series wiring below handles this automatically — but verify with a 1.5&nbsp;V AA battery before bonding the second plate: briefly touch the battery across the combined pair. Both cones should deflect in the same direction. If one goes out while the other goes in, swap the leads on one driver.</p>
+                </div>
+
+                <div class="img-placeholder img-placeholder--tall" style="margin-top:1.2rem;">
+                  <img src="img/DMG-Beluga_Wired-Daytons-Inside-View.jpg" alt="Both Dayton drivers wired in series — view through open body" class="img--top" />
+                </div>
+                <p class="guide-media__caption">Both drivers wired in series, viewed through the open body before the final plate bonds.</p>
+                <div class="code-block" style="margin-top:1.5rem;">
+                  <div class="code-block__header">
+                    <div class="code-block__header-left">
+                      <div class="code-block__dots">
+                        <div class="code-block__dot code-block__dot--r"></div>
+                        <div class="code-block__dot code-block__dot--y"></div>
+                        <div class="code-block__dot code-block__dot--g"></div>
+                      </div>
+                      <span class="code-block__filename">wiring.txt</span>
+                    </div>
+                    <div class="code-block__header-right">
+                      <span class="code-block__lang">pinout</span>
+                      <button class="code-block__copy">COPY</button>
+                    </div>
+                  </div>
+                  <div class="code-block__body">
+                    <pre><code class="language-none">JAB2+ (bridged mono)  →  Drivers in series
+─────────────────────────────────────────────
+BRIDGE OUT +  →  Driver A  +
+Driver A  −   →  Driver B  +
+Driver B  −   →  BRIDGE OUT −
+
+Combined impedance: 4 Ω + 4 Ω = 8 Ω  ✓
+Power supply:       24 V DC, min. 5 A
+Bridge output:      100 W into 8 Ω
+
+Volume pot (brass dimmer):
+  Signal input  →  POT wiper  →  JAB2+ signal in
+  (10 kΩ audio-taper, wired as voltage divider)</code></pre>
+                  </div>
+                </div>
+
+
+                <div class="step__text" style="margin-top:1.8rem;">
+                  <p>Seal the cable pass-throughs with Play-Doh putty after routing the wires. Press a thumb-sized piece around each cable where it exits the plate, smooth it flush with the inner wall. Any unsealed gap is an acoustic leak — even a 1–2 mm hole will detune the Helmholtz resonance measurably.</p>
+                </div>
+
+                <div class="img-placeholder img-placeholder--tall" style="margin-top:1rem;">
+                  <img src="img/DMG-Beluga_Wire-Passthrough-Sealing_PlayDoh.jpg" alt="Play-Doh pressed around cable pass-through to seal acoustically" class="img--top" />
+                </div>
+                <p class="guide-media__caption">Play-Doh pressed around the cable pass-through — reworkable and acoustically inert.</p>
+
+                <div class="step__text" style="margin-top:1.8rem;">
+                  <p>Once both plates are cured and sealed, bring the two body halves together and bond with epoxy along the full mating seam. Clamp or tape the joint and allow at least 90 minutes before handling. The epoxy joint is the primary acoustic seal of the enclosure — it must be continuous with no gaps.</p>
+                </div>
+
+                <div class="retro-window" style="margin-top:1rem;">
+                  <div class="retro-window__titlebar">
+                    <span class="retro-window__title">body-glue.visual</span>
+                    <div class="window-btns">
+                      <div class="window-btn window-btn--red"></div>
+                      <div class="window-btn window-btn--yellow"></div>
+                      <div class="window-btn window-btn--green"></div>
+                    </div>
+                  </div>
+                  <div class="img-carousel" id="carousel-body-glue">
+                    <div class="img-carousel__track">
+                      <div class="img-carousel__slide img-carousel__slide--video">
+                        <video preload="metadata" playsinline muted>
+                          <source src="video/DMG-Beluga_Main-Body-Assembly_Glue.mov" type="video/mp4" />
+                        </video>
+                        <div class="img-carousel__scanline"></div>
+                        <div class="carousel-video-play" aria-label="Play video">
+                          <div class="carousel-video-play__icon">&#9654;</div>
+                          <span class="carousel-video-play__label">PLAY VIDEO</span>
+                        </div>
+                        <span class="video-zoom-hint">&#9654; OPEN FULL</span>
+                      </div>
+                    </div>
+                    <div class="img-carousel__counter">1 / 1</div>
+                    <div class="img-carousel__dots"><div class="img-carousel__dot"></div></div>
+                  </div>
+                </div>
+                <p class="guide-media__caption">Gluing the body halves — work quickly, slow-cure epoxy still sets in under 10 minutes once mixed.</p>
+
+                <div class="step__text" style="margin-top:1.8rem;">
+                  <p>Wire the two drivers in series and connect to the JAB2+ bridged output. Route all cables cleanly through the rear exit before mounting the amp board in its recess.</p>
+                </div>
+
+                <div class="guide-media-grid" style="margin-top:1rem;">
+                  <div>
+                    <div class="img-placeholder img-placeholder--tall">
+                      <img src="img/DMG-Beluga_Amp-Wiring.jpg" alt="JAB2+ amplifier board fully wired — power, speaker outputs, dimmer" class="img--top" />
+                    </div>
+                    <p class="guide-media__caption">JAB2+ wired: power input (top), speaker outputs (bottom red/black), and dimmer lead.</p>
+                  </div>
+                  <div>
+                    <div class="img-placeholder img-placeholder--tall">
+                      <img src="img/DMG-Beluga_Wire-Guiding_SpeakerEncAmp.jpg" alt="Wires routed cleanly from enclosure to amp board" class="img--top" />
+                    </div>
+                    <p class="guide-media__caption">Wires routed from the enclosure through to the amp board — keep them clear of the port exit.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+
+            <!-- Step 04 -->
+            <div class="step" id="step-04">
+              <div class="step__num">04</div>
+              <div class="step__body">
+                <div class="step__title">Back cover and amp assembly</div>
+                <div class="step__text">
+                  <p>With the main body glued and cured, fit the back cover. The cover houses the JAB2+ amplifier board and closes the rear of the enclosure. Press it onto the body, aligning the cable pass-throughs, and bond it along the full mating seam with 2-component epoxy. Check that the power input connector, speaker terminals, and the dimmer lead all exit cleanly through their respective cutouts before the epoxy sets.</p>
+                  <p>Mount the JAB2+ board in its recess on the inside of the back cover. Route the speaker wires from the drivers to the bridged output terminals, and connect the power lead to the input connector. The rotary dimmer installs in the recess on the body's upper surface — press-fit and secure with a drop of super glue around the collar. Wire the dimmer between the source input and the JAB2+ signal input as a simple voltage divider.</p>
+                </div>
+
+                <div class="retro-window" style="margin-top:1rem;">
+                  <div class="retro-window__titlebar">
+                    <span class="retro-window__title">back-cover-assembly.visual</span>
+                    <div class="window-btns">
+                      <div class="window-btn window-btn--red"></div>
+                      <div class="window-btn window-btn--yellow"></div>
+                      <div class="window-btn window-btn--green"></div>
+                    </div>
+                  </div>
+                  <div class="img-carousel" id="carousel-backcover">
+                    <div class="img-carousel__track">
+                      <div class="img-carousel__slide img-carousel__slide--video">
+                        <video preload="metadata" playsinline muted>
+                          <source src="video/DMG-Beluga_BackCover-Assembly.mov" type="video/mp4" />
+                        </video>
+                        <div class="img-carousel__scanline"></div>
+                        <div class="carousel-video-play" aria-label="Play video">
+                          <div class="carousel-video-play__icon">&#9654;</div>
+                          <span class="carousel-video-play__label">PLAY VIDEO</span>
+                        </div>
+                        <span class="video-zoom-hint">&#9654; OPEN FULL</span>
+                      </div>
+                    </div>
+                    <div class="img-carousel__counter">1 / 1</div>
+                    <div class="img-carousel__dots"><div class="img-carousel__dot"></div></div>
+                  </div>
+                </div>
+                <p class="guide-media__caption">Back cover and amp board assembly. Click to open full-screen.</p>
+
+                <div class="guide-callout guide-callout--tip" style="margin-top:1.5rem;">
+                  <div class="guide-callout__label">// TIP — epoxy working time</div>
+                  Use slow-cure (90 min) 2-component epoxy for the back cover joint. The back cover needs to be aligned precisely before the glue sets — fast-cure epoxy leaves no room to adjust. Apply the epoxy to the body seam, fit the cover, and check all cutout alignments before taping the joint for curing.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 05 -->
+            <div class="step" id="step-05">
+              <div class="step__num">05</div>
+              <div class="step__body">
+                <div class="step__title">Final result and sound</div>
+                <div class="step__text">
+                  <p>Connect the 24&nbsp;V power supply and power up. You should hear the JAB2+ relay click after approximately 2&nbsp;seconds. Open the Wondom app, confirm the board is in bridged mono mode, and set the low-pass filter to approximately 120&nbsp;Hz. Then pair your source device to both the Beluga and the Nautilus over Bluetooth.</p>
+                  <p>Use a test tone at 80&nbsp;Hz and adjust the Beluga's rotary dimmer until the sub level blends with the Nautilus at your listening position. The bass should feel continuous — no audible gap between the Nautilus's sealed roll-off and the Beluga's ported output. If the sub sounds boomy or one-note, the low-pass filter is set too high; bring it down in 10&nbsp;Hz steps until it integrates cleanly.</p>
+                </div>
+
+                <div class="retro-window">
+                  <div class="retro-window__titlebar">
+                    <span class="retro-window__title">result.visual</span>
+                    <div class="window-btns">
+                      <div class="window-btn window-btn--red"></div>
+                      <div class="window-btn window-btn--yellow"></div>
+                      <div class="window-btn window-btn--green"></div>
+                    </div>
+                  </div>
+                  <div class="img-carousel img-carousel--pine" id="carousel-result">
+                    <div class="img-carousel__track">
+
+                      <div class="img-carousel__slide">
+                        <img src="img/DMG-Beluga_FinalProduct_Table-Front_Near-2.jpg" alt="DMG-Beluga — front close-up on table"
+                          class="img--top" />
+                        <div class="img-carousel__scanline"></div>
+                      </div>
+                      <div class="img-carousel__slide">
+                        <img src="img/DMG-Beluga_Product-In-Shelf_Far.jpg" alt="DMG-Beluga on shelf — wide shot"
+                          class="img--top" />
+                        <div class="img-carousel__scanline"></div>
+                      </div>
+                      <div class="img-carousel__slide">
+                        <img src="img/DMG-Beluga_FinalProduct_Table-Side_Far.jpg" alt="DMG-Beluga — side view wide"
+                          class="img--top" />
+                        <div class="img-carousel__scanline"></div>
+                      </div>
+                    </div>
+                    <button class="img-carousel__btn img-carousel__btn--prev" aria-label="Previous">&#9664;</button>
+                    <button class="img-carousel__btn img-carousel__btn--next" aria-label="Next">&#9654;</button>
+                    <div class="img-carousel__counter">1 / 3</div>
+                    <div class="img-carousel__dots">
+                      <div class="img-carousel__dot"></div>
+                      <div class="img-carousel__dot"></div>
+                      <div class="img-carousel__dot"></div>
+                    </div>
+                  </div>
+                </div>
+                <p class="guide-media__caption">The finished DMG-Beluga.</p>
+
+                <div class="guide-callout guide-callout--tip" style="margin-top:1.8rem;">
+                  <div class="guide-callout__label">// ON THE DUAL-OPPOSED RESULT</div>
+                  Place your hand on the enclosure during a bass-heavy track at moderate volume. You will feel almost
+                  nothing — the vibration cancellation of the dual-opposed architecture is immediately tactile. Compare
+                  it to any conventional single-driver sub of similar size and the difference is obvious. On a desk,
+                  this means the Beluga does not couple its mechanical energy into the surface beneath it, which in a
+                  conventional sub would re-radiate as low-level structural noise through the desk and walls.
+                </div>
+              </div>
+            </div>
+
+          </div><!-- end step-list -->
+        </section>
+
+
+        <!-- Troubleshooting -->
+        <section class="guide-section" id="troubleshooting">
+          <div class="guide-section__eyebrow">// TROUBLESHOOTING</div>
+          <h2 class="guide-section__title">Common issues</h2>
+
+          <div class="retro-window">
+            <div class="retro-window__titlebar retro-window--green">
+              <span class="retro-window__title">troubleshoot.txt</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="retro-window__body retro-window__body--flush">
+              <table class="bom-table bom-table--flush">
+                <thead>
+                  <tr>
+                    <th>Symptom</th>
+                    <th>Likely cause &amp; fix</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>No output, relay clicks then drops</td>
+                    <td>The JAB2+ protection relay tripped — usually a short or wrong load impedance. Confirm the two
+                      drivers are wired in series (8&nbsp;Ω), not parallel (2&nbsp;Ω). Disconnect drivers, power up with
+                      no load — if the relay stays engaged, the board is fine and the fault is in the wiring.</td>
+                  </tr>
+                  <tr>
+                    <td>Enclosure vibrates noticeably</td>
+                    <td>Driver polarity mismatch — one driver is fighting the other instead of cancelling. Reverse the
+                      connections on one driver and retest with the battery check before re-sealing the driver plate.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Boomy, one-note bass</td>
+                    <td>Low-pass filter cutoff is set too high in the Wondom app, or the Beluga level is too loud
+                      relative to the Nautilus. Bring the LP filter down in 10&nbsp;Hz steps from 120&nbsp;Hz and
+                      re-balance the dimmer. Also check that the sub is not placed in a room corner (which adds
+                      ~6&nbsp;dB of bass reinforcement).</td>
+                  </tr>
+                  <tr>
+                    <td>Port chuffing or wind noise at volume</td>
+                    <td>Port air velocity is too high — the driver is being pushed past the port's design excursion.
+                      Reduce playback level. If chuffing occurs at normal listening levels, the port area may have been
+                      reduced during printing (check the opening is the full 35&nbsp;cm²). Do not block or restrict the
+                      port to "fix" chuffing; it will damage the driver.</td>
+                  </tr>
+                  <tr>
+                    <td>Epoxy joint leaking (hiss at port)</td>
+                    <td>An acoustic leak at the driver plate bond or port tube socket. Locate by listening closely to
+                      the enclosure seams with the sub playing a 60&nbsp;Hz tone at moderate volume. Seal with a bead of
+                      acoustic sealant or additional slow-cure epoxy. Do not use hot glue — it is too rigid and will
+                      crack.</td>
+                  </tr>
+                  <tr>
+                    <td>Bluetooth latency / audio out of sync with Nautilus</td>
+                    <td>The two Bluetooth links have slightly different buffering. Enable LDAC or aptX on the source if
+                      supported — higher codec quality reduces buffering latency. On iOS, use AirPlay 2 rather than
+                      Bluetooth for synchronized multi-device audio.</td>
+                  </tr>
+                  <tr>
+                    <td>Dual-color gradient not appearing</td>
+                    <td>The dual-color filament needs the spool to be loaded from the start of the roll, not mid-roll.
+                      If the gradient is not visible, the filament spool may have been loaded at a point where the color
+                      had already transitioned. Unload and reload from the spool start.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="guide-callout">
+            <div class="guide-callout__label">// STILL STUCK?</div>
+            Get in touch with a description of the symptom and which step you're at. A photo of the wiring and the
+            driver plate seam is usually enough to diagnose most issues remotely.
+          </div>
+        </section>
+
+
+        <!-- Backlog -->
+        <section class="guide-section" id="backlog">
+          <div class="guide-section__eyebrow">// IMPROVE</div>
+          <h2 class="guide-section__title">Backlog</h2>
+
+          <div class="retro-window">
+            <div class="retro-window__titlebar retro-window--green">
+              <span class="retro-window__title">backlog.txt</span>
+              <div class="window-btns">
+                <div class="window-btn window-btn--red"></div>
+                <div class="window-btn window-btn--yellow"></div>
+                <div class="window-btn window-btn--green"></div>
+              </div>
+            </div>
+            <div class="retro-window__body retro-window__body--flush">
+              <table class="bom-table bom-table--flush">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Notes &amp; ideas</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Active crossover integration</td>
+                    <td>Adding a MiniDSP 2×4 between the source and both the Beluga and Nautilus amplifiers would allow
+                      a precisely configured Linkwitz-Riley crossover at 120&nbsp;Hz, replacing the Wondom's onboard
+                      low-pass with a matched 24&nbsp;dB/oct filter on both sides. This would improve integration
+                      significantly at the cost of an additional box and cable run.</td>
+                  </tr>
+                  <tr>
+                    <td>Wired input option</td>
+                    <td>The current Bluetooth-only input means there is no latency-free connection to a PC or DAC. A
+                      3.5&nbsp;mm or RCA input socket on the rear panel, switchable with the Bluetooth source, would
+                      make the Beluga usable in recording and mixing contexts where Bluetooth latency is unacceptable.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>LED accent</td>
+                    <td>The dual-color PLA body transmits light at its thinner wall sections (similar to the Nautilus
+                      cover). A strip of warm-white or amber LEDs inside the body would produce an organic glow that
+                      shifts color with the gradient filament. Would need a small recess in the body for the LED strip
+                      and a power tap from the JAB2+'s 5&nbsp;V auxiliary output.</td>
+                  </tr>
+                  <tr>
+                    <td>Decoupling feet</td>
+                    <td>While the dual-opposed architecture eliminates most mechanical vibration, the residual from
+                      driver mismatch still couples into the desk. Printed or silicone feet at the three contact points
+                      of the rounded base would isolate the remaining vibration. The rounded body geometry makes a
+                      custom cradle-style foot mount the cleanest solution.</td>
+                  </tr>
+                  <tr>
+                    <td>Larger driver variant</td>
+                    <td>A 5" or 6.5" version of the enclosure using a single larger driver (abandoning dual-opposed)
+                      could achieve deeper extension without a paired cancellation architecture, at the cost of more
+                      desk footprint and some mechanical vibration. The CAD is parametric — adjusting the driver
+                      aperture diameter and internal volume to suit a different driver would be a straightforward
+                      modification.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="guide-callout">
+            <div class="guide-callout__label">// BUILT ONE?</div>
+            If you improved any of the above, tuned the port geometry for a different driver, or found a better gradient
+            filament — open a PR on GitHub or get in touch. Happy to hear from you.
+          </div>
+          <button class="contact-me-btn" onclick="openContact('Re: Beluga Subwoofer (DMG-Beluga)')">Contact me!</button>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+
+  <!-- ── CTA ── -->
+  <section class="cta-section reveal">
+    <div class="cta-section__eyebrow">// ALL FILES OPEN</div>
+    <h2 class="cta-section__title">Built one? <em>Show us.</em></h2>
+    <p class="cta-section__sub">Tag your build, open a PR with improvements, or just send a photo. Pair it with the
+      Nautilus and the system becomes something genuinely worth sharing.</p>
+    <div class="cta-section__actions">
+      <a href="devices.html" class="btn btn-orange">&#9658; See All Devices</a>
+      <a href="guides.html" class="btn btn-ghost-light">Back to Guides</a>
+    </div>
+  </section>
+
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <a href="index.html" aria-label="DMG Labs home">
+      <svg width="100" height="32" viewBox="0 0 100 32" fill="none">
+        <text x="0" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#c8ddd0">D</text>
+        <text x="17" y="26" font-family="Cormorant Garamond,Georgia,serif" font-size="27" font-weight="700"
+          fill="#c8ddd0">M</text>
+        <path d="M52,16 L60,9.5 A10,10 0 1,0 60,22.5 Z" fill="#f06a00" />
+        <circle cx="74" cy="16" r="2.8" fill="#f06a00" />
+      </svg>
+    </a>
+    <ul class="footer__links">
+      <li><a href="devices.html" class="footer__link">Devices</a></li>
+      <li><a href="guides.html" class="footer__link">Guides</a></li>
+      <li><a href="studio.html" class="footer__link">Studio</a></li>
+    </ul>
+    <div class="footer__copy">&copy; 2025 De Mattos Gabriel Labs</div>
+  </footer>
+
+
+  <!-- ── LIGHTBOX ── -->
+  <div id="lb" role="dialog" aria-modal="true" aria-label="Image zoom">
+    <button id="lb-close" aria-label="Close">&#10005; CLOSE</button>
+    <button id="lb-prev" aria-label="Previous image">&#9664;</button>
+    <img id="lb-img" src="" alt="" />
+    <button id="lb-next" aria-label="Next image">&#9654;</button>
+    <span id="lb-counter"></span>
+    <span id="lb-esc">CLICK BACKDROP OR PRESS ESC TO CLOSE</span>
+  </div>
+
+  <!-- ── CONTACT MODAL ── -->
+  <div id="contact-modal" role="dialog" aria-modal="true" aria-label="Contact form">
+    <div class="contact-modal-box">
+      <div class="contact-modal-titlebar">
+        <span class="contact-modal-title">// GET IN TOUCH</span>
+        <button class="contact-modal-close" id="contact-close" aria-label="Close">&#10005;</button>
+      </div>
+      <div class="contact-modal-body">
+        <label for="contact-subject">Re:</label>
+        <input type="text" id="contact-subject" name="subject" autocomplete="off" />
+        <label for="contact-message">Message:</label>
+        <textarea id="contact-message" name="message" placeholder="Write your message here..."></textarea>
+        <label for="contact-email">Email:</label>
+        <input type="email" id="contact-email" name="email" placeholder="your@email.com" autocomplete="email" />
+        <div class="contact-modal-actions">
+          <button class="contact-send-btn" id="contact-send">&#9658; Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VIDEO LIGHTBOX ── -->
+  <div id="vlb" role="dialog" aria-modal="true" aria-label="Video player">
+    <button id="vlb-close" aria-label="Close video">&#10005; CLOSE</button>
+    <video id="vlb-video" controls playsinline></video>
+    <span id="vlb-label">CLICK BACKDROP OR PRESS ESC TO CLOSE</span>
+  </div>
+
+  <script src="scripts.js"></script>
+  <script>
+  (function () {
+    var vlb      = document.getElementById('vlb');
+    var vlbVid   = document.getElementById('vlb-video');
+    var vlbClose = document.getElementById('vlb-close');
+
+    function openVlb(src) {
+      // Stop every inline video first
+      document.querySelectorAll('.img-carousel__slide--video video').forEach(function (v) {
+        v.pause();
+        v.currentTime = 0;
+      });
+      // Load into lightbox
+      vlbVid.innerHTML = '<source src="' + src + '" type="video/mp4" />';
+      vlbVid.load();
+      vlb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      vlbVid.play().catch(function () {});
+    }
+
+    function closeVlb() {
+      vlb.classList.remove('active');
+      vlbVid.pause();
+      vlbVid.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+
+    vlbClose.addEventListener('click', closeVlb);
+    vlb.addEventListener('click', function (e) {
+      if (e.target === vlb || e.target === document.getElementById('vlb-label')) closeVlb();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeVlb();
+    });
+
+    // Wire each play overlay to open the lightbox only — never play inline
+    document.querySelectorAll('.img-carousel__slide--video').forEach(function (slide) {
+      var sourceEl = slide.querySelector('source');
+      var playBtn  = slide.querySelector('.carousel-video-play');
+      if (!sourceEl || !playBtn) return;
+      var src = sourceEl.getAttribute('src');
+      playBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        openVlb(src);
+      });
+    });
+  })();
+  </script>
+</body>
+
+</html>
