@@ -37,6 +37,91 @@
       padding-top:    var(--space-10);
       padding-bottom: var(--space-10);
     }
+
+    /* ── Mobile hamburger menu ── */
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      margin-left: auto;
+      z-index: 200;
+    }
+    .nav__hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #0f1f17;
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+      transform-origin: center;
+    }
+    /* Animate to X when open */
+    .nav__hamburger[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav__hamburger[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav__hamburger[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav__mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-height, 64px);
+      left: 0;
+      right: 0;
+      background: #f5f0e8;
+      border-top: 1px solid rgba(15,31,23,0.1);
+      box-shadow: 0 8px 24px rgba(15,31,23,0.1);
+      z-index: 150;
+      padding: 0.5rem 0 1rem;
+    }
+    .nav__mobile-menu.is-open {
+      display: block;
+    }
+    .nav__mobile-menu a {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0f1f17;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav__mobile-menu a:hover {
+      background: rgba(15,31,23,0.05);
+    }
+    .nav__mobile-menu .btn-nav-cta {
+      display: block;
+      margin: 0.75rem 1.5rem 0;
+      text-align: center;
+    }
+
+    @media (max-width: 960px) {
+      .nav__hamburger { display: flex; }
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .hero__left {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        max-width: none;
+        grid-column: 1 / -1;
+      }
+    }
   </style>
 </head>
 
@@ -59,6 +144,26 @@
       <li><a href="studio.html" class="nav__link">Studio</a></li>
     </ul>
     <a href="guides.html" class="btn-nav-cta">&#9658; Start Building</a>
+
+    <!-- Hamburger button — visible on mobile only -->
+    <button
+      class="nav__hamburger"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="nav-mobile-menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Mobile dropdown -->
+    <div class="nav__mobile-menu" id="nav-mobile-menu" role="navigation" aria-label="Mobile navigation">
+      <a href="devices.html">Devices</a>
+      <a href="guides.html">Guides</a>
+      <a href="studio.html">Studio</a>
+      <a href="guides.html" class="btn-nav-cta">&#9658; Start Building</a>
+    </div>
   </nav>
 
   <div class="ticker-wrap">
@@ -357,7 +462,7 @@
           </div>
           <div class="product-card__body">
             <span class="tag tag-elec" style="margin-bottom:0.78rem">Electronics</span>
-            <div class="product-card__visual" style="background:rgba(74,124,89,0.06);">
+              <div class="product-card__visual" style="background:rgba(74,124,89,0.06);">
                 <div class="img-placeholder img-placeholder--tall">
                 <img src="img/DMG-LU1_CAD-Capture.png" alt="DMG-40 Transit Clock — European Urban Render" class="img--top"/>
               </div>  
@@ -516,6 +621,41 @@
   </footer>
 
   <script src="scripts.js"></script>
+  <script>
+    (function () {
+      var btn  = document.querySelector('.nav__hamburger');
+      var menu = document.getElementById('nav-mobile-menu');
+      var nav  = document.querySelector('.nav');
+      if (!btn || !menu) return;
+
+      function openMenu() {
+        // Measure nav height each time in case it shifts (scroll, resize)
+        var navH = nav ? nav.getBoundingClientRect().bottom : 64;
+        menu.style.top = navH + 'px';
+        menu.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.setAttribute('aria-label', 'Close navigation menu');
+      }
+
+      function closeMenu() {
+        menu.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-label', 'Open navigation menu');
+      }
+
+      btn.addEventListener('click', function () {
+        menu.classList.contains('is-open') ? closeMenu() : openMenu();
+      });
+
+      menu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) closeMenu();
+      });
+    })();
+  </script>
 </body>
 
 </html>
